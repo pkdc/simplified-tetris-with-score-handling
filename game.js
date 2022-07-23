@@ -1,5 +1,9 @@
 "use strict";
 
+let wait;
+let prevTime;
+let runID, startedID, waitID;
+
 const body = document.querySelector("body");
 const root = document.querySelector("#root");
 
@@ -13,13 +17,111 @@ root.append(box3);
 
 box2.append(gameTable);
 
+const slowDrop = function() {
+    console.log("slow");
+    blocks.erase();
+    blocks.fall(maxY);
+    blocks.colour();
+    // timeoutID = setTimeout(() => {    
+    //     globalID = requestAnimationFrame(slowDrop);
+    // }, 500);
+};
+
+const fastDrop = function() {
+    wait = 0;
+    // console.log("fast");
+    // blocks.erase();
+    // // blocks.fastFall(maxY);
+    // blocks.fall(maxY);
+    // blocks.colour();
+    // timeoutID = setTimeout(() => {    
+    //     globalID = requestAnimationFrame(slowDrop);
+    // }, 100);
+};
+
+const moveRight = function() {
+    console.log("Mv Right");
+    blocks.erase();
+    blocks.mvRight(maxX);
+    blocks.colour();
+    // mvRight += 10;
+    // blockGroup.style.right = `${mvRight}px`;
+}
+
+const moveLeft = function() {
+    console.log("Mv Left");
+    blocks.erase();
+    blocks.mvLeft();
+    blocks.colour();
+    // mvLeft += 10;
+    // blockGroup.style.right = `${mvLeft}px`;
+}
+
+// const rotateTBlock = function() {
+//     console.log(`rotate! ${blocks.shape}`);
+//     blocks.erase();
+//     blocks.rotate();
+//     blocks.colour();
+// }
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        if (!startedID) {
+            startedID = requestAnimationFrame(run);
+        }
+    }
+});
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowDown") {
+        console.log("fastDrop");
+        fastDrop();
+    }
+    if (e.key === "ArrowRight") {
+        console.log("Right");
+        moveRight();
+    }
+    if (e.key === "ArrowLeft") {
+        console.log("Left");
+        moveLeft();
+    }
+    // if (e.key === "ArrowUp") {
+    //     console.log("Up, rotate");
+    //     rotateTBlock();
+    // }
+});
+
+const checkWait = function(timestamp) {
+    // if the fall is called right after the execution of the game (prevTime is falsy)
+    // i.e. just fell one row
+    console.log(timestamp);
+    console.log(prevTime);
+    if (!prevTime) {
+        prevTime = timestamp;
+    }
+
+    let runtime = timestamp - prevTime;
+    if (runtime >= wait) {
+        slowDrop(); // fall a line
+        // after falling a line, reset prevTime and wait (in case it's changed by fast drop)
+        runID = requestAnimationFrame(run);
+    } else {
+        // continue waiting, and listening to events
+        waitID = requestAnimationFrame(checkWait);
+    }
+}
+
+const run = function() {
+    wait = 1000;
+    prevTime = null;
+    console.log("in run");
+    waitID = requestAnimationFrame(checkWait);
+}
+
 // generate
 let x1, y1;
 let x2, y2;
 let x3, y3;
 let x4, y4;
-let globalID;
-let timeoutID;
 // let placed = true;
 // while (placed) {
     // blocks are not real elements, they are just coloured pixels
@@ -29,75 +131,7 @@ let timeoutID;
     blocks.colour();
     // console.log(`blocks coloured`);
     // placed = !blocks.canMove;
-
-    const slowDrop = function() {
-        console.log("slow");
-        blocks.erase();
-        blocks.fall(maxY);
-        blocks.colour();
-        // timeoutID = setTimeout(() => {    
-        //     globalID = requestAnimationFrame(slowDrop);
-        // }, 500);
-    };
-
-    const fastDrop = function() {
-        console.log("fast");
-        blocks.erase();
-        blocks.fall(maxY);
-        blocks.colour();
-        // timeoutID = setTimeout(() => {    
-        //     globalID = requestAnimationFrame(slowDrop);
-        // }, 100);
-    };
-
-    const moveRight = function() {
-        console.log("Mv Right");
-        blocks.erase();
-        blocks.mvRight(maxX);
-        blocks.colour();
-        // mvRight += 10;
-        // blockGroup.style.right = `${mvRight}px`;
-    }
-
-    const moveLeft = function() {
-        console.log("Mv Left");
-        blocks.erase();
-        blocks.mvLeft();
-        blocks.colour();
-        // mvLeft += 10;
-        // blockGroup.style.right = `${mvLeft}px`;
-    }
-
-    // const rotateTBlock = function() {
-    //     console.log(`rotate! ${blocks.shape}`);
-    //     blocks.erase();
-    //     blocks.rotate();
-    //     blocks.colour();
-    // }
-
     // EventListeners
-    document.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-            console.log("slowDrop");
-            slowDrop();
-        }
-        if (e.key === "ArrowDown") {
-            console.log("fastDrop");
-            fastDrop();
-        }
-        if (e.key === "ArrowRight") {
-            console.log("Right");
-            moveRight();
-        }
-        if (e.key === "ArrowLeft") {
-            console.log("Left");
-            moveLeft();
-        }
-        // if (e.key === "ArrowUp") {
-            //         console.log("Up, rotate");
-            //         rotateTBlock();
-            //     }
-    });
 
     // document.addEventListener("keydown", (e) => {
     //     

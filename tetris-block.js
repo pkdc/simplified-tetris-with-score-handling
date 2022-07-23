@@ -62,6 +62,27 @@ class tetrisBlock {
         this.y4 += 1;
       }
 
+      // fastFall
+      // fastFall(maxY) {
+      //   console.log(this);
+      //   wait = 1000;
+      //   if (this.y1 >= maxY-1 || this.y2 >= maxY-1 || this.y3 >= maxY-1 || this.y4 >= maxY-1) {
+      //     console.log("bottom reached");
+      //     this.canMove = false;
+      //     return;
+      //   }
+      //   // const bStyles = window.getComputedStyle(this);
+      //   // const bBGColour = bStyles.getPropertyValue("background");
+      //   // if (bBGColour !== "var(--grey)") {
+      //     // console.log("another block reached");
+      //   // }
+      //   // console.log(this.y1);
+      //   this.y1 += 1;
+      //   this.y2 += 1;
+      //   this.y3 += 1;
+      //   this.y4 += 1;
+      // }
+
       // move right
       mvRight(maxX) {
         if (this.x1 === maxX-1 || this.x2 === maxX-1 || this.x3 === maxX-1 || this.x4 === maxX-1) {
@@ -125,8 +146,6 @@ class tetrisBlock {
         block3.style.background = this.blockColour;
         block4.style.background = this.blockColour;
       }
-      
-      // fastDrop
 
       // generate
       static generate() {
