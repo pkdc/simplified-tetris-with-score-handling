@@ -40,6 +40,7 @@ class tetrisBlock {
       // set setCanMove(able) {
       //   this._canMove = able;
       // }
+
       // slowFall
       fall(maxY) {
         console.log(this);
@@ -135,25 +136,25 @@ class tetrisBlock {
         console.log(`generate new ${rand}`);
         switch(rand) {
           case 0: // rectangle
-            x1 = 4;
+            x1 = maxX/2 - 2;
             y1 = 0;
-            x2 = 5;
+            x2 = maxX/2 - 1;
             y2 = 0;
-            x3 = 6;
+            x3 = maxX/2;
             y3 = 0;
-            x4 = 7;
+            x4 = maxX/2 + 1;
             y4 = 0;
             blockColour = "skyblue";
             shape = "rect";
             break;
           case 1: // sq
-            x1 = 5;
+            x1 = maxX/2 - 1;
             y1 = 0;
-            x2 = 6;
+            x2 = maxX/2;
             y2 = 0;
-            x3 = 5;
+            x3 = maxX/2 - 1;
             y3 = 1;
-            x4 = 6;
+            x4 = maxX/2;
             y4 = 1;
             blockColour = "yellow";
             shape = "sq";

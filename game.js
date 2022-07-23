@@ -11,24 +11,7 @@ root.append(box1);
 root.append(box2);
 root.append(box3);
 
-const gameTable = document.createElement("div");
-gameTable.classList.add("game-table");
 box2.append(gameTable);
-
-// create game area
-const maxY=15, maxX=12;
-for (let j = 0; j < maxY; j++) {
-    for (let i = 0; i <maxX; i++) {
-        const tablePixel = document.createElement("div");
-        tablePixel.classList.add("table-pixel");
-        tablePixel.id = `pixel-${i}-${j}`;
-        // const pixelVal = document.createElement("input");
-        // pixelVal.value = 0; // 0 means free, 1 means occupied
-        // pixelVal.style.display = "none";
-        // tablePixel.append(pixelVal);
-        gameTable.append(tablePixel);
-    }
-}
 
 // generate
 let x1, y1;
@@ -46,19 +29,15 @@ let timeoutID;
     blocks.colour();
     // console.log(`blocks coloured`);
     // placed = !blocks.canMove;
-    // block1.style.background = "orange";
-    // block2.style.background = "orange";
-    // block3.style.background = "orange";
-    // block4.style.background = "orange";
 
     const slowDrop = function() {
         console.log("slow");
         blocks.erase();
         blocks.fall(maxY);
         blocks.colour();
-        timeoutID = setTimeout(() => {    
-            globalID = requestAnimationFrame(slowDrop);
-        }, 500);
+        // timeoutID = setTimeout(() => {    
+        //     globalID = requestAnimationFrame(slowDrop);
+        // }, 500);
     };
 
     const fastDrop = function() {
@@ -67,8 +46,8 @@ let timeoutID;
         blocks.fall(maxY);
         blocks.colour();
         // timeoutID = setTimeout(() => {    
-        globalID = requestAnimationFrame(fastDrop);
-        // }, 200);
+        //     globalID = requestAnimationFrame(slowDrop);
+        // }, 100);
     };
 
     const moveRight = function() {
@@ -89,12 +68,12 @@ let timeoutID;
         // blockGroup.style.right = `${mvLeft}px`;
     }
 
-    const rotateTBlock = function() {
-        console.log(`rotate! ${blocks.shape}`);
-        blocks.erase();
-        blocks.rotate();
-        blocks.colour();
-    }
+    // const rotateTBlock = function() {
+    //     console.log(`rotate! ${blocks.shape}`);
+    //     blocks.erase();
+    //     blocks.rotate();
+    //     blocks.colour();
+    // }
 
     // EventListeners
     document.addEventListener("keydown", (e) => {
@@ -102,40 +81,27 @@ let timeoutID;
             console.log("slowDrop");
             slowDrop();
         }
-    });
-
-    document.addEventListener("keydown", (e) => {
         if (e.key === "ArrowDown") {
             console.log("fastDrop");
             fastDrop();
         }
-    });
-    // document.addEventListener("keyup", (e) => {
-    //     if (e.key === "ArrowDown") {
-    //         console.log("back to slowDrop");
-    //         slowDrop();
-    //     }
-    // });
-
-    document.addEventListener("keydown", (e) => {
         if (e.key === "ArrowRight") {
             console.log("Right");
             moveRight();
         }
-    });
-    document.addEventListener("keydown", (e) => {
-        if (e.key === "ArrowUp") {
-            console.log("Up, rotate");
-            rotateTBlock();
-        }
-    });
-    document.addEventListener("keydown", (e) => {
         if (e.key === "ArrowLeft") {
             console.log("Left");
             moveLeft();
         }
+        // if (e.key === "ArrowUp") {
+            //         console.log("Up, rotate");
+            //         rotateTBlock();
+            //     }
     });
 
+    // document.addEventListener("keydown", (e) => {
+    //     
+    // });
     // document.addEventListener("keydown", (e) => {
     //     if (e.key === " ") {
     //         console.log("stop");
