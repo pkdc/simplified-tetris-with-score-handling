@@ -20,7 +20,7 @@ root.append(box3);
 box2.append(gameTable);
 
 const slowDrop = function() {
-    console.log("slow");
+    // console.log("slow");
     curBlocks.erase();
     curBlocks.fall(maxY);
     curBlocks.colour();
@@ -107,8 +107,8 @@ const run = function() {
 const newBlocks = function() {
     // generate
     curBlocks = new tetrisBlock(...tetrisBlock.generate());
-    console.log(`${curBlocks.shape}`);
-    console.log(`${curBlocks.locked}`);
+    console.log("shape", `${curBlocks.shape}`);
+    console.log("locked?", `${curBlocks.locked}`);
     // console.log(`blocks created`);
     curBlocks.colour();
     // console.log(`blocks coloured`);

@@ -44,36 +44,75 @@ class tetrisBlock {
 
       // slowFall
       fall(maxY) {
-        console.log(this);
+        // console.log(this);
+        let block1 = document.querySelector(`#pixel-${this.x1}-${this.y1}`);
+        let block2 = document.querySelector(`#pixel-${this.x2}-${this.y2}`);
+        let block3 = document.querySelector(`#pixel-${this.x3}-${this.y3}`);
+        let block4 = document.querySelector(`#pixel-${this.x4}-${this.y4}`);
 
-        if (this.y1 >= maxY-1 || this.y2 >= maxY-1 || this.y3 >= maxY-1 || this.y4 >= maxY-1) {
-          console.log("bottom reached");
+        let blockArr = [block1, block2, block3, block4];
+
+        let collide = false;
+
+        // if (blockArr.some(el => el.classList.contains("occupied"))) {
+        //   blockArr.forEach(blk => blk.classList.add("occupied"));
+        //   collide = true;
+        // }
+        // console.log(blockArr.some((el) => el.classList.contains("occupied")))
+        // collide = blockArr.some((el) => el.classList.contains("occupied"));
+        collide = blockArr.some((el) => {
+        //   // const bStyles = window.getComputedStyle(el);
+        //   // const bBGColour = bStyles.getPropertyValue("background-color");
+        //   // console.log(bBGColour);
+        //   // if (bBGColour !== "rgb(189, 176, 176)") {
+        //   //   console.log("another block reached");
+        //   //   return true;
+        //   // }
+        //   // console.log("collided");
+        //   // if (this.y1 !== 0 || this.y2 !== 0 || this.y3 !== 0 || this.y4 !== 0 || this.y1 !== 1 || this.y2 !== 1 || this.y3 !== 1 || this.y4 !== 1 ) {
+            return el.classList.contains("occupied");
+        //   // }
+        });
+        console.log("collided", collide);
+
+        if (this.y1 >= maxY-1 || this.y2 >= maxY-1 || this.y3 >= maxY-1 || this.y4 >= maxY-1 || collide) {
+          // console.log("can't move");
           this.locked = true;
-          
-          let block1 = document.querySelector(`#pixel-${this.x1}-${this.y1}`);
-          let block2 = document.querySelector(`#pixel-${this.x2}-${this.y2}`);
-          let block3 = document.querySelector(`#pixel-${this.x3}-${this.y3}`);
-          let block4 = document.querySelector(`#pixel-${this.x4}-${this.y4}`);
-
-          block1.style.background = this.blockColour;
-          block2.style.background = this.blockColour;
-          block3.style.background = this.blockColour;
-          block4.style.background = this.blockColour;
-
-          console.log(this.locked);
+          for (const el of blockArr) {
+            el.classList.add("occupied");
+            el.style.background = this.blockColour;
+          }
+          // console.log(this.locked);
           newBlocks();
           return;
-        }
-        // const bStyles = window.getComputedStyle(this);
-        // const bBGColour = bStyles.getPropertyValue("background");
-        // if (bBGColour !== "var(--grey)") {
-          // console.log("another block reached");
+        } 
+        // else {
+        //   for (const el of blockArr) {
+        //     el.classList.remove("occupied");
+        //   }
         // }
+        
+        blockArr.forEach(function(el) {
+          el.classList.remove("occupied");
+        });
+
         // console.log(this.y1);
         this.y1 += 1;
         this.y2 += 1;
         this.y3 += 1;
         this.y4 += 1;
+
+        // block1 = document.querySelector(`#pixel-${this.x1}-${this.y1}`);
+        // block2 = document.querySelector(`#pixel-${this.x2}-${this.y2}`);
+        // block3 = document.querySelector(`#pixel-${this.x3}-${this.y3}`);
+        // block4 = document.querySelector(`#pixel-${this.x4}-${this.y4}`);
+
+        // blockArr = [block1, block2, block3, block4];   
+
+        // blockArr.forEach(function(el) {
+        //   el.classList.add("occupied");
+        // });
+
       }
 
       // move right
