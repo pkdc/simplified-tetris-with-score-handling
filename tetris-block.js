@@ -49,6 +49,17 @@ class tetrisBlock {
         if (this.y1 >= maxY-1 || this.y2 >= maxY-1 || this.y3 >= maxY-1 || this.y4 >= maxY-1) {
           console.log("bottom reached");
           this.locked = true;
+          
+          let block1 = document.querySelector(`#pixel-${this.x1}-${this.y1}`);
+          let block2 = document.querySelector(`#pixel-${this.x2}-${this.y2}`);
+          let block3 = document.querySelector(`#pixel-${this.x3}-${this.y3}`);
+          let block4 = document.querySelector(`#pixel-${this.x4}-${this.y4}`);
+
+          block1.style.background = this.blockColour;
+          block2.style.background = this.blockColour;
+          block3.style.background = this.blockColour;
+          block4.style.background = this.blockColour;
+
           console.log(this.locked);
           newBlocks();
           return;

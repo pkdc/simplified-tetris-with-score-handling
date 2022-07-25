@@ -125,7 +125,7 @@ document.addEventListener("keydown", (e) => {
         }
     }
 });
- newBlocks();
+newBlocks();
     // next comming up window
     // const commingUp = document.createElement("div");
     // commingUp.classList.add("comming-up");
