@@ -1,7 +1,7 @@
 "use strict";
 
 class tetrisBlock {
-    constructor(x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape, canMove) {
+    constructor(x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape, locked) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
@@ -12,6 +12,7 @@ class tetrisBlock {
         this.y4 = y4;
         this.blockColour = blockColour;
         this.shape = shape;
+        this.locked = locked;
         // this.canMove = canMove;
       }
 
@@ -47,7 +48,9 @@ class tetrisBlock {
 
         if (this.y1 >= maxY-1 || this.y2 >= maxY-1 || this.y3 >= maxY-1 || this.y4 >= maxY-1) {
           console.log("bottom reached");
-          this.canMove = false;
+          this.locked = true;
+          console.log(this.locked);
+          newBlocks();
           return;
         }
         // const bStyles = window.getComputedStyle(this);
@@ -61,27 +64,6 @@ class tetrisBlock {
         this.y3 += 1;
         this.y4 += 1;
       }
-
-      // fastFall
-      // fastFall(maxY) {
-      //   console.log(this);
-      //   wait = 1000;
-      //   if (this.y1 >= maxY-1 || this.y2 >= maxY-1 || this.y3 >= maxY-1 || this.y4 >= maxY-1) {
-      //     console.log("bottom reached");
-      //     this.canMove = false;
-      //     return;
-      //   }
-      //   // const bStyles = window.getComputedStyle(this);
-      //   // const bBGColour = bStyles.getPropertyValue("background");
-      //   // if (bBGColour !== "var(--grey)") {
-      //     // console.log("another block reached");
-      //   // }
-      //   // console.log(this.y1);
-      //   this.y1 += 1;
-      //   this.y2 += 1;
-      //   this.y3 += 1;
-      //   this.y4 += 1;
-      // }
 
       // move right
       mvRight(maxX) {
@@ -108,17 +90,17 @@ class tetrisBlock {
 
       // rotate
       rotate() {
-        switch(this.shape) {
-          case "rect":
-            console.log(this.shape);
-            // just making it vertical...
-            this.x2 = this.x1;
-            this.x3 = this.x1;
-            this.x4 = this.x1
-            this.y2 = this.y1+1;
-            this.y3 = this.y1+2;
-            this.y4 = this.y1+3;
-        }
+        // switch(this.shape) {
+        //   case "rect":
+        //     console.log(this.shape);
+        //     // just making it vertical...
+        //     this.x2 = this.x1;
+        //     this.x3 = this.x1;
+        //     this.x4 = this.x1
+        //     this.y2 = this.y1+1;
+        //     this.y3 = this.y1+2;
+        //     this.y4 = this.y1+3;
+        // }
       }
 
       erase() {
@@ -135,6 +117,10 @@ class tetrisBlock {
 
       // colour
       colour() {
+
+        if (!this.locked) {
+
+        }
         let block1 = document.querySelector(`#pixel-${this.x1}-${this.y1}`);
         let block2 = document.querySelector(`#pixel-${this.x2}-${this.y2}`);
         let block3 = document.querySelector(`#pixel-${this.x3}-${this.y3}`);
@@ -149,7 +135,7 @@ class tetrisBlock {
 
       // generate
       static generate() {
-        let x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape;
+        let x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape, locked;
         const rand = Math.floor(Math.random()*2);
         // const rand = 0;
         console.log(`generate new ${rand}`);
@@ -165,6 +151,7 @@ class tetrisBlock {
             y4 = 0;
             blockColour = "skyblue";
             shape = "rect";
+            locked = false;
             break;
           case 1: // sq
             x1 = maxX/2 - 1;
@@ -177,9 +164,10 @@ class tetrisBlock {
             y4 = 1;
             blockColour = "yellow";
             shape = "sq";
+            locked = false;
             break;
         }
-        return [x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape];
+        return [x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape, locked];
       }
 };
 // tetrisBlock.prototype.slowDrop = function() {
@@ -189,3 +177,24 @@ class tetrisBlock {
 // tetrisBlock.prototype.moveRight
 // tetrisBlock.prototype.moveLeft
 // tetrisBlock.prototype.fastDrop
+
+      // fastFall
+      // fastFall(maxY) {
+      //   console.log(this);
+      //   wait = 1000;
+      //   if (this.y1 >= maxY-1 || this.y2 >= maxY-1 || this.y3 >= maxY-1 || this.y4 >= maxY-1) {
+      //     console.log("bottom reached");
+      //     this.canMove = false;
+      //     return;
+      //   }
+      //   // const bStyles = window.getComputedStyle(this);
+      //   // const bBGColour = bStyles.getPropertyValue("background");
+      //   // if (bBGColour !== "var(--grey)") {
+      //     // console.log("another block reached");
+      //   // }
+      //   // console.log(this.y1);
+      //   this.y1 += 1;
+      //   this.y2 += 1;
+      //   this.y3 += 1;
+      //   this.y4 += 1;
+      // }
