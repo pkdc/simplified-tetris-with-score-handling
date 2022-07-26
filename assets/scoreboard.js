@@ -4,6 +4,7 @@ let round = 0;
 let gameStartTime = Date.now();
 
 const scoreArea = document.createElement("div");
+scoreArea.classList.add("score-area");
 scoreArea.textContent = `round: ${round}`;
 
 const nextRound = function() {
