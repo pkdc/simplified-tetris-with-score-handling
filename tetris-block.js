@@ -121,6 +121,17 @@ class tetrisBlock {
         if (this.x1 === maxX-1 || this.x2 === maxX-1 || this.x3 === maxX-1 || this.x4 === maxX-1) {
           return;
         }
+
+        let nextBlock1 = document.querySelector(`#pixel-${this.x1+1}-${this.y1}`);
+        let nextBlock2 = document.querySelector(`#pixel-${this.x2+1}-${this.y2}`);
+        let nextBlock3 = document.querySelector(`#pixel-${this.x3+1}-${this.y3}`);
+        let nextBlock4 = document.querySelector(`#pixel-${this.x4+1}-${this.y4}`);
+        let nextBlockArr = [nextBlock1,nextBlock2,nextBlock3,nextBlock4]
+
+        if (nextBlockArr.some((el) => el.classList.contains("occupied"))) {
+          return;
+        }
+
         console.log(this);
         this.x1 += 1;
         this.x2 += 1;
@@ -132,6 +143,17 @@ class tetrisBlock {
         if (this.x1 === 0 || this.x2 === 0 || this.x3 === 0 || this.x4 === 0) {
           return;
         }
+
+        let nextBlock1 = document.querySelector(`#pixel-${this.x1-1}-${this.y1}`);
+        let nextBlock2 = document.querySelector(`#pixel-${this.x2-1}-${this.y2}`);
+        let nextBlock3 = document.querySelector(`#pixel-${this.x3-1}-${this.y3}`);
+        let nextBlock4 = document.querySelector(`#pixel-${this.x4-1}-${this.y4}`);
+        let nextBlockArr = [nextBlock1,nextBlock2,nextBlock3,nextBlock4]
+
+        if (nextBlockArr.some((el) => el.classList.contains("occupied"))) {
+          return;
+        }
+
         console.log(this);
         this.x1 -= 1;
         this.x2 -= 1;
