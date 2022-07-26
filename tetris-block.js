@@ -208,6 +208,7 @@ class tetrisBlock {
 
       // generate
       static generate() {
+        nextRound();
         let x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape, locked;
         // const rand = Math.floor(Math.random()*2);
         const rand = 1;

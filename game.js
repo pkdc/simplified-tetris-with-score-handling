@@ -17,6 +17,7 @@ root.append(box1);
 root.append(box2);
 root.append(box3);
 
+box1.append(scoreArea);
 box2.append(gameTable);
 
 const slowDrop = function() {
