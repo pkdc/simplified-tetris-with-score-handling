@@ -52,6 +52,12 @@ class tetrisBlock {
 
         let blockArr = [block1, block2, block3, block4];
 
+        let nextBlock1 = document.querySelector(`#pixel-${this.x1}-${this.y1+1}`);
+        let nextBlock2 = document.querySelector(`#pixel-${this.x2}-${this.y2+1}`);
+        let nextBlock3 = document.querySelector(`#pixel-${this.x3}-${this.y3+1}`);
+        let nextBlock4 = document.querySelector(`#pixel-${this.x4}-${this.y4+1}`);
+        let nextBlockArr = [nextBlock1,nextBlock2,nextBlock3,nextBlock4]
+
         let collide = false;
 
         // if (blockArr.some(el => el.classList.contains("occupied"))) {
@@ -60,7 +66,7 @@ class tetrisBlock {
         // }
         // console.log(blockArr.some((el) => el.classList.contains("occupied")))
         // collide = blockArr.some((el) => el.classList.contains("occupied"));
-        collide = blockArr.some((el) => {
+        collide = nextBlockArr.some((el) => {
         //   // const bStyles = window.getComputedStyle(el);
         //   // const bBGColour = bStyles.getPropertyValue("background-color");
         //   // console.log(bBGColour);
@@ -86,11 +92,6 @@ class tetrisBlock {
           newBlocks();
           return;
         } 
-        // else {
-        //   for (const el of blockArr) {
-        //     el.classList.remove("occupied");
-        //   }
-        // }
         
         blockArr.forEach(function(el) {
           el.classList.remove("occupied");
@@ -186,7 +187,8 @@ class tetrisBlock {
       // generate
       static generate() {
         let x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape, locked;
-        const rand = Math.floor(Math.random()*2);
+        // const rand = Math.floor(Math.random()*2);
+        const rand = 1;
         // const rand = 0;
         console.log(`generate new ${rand}`);
         switch(rand) {

@@ -17,3 +17,10 @@ for (let j = 0; j < maxY; j++) {
         gameTable.append(tablePixel);
     }
 }
+for (let k = 0; k <maxX; k++) {
+    const tablePixel = document.createElement("div");
+        tablePixel.classList.add("table-pixel");
+        tablePixel.id = `pixel-${k}-20`;
+        tablePixel.classList.add("occupied");
+        gameTable.append(tablePixel);
+}
