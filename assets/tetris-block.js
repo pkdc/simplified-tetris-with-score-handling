@@ -45,17 +45,17 @@ class tetrisBlock {
       // slowFall
       fall(maxY) {
         // console.log(this);
-        let block1 = document.querySelector(`#pixel-${this.x1}-${this.y1}`);
-        let block2 = document.querySelector(`#pixel-${this.x2}-${this.y2}`);
-        let block3 = document.querySelector(`#pixel-${this.x3}-${this.y3}`);
-        let block4 = document.querySelector(`#pixel-${this.x4}-${this.y4}`);
+        let block1 = document.querySelector(`.x-${this.x1}.y-${this.y1}`);
+        let block2 = document.querySelector(`.x-${this.x2}.y-${this.y2}`);
+        let block3 = document.querySelector(`.x-${this.x3}.y-${this.y3}`);
+        let block4 = document.querySelector(`.x-${this.x4}.y-${this.y4}`);
 
         let blockArr = [block1, block2, block3, block4];
 
-        let nextBlock1 = document.querySelector(`#pixel-${this.x1}-${this.y1+1}`);
-        let nextBlock2 = document.querySelector(`#pixel-${this.x2}-${this.y2+1}`);
-        let nextBlock3 = document.querySelector(`#pixel-${this.x3}-${this.y3+1}`);
-        let nextBlock4 = document.querySelector(`#pixel-${this.x4}-${this.y4+1}`);
+        let nextBlock1 = document.querySelector(`.x-${this.x1}.y-${this.y1+1}`);
+        let nextBlock2 = document.querySelector(`.x-${this.x2}.y-${this.y2+1}`);
+        let nextBlock3 = document.querySelector(`.x-${this.x3}.y-${this.y3+1}`);
+        let nextBlock4 = document.querySelector(`.x-${this.x4}.y-${this.y4+1}`);
         let nextBlockArr = [nextBlock1,nextBlock2,nextBlock3,nextBlock4]
 
         let collide = false;
@@ -103,10 +103,10 @@ class tetrisBlock {
         this.y3 += 1;
         this.y4 += 1;
 
-        // block1 = document.querySelector(`#pixel-${this.x1}-${this.y1}`);
-        // block2 = document.querySelector(`#pixel-${this.x2}-${this.y2}`);
-        // block3 = document.querySelector(`#pixel-${this.x3}-${this.y3}`);
-        // block4 = document.querySelector(`#pixel-${this.x4}-${this.y4}`);
+        // block1 = document.querySelector(`.x-${this.x1}.y-${this.y1}`);
+        // block2 = document.querySelector(`.x-${this.x2}.y-${this.y2}`);
+        // block3 = document.querySelector(`.x-${this.x3}.y-${this.y3}`);
+        // block4 = document.querySelector(`.x-${this.x4}.y-${this.y4}`);
 
         // blockArr = [block1, block2, block3, block4];   
 
@@ -122,10 +122,10 @@ class tetrisBlock {
           return;
         }
 
-        let nextBlock1 = document.querySelector(`#pixel-${this.x1+1}-${this.y1}`);
-        let nextBlock2 = document.querySelector(`#pixel-${this.x2+1}-${this.y2}`);
-        let nextBlock3 = document.querySelector(`#pixel-${this.x3+1}-${this.y3}`);
-        let nextBlock4 = document.querySelector(`#pixel-${this.x4+1}-${this.y4}`);
+        let nextBlock1 = document.querySelector(`.x-${this.x1+1}.y-${this.y1}`);
+        let nextBlock2 = document.querySelector(`.x-${this.x2+1}.y-${this.y2}`);
+        let nextBlock3 = document.querySelector(`.x-${this.x3+1}.y-${this.y3}`);
+        let nextBlock4 = document.querySelector(`.x-${this.x4+1}.y-${this.y4}`);
         let nextBlockArr = [nextBlock1,nextBlock2,nextBlock3,nextBlock4]
 
         if (nextBlockArr.some((el) => el.classList.contains("occupied"))) {
@@ -144,10 +144,10 @@ class tetrisBlock {
           return;
         }
 
-        let nextBlock1 = document.querySelector(`#pixel-${this.x1-1}-${this.y1}`);
-        let nextBlock2 = document.querySelector(`#pixel-${this.x2-1}-${this.y2}`);
-        let nextBlock3 = document.querySelector(`#pixel-${this.x3-1}-${this.y3}`);
-        let nextBlock4 = document.querySelector(`#pixel-${this.x4-1}-${this.y4}`);
+        let nextBlock1 = document.querySelector(`.x-${this.x1-1}.y-${this.y1}`);
+        let nextBlock2 = document.querySelector(`.x-${this.x2-1}.y-${this.y2}`);
+        let nextBlock3 = document.querySelector(`.x-${this.x3-1}.y-${this.y3}`);
+        let nextBlock4 = document.querySelector(`.x-${this.x3-1}.y-${this.y3}`);
         let nextBlockArr = [nextBlock1,nextBlock2,nextBlock3,nextBlock4]
 
         if (nextBlockArr.some((el) => el.classList.contains("occupied"))) {
@@ -177,10 +177,10 @@ class tetrisBlock {
       }
 
       erase() {
-        let block1 = document.querySelector(`#pixel-${this.x1}-${this.y1}`);
-        let block2 = document.querySelector(`#pixel-${this.x2}-${this.y2}`);
-        let block3 = document.querySelector(`#pixel-${this.x3}-${this.y3}`);
-        let block4 = document.querySelector(`#pixel-${this.x4}-${this.y4}`);
+        let block1 = document.querySelector(`.x-${this.x1}.y-${this.y1}`);
+        let block2 = document.querySelector(`.x-${this.x2}.y-${this.y2}`);
+        let block3 = document.querySelector(`.x-${this.x3}.y-${this.y3}`);
+        let block4 = document.querySelector(`.x-${this.x4}.y-${this.y4}`);
 
         block1.style.background = "var(--grey)";
         block2.style.background = "var(--grey)";
@@ -194,10 +194,10 @@ class tetrisBlock {
         if (!this.locked) {
 
         }
-        let block1 = document.querySelector(`#pixel-${this.x1}-${this.y1}`);
-        let block2 = document.querySelector(`#pixel-${this.x2}-${this.y2}`);
-        let block3 = document.querySelector(`#pixel-${this.x3}-${this.y3}`);
-        let block4 = document.querySelector(`#pixel-${this.x4}-${this.y4}`);
+        let block1 = document.querySelector(`.x-${this.x1}.y-${this.y1}`);
+        let block2 = document.querySelector(`.x-${this.x2}.y-${this.y2}`);
+        let block3 = document.querySelector(`.x-${this.x3}.y-${this.y3}`);
+        let block4 = document.querySelector(`.x-${this.x4}.y-${this.y4}`);
         // console.log(block1);
 
         block1.style.background = this.blockColour;
@@ -210,8 +210,8 @@ class tetrisBlock {
       static generate() {
         nextRound();
         let x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape, locked;
-        // const rand = Math.floor(Math.random()*2);
-        const rand = 1;
+        const rand = Math.floor(Math.random()*2);
+        // const rand = 1;
         // const rand = 0;
         console.log(`generate new ${rand}`);
         switch(rand) {

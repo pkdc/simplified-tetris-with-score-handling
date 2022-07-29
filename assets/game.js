@@ -128,6 +128,7 @@ document.addEventListener("keydown", (e) => {
     }
 });
 newBlocks();
+timer();
     // next comming up window
     // const commingUp = document.createElement("div");
     // commingUp.classList.add("comming-up");
