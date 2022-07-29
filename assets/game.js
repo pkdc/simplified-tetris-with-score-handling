@@ -103,6 +103,7 @@ const run = function() {
     prevTime = null;
     console.log("in run");
     waitID = requestAnimationFrame(checkWait);
+    timer();
 }
 
 const newBlocks = function() {

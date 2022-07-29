@@ -8,7 +8,7 @@ import (
 )
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
-	tpl, err := template.ParseFiles("./templates/index.html")
+	tpl, err := template.ParseFiles("./assets/index.html")
 	if err != nil {
 		http.Error(w, "Parsing Error", http.StatusInternalServerError)
 		return
