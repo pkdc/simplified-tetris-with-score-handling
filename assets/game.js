@@ -18,12 +18,13 @@ root.append(box2);
 root.append(box3);
 
 box1.append(scoreArea);
-box2.append(gameTable);
+const gameBoard = new gameArea(10, 20);
+box2.append(gameBoard.generateTable());
 
 const slowDrop = function() {
     // console.log("slow");
     curBlocks.erase();
-    curBlocks.fall(maxY);
+    curBlocks.fall(gameBoard.maxY);
     curBlocks.colour();
     // timeoutID = setTimeout(() => {    
     //     globalID = requestAnimationFrame(slowDrop);
@@ -37,7 +38,7 @@ const fastDrop = function() {
 const moveRight = function() {
     console.log("Mv Right");
     curBlocks.erase();
-    curBlocks.mvRight(maxX);
+    curBlocks.mvRight(gameBoard.maxX);
     curBlocks.colour();
     // mvRight += 10;
     // blockGroup.style.right = `${mvRight}px`;
@@ -108,7 +109,7 @@ const run = function() {
 
 const newBlocks = function() {
     // generate
-    curBlocks = new tetrisBlock(...tetrisBlock.generate());
+    curBlocks = new tetrisBlock(...tetrisBlock.generateTBlock(gameBoard.maxX, gameBoard.maxY));
     console.log("shape", `${curBlocks.shape}`);
     console.log("locked?", `${curBlocks.locked}`);
     // console.log(`blocks created`);

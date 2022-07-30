@@ -19,21 +19,7 @@ const nextRound = function() {
     // if 4 lines, remove it, add score
     
     // if a line, remove it, add score
-    for (let j = 0; j < maxY; j++) {
-        const line = document.querySelectorAll(`.y-${j}`);
-        let lineArr = [...line];
-        console.log(lineArr);
-        let wholeLine = true;
-        wholeLine = lineArr.every((el) => el.classList.contains("occupied"));
-        console.log("wholeLine", wholeLine);
-        if (wholeLine) {
-            score += 100;
-            line.forEach(el => el.remove());
-            
-        }
-
-    }
-
+    gameBoard.removeOneLine();
     round++;
 };
 
