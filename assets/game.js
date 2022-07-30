@@ -1,5 +1,9 @@
 "use strict";
 
+import gameArea from './table.js';
+import {scoreArea, timer} from './scoreboard.js';
+import tetrisBlock from './tetris-block.js';
+
 let wait;
 let prevTime;
 let runID, waitID;
@@ -24,7 +28,7 @@ box2.append(gameBoard.generateTable());
 const slowDrop = function() {
     // console.log("slow");
     curBlocks.erase();
-    curBlocks.fall(gameBoard.maxY);
+    curBlocks.fall(gameBoard.getMaxY);
     curBlocks.colour();
     // timeoutID = setTimeout(() => {    
     //     globalID = requestAnimationFrame(slowDrop);
@@ -38,7 +42,7 @@ const fastDrop = function() {
 const moveRight = function() {
     console.log("Mv Right");
     curBlocks.erase();
-    curBlocks.mvRight(gameBoard.maxX);
+    curBlocks.mvRight(gameBoard.getMaxX);
     curBlocks.colour();
     // mvRight += 10;
     // blockGroup.style.right = `${mvRight}px`;
@@ -109,7 +113,8 @@ const run = function() {
 
 const newBlocks = function() {
     // generate
-    curBlocks = new tetrisBlock(...tetrisBlock.generateTBlock(gameBoard.maxX, gameBoard.maxY));
+    console.log("game maxX", gameBoard.getMaxX);
+    curBlocks = new tetrisBlock(...tetrisBlock.generateTBlock(gameBoard.getMaxX));
     console.log("shape", `${curBlocks.shape}`);
     console.log("locked?", `${curBlocks.locked}`);
     // console.log(`blocks created`);

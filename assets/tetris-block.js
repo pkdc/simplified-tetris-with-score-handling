@@ -1,5 +1,5 @@
 "use strict";
-
+import {nextRound} from './scoreboard.js';
 class tetrisBlock {
     constructor(x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape, locked) {
         this.x1 = x1;
@@ -191,9 +191,14 @@ class tetrisBlock {
       // colour
       colour() {
 
-        if (!this.locked) {
+        // if (!this.locked) {
 
-        }
+        // }
+        console.log(this.x1, this.y1);
+        console.log(this.x2, this.y2);
+        console.log(this.x3, this.y3);
+        console.log(this.x4, this.y4);
+        console.log(document.querySelector(`.x-${this.x1}.y-${this.y1}`));
         let block1 = document.querySelector(`.x-${this.x1}.y-${this.y1}`);
         let block2 = document.querySelector(`.x-${this.x2}.y-${this.y2}`);
         let block3 = document.querySelector(`.x-${this.x3}.y-${this.y3}`);
@@ -207,8 +212,9 @@ class tetrisBlock {
       }
 
       // generate
-      static generateTBlock(maxX, maxY) {
+      static generateTBlock(maxX) {
         nextRound();
+        console.log("maxX", maxX);
         let x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape, locked;
         const rand = Math.floor(Math.random()*2);
         // const rand = 1;
@@ -242,9 +248,16 @@ class tetrisBlock {
             locked = false;
             break;
         }
+        console.log(x1, y1);
+        console.log(x2, y2);
+        console.log(x3, y3);
+        console.log(x4, y4);
         return [x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape, locked];
       }
 };
+
+export default tetrisBlock;
+
 // tetrisBlock.prototype.slowDrop = function() {
 
 // };

@@ -1,11 +1,24 @@
-"use strict"
-
 class gameArea {
     constructor(maxX, maxY) {
         this.maxX = maxX;
         this.maxY = maxY;
     }
+    // getters
+    get getMaxX() {
+        return this.maxX;
+    }
+    get getMaxY() {
+        return this.maxY;
+    }
 
+    // setters
+    set setMaxX(x) {
+        this.maxX = x;
+    }
+    set setMaxY(y) {
+        this.maxY = y;
+    }
+    
     removeOneLine() {
         for (let j = 0; j < this.maxY; j++) {
             const line = document.querySelectorAll(`.y-${j}`);
@@ -56,3 +69,4 @@ class gameArea {
 
 // };
 }
+export default gameArea;
