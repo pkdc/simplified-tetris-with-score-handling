@@ -28,11 +28,15 @@ box2.append(gameBoard.generateTable());
 const slowDrop = function() {
     // console.log("slow");
     curBlocks.erase();
-    curBlocks.fall(gameBoard.getMaxY);
+    const rBlocks = curBlocks.fall(curBlocks, gameBoard.getMaxX, gameBoard.getMaxY);
+    if (rBlocks) {
+        curBlocks = rBlocks;
+    }
     curBlocks.colour();
     // timeoutID = setTimeout(() => {    
     //     globalID = requestAnimationFrame(slowDrop);
     // }, 500);
+    return;
 };
 
 const fastDrop = function() {
@@ -111,17 +115,6 @@ const run = function() {
     timer();
 }
 
-const newBlocks = function() {
-    // generate
-    console.log("game maxX", gameBoard.getMaxX);
-    curBlocks = new tetrisBlock(...tetrisBlock.generateTBlock(gameBoard.getMaxX));
-    console.log("shape", `${curBlocks.shape}`);
-    console.log("locked?", `${curBlocks.locked}`);
-    // console.log(`blocks created`);
-    curBlocks.colour();
-    // console.log(`blocks coloured`);
-}
-
 // press "Enter" to start game
 document.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
@@ -133,7 +126,7 @@ document.addEventListener("keydown", (e) => {
         }
     }
 });
-newBlocks();
+curBlocks = tetrisBlock.newBlocks(curBlocks, gameBoard.getMaxX);
 timer();
     // next comming up window
     // const commingUp = document.createElement("div");

@@ -43,7 +43,7 @@ class tetrisBlock {
       // }
 
       // slowFall
-      fall(maxY) {
+      fall(curBlocks, maxX, maxY) {
         // console.log(this);
         let block1 = document.querySelector(`.x-${this.x1}.y-${this.y1}`);
         let block2 = document.querySelector(`.x-${this.x2}.y-${this.y2}`);
@@ -89,8 +89,8 @@ class tetrisBlock {
             el.style.background = this.blockColour;
           }
           // console.log(this.locked);
-          newBlocks();
-          return;
+          const returnBlocks = tetrisBlock.newBlocks(curBlocks, maxX);
+          return returnBlocks;
         } 
         
         blockArr.forEach(function(el) {
@@ -113,7 +113,7 @@ class tetrisBlock {
         // blockArr.forEach(function(el) {
         //   el.classList.add("occupied");
         // });
-
+        return;
       }
 
       // move right
@@ -254,6 +254,18 @@ class tetrisBlock {
         console.log(x4, y4);
         return [x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape, locked];
       }
+
+      static newBlocks(curBlocks ,maxX) {
+        // generate
+        console.log("game maxX", maxX);
+        curBlocks = new tetrisBlock(...tetrisBlock.generateTBlock(maxX));
+        console.log("shape", `${curBlocks.shape}`);
+        console.log("locked?", `${curBlocks.locked}`);
+        // console.log(`blocks created`);
+        curBlocks.colour();
+        // console.log(`blocks coloured`);
+        return curBlocks;
+    }
 };
 
 export default tetrisBlock;
