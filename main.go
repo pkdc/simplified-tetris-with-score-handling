@@ -8,7 +8,7 @@ import (
 )
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
-	tpl, err := template.ParseFiles("./assets/index.html")
+	tpl, err := template.ParseFiles("./assets/dist/index.html")
 	if err != nil {
 		http.Error(w, "Parsing Error", http.StatusInternalServerError)
 		return
@@ -18,7 +18,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	mux := http.NewServeMux()
-	mux.Handle("/assets/", http.StripPrefix("/assets", http.FileServer(http.Dir("./assets"))))
+	mux.Handle("/assets/dist/", http.StripPrefix("/assets/dist", http.FileServer(http.Dir("./assets/dist"))))
 	mux.HandleFunc("/", homeHandler)
 
 	fmt.Println("Starting server at port 8080")

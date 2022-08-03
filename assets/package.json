@@ -1,0 +1,22 @@
+{
+  "name": "assets",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pkdc/tetris.git"
+  },
+  "author": "David Choy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pkdc/tetris/issues"
+  },
+  "homepage": "https://github.com/pkdc/tetris#readme",
+  "devDependencies": {
+    "parcel": "^2.6.2"
+  }
+}
