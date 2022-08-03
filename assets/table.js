@@ -19,12 +19,13 @@ class gameArea {
         this.maxY = y;
     }
     
-    removeOneLine() {
+    removeOneLine = function(score) {
         for (let j = 0; j < this.maxY; j++) {
             const line = document.querySelectorAll(`.y-${j}`);
             let lineArr = [...line];
             console.log(lineArr);
-            let wholeLine = true;
+            let wholeLine;
+            // let wholeLine = true;
             wholeLine = lineArr.every((el) => el.classList.contains("occupied"));
             console.log("wholeLine", wholeLine);
             if (wholeLine) {
@@ -33,6 +34,7 @@ class gameArea {
             }
             // gameArea.addNewLine(); // not implemented yet
         }
+        return score;
     };
 
     generateTable = function() {

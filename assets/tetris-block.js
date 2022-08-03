@@ -43,7 +43,7 @@ class tetrisBlock {
       // }
 
       // slowFall
-      fall(curBlocks, maxX, maxY) {
+      fall(curBlocks, gameBoard) {
         // console.log(this);
         let block1 = document.querySelector(`.x-${this.x1}.y-${this.y1}`);
         let block2 = document.querySelector(`.x-${this.x2}.y-${this.y2}`);
@@ -81,7 +81,8 @@ class tetrisBlock {
         });
         console.log("collided", collide);
 
-        if (this.y1 >= maxY-1 || this.y2 >= maxY-1 || this.y3 >= maxY-1 || this.y4 >= maxY-1 || collide) {
+        // lock the blocks
+        if (this.y1 >= gameBoard.getMaxY-1 || this.y2 >= gameBoard.getMaxY-1 || this.y3 >= gameBoard.getMaxY-1 || this.y4 >= gameBoard.getMaxY-1 || collide) {
           // console.log("can't move");
           this.locked = true;
           for (const el of blockArr) {
@@ -89,39 +90,32 @@ class tetrisBlock {
             el.style.background = this.blockColour;
           }
           // console.log(this.locked);
-          const returnBlocks = tetrisBlock.newBlocks(curBlocks, maxX);
+          const returnBlocks = tetrisBlock.newBlocks(curBlocks, gameBoard);
+
           return returnBlocks;
         } 
         
-        blockArr.forEach(function(el) {
-          el.classList.remove("occupied");
-        });
-
-        // console.log(this.y1);
+        // move the blocks down by 1
         this.y1 += 1;
         this.y2 += 1;
         this.y3 += 1;
         this.y4 += 1;
 
-        // block1 = document.querySelector(`.x-${this.x1}.y-${this.y1}`);
-        // block2 = document.querySelector(`.x-${this.x2}.y-${this.y2}`);
-        // block3 = document.querySelector(`.x-${this.x3}.y-${this.y3}`);
-        // block4 = document.querySelector(`.x-${this.x4}.y-${this.y4}`);
+        // remove the prev occupied class after moving out the pixel
+        blockArr.forEach(function(el) {
+          el.classList.remove("occupied");
+        });
 
-        // blockArr = [block1, block2, block3, block4];   
-
-        // blockArr.forEach(function(el) {
-        //   el.classList.add("occupied");
-        // });
         return;
       }
 
-      // move right
+      // check if there is a wall next to it
       mvRight(maxX) {
         if (this.x1 === maxX-1 || this.x2 === maxX-1 || this.x3 === maxX-1 || this.x4 === maxX-1) {
           return;
         }
 
+        // check if there is another block
         let nextBlock1 = document.querySelector(`.x-${this.x1+1}.y-${this.y1}`);
         let nextBlock2 = document.querySelector(`.x-${this.x2+1}.y-${this.y2}`);
         let nextBlock3 = document.querySelector(`.x-${this.x3+1}.y-${this.y3}`);
@@ -131,19 +125,22 @@ class tetrisBlock {
         if (nextBlockArr.some((el) => el.classList.contains("occupied"))) {
           return;
         }
-
+        
+        // move right
         console.log(this);
         this.x1 += 1;
         this.x2 += 1;
         this.x3 += 1;
         this.x4 += 1;
       }
-      // move left
+
       mvLeft() {
+        // check if there is a wall next to it
         if (this.x1 === 0 || this.x2 === 0 || this.x3 === 0 || this.x4 === 0) {
           return;
         }
 
+        // check if there is another block
         let nextBlock1 = document.querySelector(`.x-${this.x1-1}.y-${this.y1}`);
         let nextBlock2 = document.querySelector(`.x-${this.x2-1}.y-${this.y2}`);
         let nextBlock3 = document.querySelector(`.x-${this.x3-1}.y-${this.y3}`);
@@ -154,7 +151,7 @@ class tetrisBlock {
           return;
         }
 
-        console.log(this);
+        // move left
         this.x1 -= 1;
         this.x2 -= 1;
         this.x3 -= 1;
@@ -212,9 +209,9 @@ class tetrisBlock {
       }
 
       // generate
-      static generateTBlock(maxX) {
-        nextRound();
-        console.log("maxX", maxX);
+      static generateTBlock(gameBoard) {
+        nextRound(gameBoard);
+        console.log("maxX", gameBoard.getMaxX);
         let x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape, locked;
         const rand = Math.floor(Math.random()*2);
         // const rand = 1;
@@ -222,26 +219,27 @@ class tetrisBlock {
         console.log(`generate new ${rand}`);
         switch(rand) {
           case 0: // rectangle
-            x1 = maxX/2 - 2;
+            x1 = gameBoard.getMaxX/2 - 2;
             y1 = 0;
-            x2 = maxX/2 - 1;
+            x2 = gameBoard.getMaxX/2 - 1;
             y2 = 0;
-            x3 = maxX/2;
+            x3 = gameBoard.getMaxX/2;
             y3 = 0;
-            x4 = maxX/2 + 1;
+            x4 = gameBoard.getMaxX/2 + 1;
             y4 = 0;
             blockColour = "skyblue";
             shape = "rect";
             locked = false;
             break;
           case 1: // sq
-            x1 = maxX/2 - 1;
+            x1 = gameBoard.getMaxX/2 - 1;
             y1 = 0;
-            x2 = maxX/2;
+            x2 = gameBoard.getMaxX/2;
             y2 = 0;
-            x3 = maxX/2 - 1;
+            x3 = gameBoard.getMaxX/2 - 1;
             y3 = 1;
-            x4 = maxX/2;
+            x4 = gameBoard.getMaxX
+            /2;
             y4 = 1;
             blockColour = "yellow";
             shape = "sq";
@@ -255,10 +253,10 @@ class tetrisBlock {
         return [x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape, locked];
       }
 
-      static newBlocks(curBlocks ,maxX) {
+      static newBlocks(curBlocks, gameBoard) {
         // generate
-        console.log("game maxX", maxX);
-        curBlocks = new tetrisBlock(...tetrisBlock.generateTBlock(maxX));
+        console.log("game maxX", gameBoard.getMaxX);
+        curBlocks = new tetrisBlock(...tetrisBlock.generateTBlock(gameBoard));
         console.log("shape", `${curBlocks.shape}`);
         console.log("locked?", `${curBlocks.locked}`);
         // console.log(`blocks created`);

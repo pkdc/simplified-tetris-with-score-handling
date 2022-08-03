@@ -15,11 +15,12 @@ export const timer = function() {
     scoreArea.textContent = `Score: ${score}, Round: ${round}, Time: ${min}:${sec}`;
 }
 
-export const nextRound = function() {
+export const nextRound = function(gameBoard) {
     // if 4 lines, remove it, add score
     
     // if a line, remove it, add score
-    // gameBoard.removeOneLine();
+    console.log(gameBoard);
+    score = gameBoard.removeOneLine(score);
     round++;
 };
 

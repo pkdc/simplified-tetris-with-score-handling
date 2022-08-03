@@ -28,7 +28,7 @@ box2.append(gameBoard.generateTable());
 const slowDrop = function() {
     // console.log("slow");
     curBlocks.erase();
-    const rBlocks = curBlocks.fall(curBlocks, gameBoard.getMaxX, gameBoard.getMaxY);
+    const rBlocks = curBlocks.fall(curBlocks, gameBoard);
     if (rBlocks) {
         curBlocks = rBlocks;
     }
@@ -126,7 +126,7 @@ document.addEventListener("keydown", (e) => {
         }
     }
 });
-curBlocks = tetrisBlock.newBlocks(curBlocks, gameBoard.getMaxX);
+curBlocks = tetrisBlock.newBlocks(curBlocks, gameBoard);
 timer();
     // next comming up window
     // const commingUp = document.createElement("div");
