@@ -49,9 +49,29 @@ body {
 }
 
 .score-area {
-    background: sandybrown;
+    background: #ffb300;
     height: 300px;
     width: 300px;
     font-size: 20px;
     padding: 20px;
 }
+
+.enter-name {
+    background: #2ecc71;
+    display: block;
+    height: 300px;
+    width: 500px;
+    padding: 50px;
+    margin: 20px;
+}
+
+.name-form {
+    margin: 30px;
+    padding: 50px;
+    display: block;
+    background: #72cc2e;
+}
+
+/* .enter-name-item {
+    
+} */
