@@ -148,6 +148,9 @@ timer();
     enterNameForm.setAttribute("action", url);
     enterNameForm.setAttribute("method", method);
 
+    const gameoverText = document.createElement('h1');
+    gameoverText.textContent = "GAME OVER";
+
     const enterNameLabelDiv = document.createElement('div');
     const enterNameLabel = document.createElement('label');
     enterNameLabel.textContent = "Please Enter Your Name:";
@@ -167,7 +170,7 @@ timer();
     enterNameSubmit.setAttribute("type", "submit");
     enterNameSubmitDiv.append(enterNameSubmit);
 
-    enterNameForm.append(enterNameLabelDiv, enterNameInputDiv, enterNameSubmitDiv);
+    enterNameForm.append(gameoverText, enterNameLabelDiv, enterNameInputDiv, enterNameSubmitDiv);
     enterNameDiv.append(enterNameForm);
     body.append(enterNameDiv);
 

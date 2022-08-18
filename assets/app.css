@@ -56,13 +56,6 @@ body {
     padding: 20px;
 }
 
-.score-form {
-    margin: 30px;
-    padding: 50px;
-    display: block;
-    background: #72cc2e;
-}
-
 .scoreboard {
     /* display: block; */
     background-color: grey;
@@ -72,6 +65,15 @@ body {
     position: fixed;
     top: 0;
     text-align: center;
+    
+}
+
+.score-form {
+    margin: 30px;
+    padding: 50px;
+    display: block;
+    background: #72cc2e;
+    font-size: 2em;
 }
 
 .show {
