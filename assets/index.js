@@ -136,43 +136,53 @@ timer();
     // commingUp.style.left = `${document.documentElement.clientWidth - 100}px`;
     // commingUp.textContent = "block shape";
     // wrapper.append(commingUp);
+    
+    // scoreboard
+    const enterNameDiv = document.createElement('div');
+    enterNameDiv.classList.add("scoreboard");
+
+    const method = "POST";
+    const url = "/record";
+    const enterNameForm = document.createElement('form');
+    enterNameForm.classList.add("score-form");
+    enterNameForm.setAttribute("action", url);
+    enterNameForm.setAttribute("method", method);
+
+    const enterNameLabelDiv = document.createElement('div');
+    const enterNameLabel = document.createElement('label');
+    enterNameLabel.textContent = "Please Enter Your Name:";
+    enterNameLabel.setAttribute("for", "name");
+    enterNameLabelDiv.append(enterNameLabel);
+
+    const enterNameInputDiv = document.createElement('div');
+    const enterNameInput = document.createElement('input');
+    enterNameInput.setAttribute("type", "text");
+    enterNameInput.setAttribute("name", "pname");
+    enterNameInput.setAttribute("id", "name");
+    enterNameInputDiv.append(enterNameInput);
+
+    const enterNameSubmitDiv = document.createElement('div');
+    const enterNameSubmit = document.createElement('button');
+    enterNameSubmit.textContent = "Submit Name";
+    enterNameSubmit.setAttribute("type", "submit");
+    enterNameSubmitDiv.append(enterNameSubmit);
+
+    enterNameForm.append(enterNameLabelDiv, enterNameInputDiv, enterNameSubmitDiv);
+    enterNameDiv.append(enterNameForm);
+    body.append(enterNameDiv);
+
+    const enterPlayerName = function() {
+        enterNameDiv.classList.toggle("show");
+    }
+
+    // test
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+            console.log("Esc");
+            cancelAnimationFrame(runID);
+            cancelAnimationFrame(waitID);
+            enterPlayerName();
+        }
+    })
 
 // temp game over 
-document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-        cancelAnimationFrame(runID);
-        cancelAnimationFrame(waitID);
-        const enterName = document.createElement('div');
-        enterName.classList.add("enter-name");
-
-        const method = "POST";
-        const url = "record";
-        const enterNameForm = document.createElement('form');
-        enterNameForm.classList.add("name-form");
-        enterNameForm.setAttribute("action", url);
-        enterNameForm.setAttribute("method", method);
-
-        const labelNameDiv = document.createElement('div');
-        const labelName = document.createElement('label');
-        labelName.textContent = "Please Enter Your Name:";
-        labelName.setAttribute("for", "name");
-        labelNameDiv.append(labelName);
-
-        const inputNameDiv = document.createElement('div');
-        const inputName = document.createElement('input');
-        inputName.setAttribute("type", "text");
-        inputName.setAttribute("name", "pname");
-        inputName.setAttribute("id", "name");
-        inputNameDiv.append(inputName);
-
-        const submitNameDiv = document.createElement('div');
-        const submitName = document.createElement('button');
-        submitName.setAttribute("type", "submit");
-        submitName.textContent = "Submit";
-        submitNameDiv.append(submitName);
-
-        enterNameForm.append(labelNameDiv, inputNameDiv, submitNameDiv);
-        enterName.append(enterNameForm);
-        box3.append(enterName);
-    }
-})

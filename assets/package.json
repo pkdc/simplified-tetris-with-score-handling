@@ -1,0 +1,19 @@
+{
+  "name": "tetris",
+  "version": "1.0.0",
+  "description": "This project is using JavaScript, without using Canvas, to make a game of tetris.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pkdc/tetris.git"
+  },
+  "author": "David",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pkdc/tetris/issues"
+  },
+  "homepage": "https://github.com/pkdc/tetris#readme"
+}
