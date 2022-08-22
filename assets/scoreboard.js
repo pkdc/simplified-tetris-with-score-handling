@@ -1,12 +1,11 @@
 "use strict"
 
 let round = 0;
-let score = 0;
+export let score = 0;
 let gameStartTime = Date.now();
 
 export const scoreArea = document.createElement("div");
 scoreArea.classList.add("score-area");
-scoreArea.textContent = `round: ${round}`;
 
 // temp timer
 export const timer = function() {
@@ -22,6 +21,7 @@ export const nextRound = function(gameBoard) {
     // if a line, remove it, add score
     console.log(gameBoard);
     score = gameBoard.removeOneLine(score);
+    // score += 4; // temp
     round++;
 };
 

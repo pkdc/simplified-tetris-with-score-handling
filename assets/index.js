@@ -1,7 +1,7 @@
 "use strict";
 
 import gameArea from './table.js';
-import {scoreArea, timer} from './scoreboard.js';
+import {score, scoreArea, timer} from './scoreboard.js';
 import tetrisBlock from './tetris-block.js';
 
 let wait;
@@ -141,22 +141,26 @@ timer();
     const enterNameDiv = document.createElement('div');
     enterNameDiv.classList.add("scoreboard");
 
+    // form
     const method = "POST";
     const url = "/record";
-    const enterNameForm = document.createElement('form');
-    enterNameForm.classList.add("score-form");
-    enterNameForm.setAttribute("action", url);
-    enterNameForm.setAttribute("method", method);
+    const recordForm = document.createElement('form');
+    recordForm.classList.add("score-form");
+    recordForm.setAttribute("action", url);
+    recordForm.setAttribute("method", method);
 
+    // gameover text
     const gameoverText = document.createElement('h1');
     gameoverText.textContent = "GAME OVER";
 
+    // name label
     const enterNameLabelDiv = document.createElement('div');
     const enterNameLabel = document.createElement('label');
     enterNameLabel.textContent = "Please Enter Your Name:";
     enterNameLabel.setAttribute("for", "name");
     enterNameLabelDiv.append(enterNameLabel);
 
+    // name input
     const enterNameInputDiv = document.createElement('div');
     const enterNameInput = document.createElement('input');
     enterNameInput.setAttribute("type", "text");
@@ -164,14 +168,51 @@ timer();
     enterNameInput.setAttribute("id", "name");
     enterNameInputDiv.append(enterNameInput);
 
-    const enterNameSubmitDiv = document.createElement('div');
-    const enterNameSubmit = document.createElement('button');
-    enterNameSubmit.textContent = "Submit Name";
-    enterNameSubmit.setAttribute("type", "submit");
-    enterNameSubmitDiv.append(enterNameSubmit);
+    // score label
+    const scoreLabelDiv = document.createElement('div');
+    const scoreLabel = document.createElement('label');
+    scoreLabel.textContent = "Score: ";
+    scoreLabel.setAttribute("for", "score");
+    scoreLabelDiv.append(scoreLabel);
 
-    enterNameForm.append(gameoverText, enterNameLabelDiv, enterNameInputDiv, enterNameSubmitDiv);
-    enterNameDiv.append(enterNameForm);
+    // score input
+    const scoreInputDiv = document.createElement('div');
+    const scoreInput = document.createElement('input');
+    scoreInput.setAttribute("type", "number");
+    scoreInput.setAttribute("name", "score");
+    // scoreInput.setAttribute("value", `${score}`);
+    scoreInput.setAttribute("value", `710`);
+    scoreInput.setAttribute("id", "score");
+    scoreInput.setAttribute("readonly", "readonly");
+    scoreInputDiv.append(scoreInput);
+
+    // time label
+    const timeLabelDiv = document.createElement('div');
+    const timeLabel = document.createElement('label');
+    timeLabel.textContent = "Time: ";
+    timeLabel.setAttribute("for", "time");
+    timeLabelDiv.append(timeLabel);
+
+    // time input
+    const timeInputDiv = document.createElement('div');
+    const timeInput = document.createElement('input');
+    timeInput.setAttribute("type", "text");
+    timeInput.setAttribute("name", "time");
+    // timeInput.setAttribute("value", `${gameTimer.getTime()}`);
+    timeInput.setAttribute("value", `03:16`); //temp
+    timeInput.setAttribute("id", "time");
+    timeInput.setAttribute("readonly", "readonly");
+    timeInputDiv.append(timeInput);
+
+
+    const recordSubmitDiv = document.createElement('div');
+    const recordSubmit = document.createElement('button');
+    recordSubmit.textContent = "Submit Name";
+    recordSubmit.setAttribute("type", "submit");
+    recordSubmitDiv.append(recordSubmit);
+
+    recordForm.append(gameoverText, enterNameLabelDiv, enterNameInputDiv, timeLabelDiv, timeInputDiv, scoreLabelDiv, scoreInputDiv, recordSubmitDiv);
+    enterNameDiv.append(recordForm);
     body.append(enterNameDiv);
 
     const enterPlayerName = function() {
