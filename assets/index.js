@@ -1,7 +1,7 @@
 "use strict";
 
 import gameArea from './table.js';
-// import {score, scoreArea, timer} from './scoreboard.js';
+import {score} from './scoreboard.js';
 import tetrisBlock from './tetris-block.js';
 import timer from './timer.js';
 
@@ -28,10 +28,10 @@ root.append(box3);
 const scoreArea = document.createElement("div");
 const scoreDisplay = document.createElement("p");
 scoreDisplay.id = "score-display";
-scoreDisplay.textContent = 0;
-const timeText = document.createElement("p");
-timeText.textContent = "Time";
-timeText.style.display = "span";
+scoreDisplay.textContent = `Score: ${score}`;
+// const timeText = document.createElement("p");
+// timeText.textContent = "Time";
+// timeText.style.display = "span";
 const timeDisplay = document.createElement("p");
 timeDisplay.textContent = `00:00`;
 timeDisplay.id = "time-display";
@@ -130,6 +130,7 @@ const run = function() {
     prevTime = null;
     console.log("in run");
     timeDisplay.textContent = `${gameTimer.getTime()}`;
+    scoreDisplay.textContent = `Score: ${score}`;
     waitID = requestAnimationFrame(checkWait);
 }
 
@@ -201,7 +202,7 @@ const scoreInput = document.createElement('input');
 scoreInput.setAttribute("type", "number");
 scoreInput.setAttribute("name", "score");
 // scoreInput.setAttribute("value", `${score}`);
-scoreInput.setAttribute("value", `710`);
+// scoreInput.setAttribute("value", `710`); //temp
 scoreInput.setAttribute("id", "score");
 scoreInput.setAttribute("readonly", "readonly");
 scoreInputDiv.append(scoreInput);
@@ -236,7 +237,7 @@ body.append(enterNameDiv);
 
 const enterPlayerName = function() {
     timeInput.setAttribute("value", `${timeDisplay.textContent}`);
-    scoreInput.setAttribute("value", `${scoreDisplay.textContent}`);
+    scoreInput.setAttribute("value", `${score}`);
     enterNameDiv.classList.toggle("show");
     
 }
