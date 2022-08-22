@@ -4,9 +4,6 @@ let round = 0;
 export let score = 0;
 let gameStartTime = Date.now();
 
-export const scoreArea = document.createElement("div");
-scoreArea.classList.add("score-area");
-
 // temp timer
 export const timer = function() {
     const playTime = Date.now() - gameStartTime;
