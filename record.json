@@ -1,5 +1,8 @@
-{
- "player_name": "abc",
- "game_score": "0",
- "game_time": "00:07"
-}
+[
+	{
+		"id": 1,
+		"player_name": "dave",
+		"game_score": "0",
+		"game_time": "00:01"
+	}
+]

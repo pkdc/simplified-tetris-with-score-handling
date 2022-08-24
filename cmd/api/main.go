@@ -2,14 +2,19 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"html/template"
+	"io/fs"
 	"log"
 	"net/http"
 	"os"
 )
 
+var id int
+
 type GameRecord struct {
+	Id         int    `json:"id"`
 	PlayerName string `json:"player_name"`
 	GameScore  string `json:"game_score"`
 	GameTime   string `json:"game_time"`
@@ -32,7 +37,11 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 	// Get to get
 	if r.Method == http.MethodGet {
 		fmt.Printf("----record-GET-----\n")
-		// display records from db
+		// respond with json
+		// w.Header().Set("Content-Type", "application/json")
+		// w.WriteHeader(http.StatusOK)
+		// w.Write(js)
+
 	}
 	// Post to store
 	if r.Method == http.MethodPost {
@@ -41,6 +50,8 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Fatal(err)
 		}
+
+		fmt.Printf("Id: %d\n", id)
 		pname := r.PostForm.Get("pname")
 		fmt.Printf("Name: %s\n", pname)
 		score := r.PostForm.Get("score")
@@ -48,35 +59,61 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 		time := r.PostForm.Get("time")
 		fmt.Printf("Time: %s\n", time)
 
+		// try to open
+		f, err := os.OpenFile("record.json", os.O_WRONLY|os.O_APPEND, 644)
+		// if file not exist
+		if errors.Is(err, fs.ErrNotExist) {
+
+			// first record
+			curRecord := GameRecord{
+				Id:         1,
+				PlayerName: pname,
+				GameScore:  score,
+				GameTime:   time,
+			}
+
+			var Records []GameRecord
+			Records = append(Records, curRecord)
+
+			js, err := json.MarshalIndent(Records, "", "\t")
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			err = os.WriteFile("record.json", js, 0644)
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+		defer f.Close()
+		// if file exist
+		var Records []GameRecord
+		// get the records from record.json
+
+		// put each record into Records array
+
+		// get the length and find the last record's id
+
+		// id is the last id + 1
 		curRecord := GameRecord{
+			Id:         5,
 			PlayerName: pname,
 			GameScore:  score,
 			GameTime:   time,
 		}
 
-		js, err := json.MarshalIndent(curRecord, "", " ")
+		Records = append(Records, curRecord)
+
+		js, err := json.MarshalIndent(Records, "", "\t")
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		w.Write(js)
-		// if not exist
-		err = os.WriteFile("record.json", js, 0644)
-		if err != nil {
-			log.Fatal(err)
-		}
-		// if exist
-		f, err := os.OpenFile("record.json", os.O_RDWR|os.O_CREATE|os.O_APPEND, 644)
-		if err != nil {
-			log.Println(err)
-		}
-		defer f.Close()
 		f.Write(js)
+		// f.Write([]byte('\n'))
 
-		// w.Header().Set("Location", "/")
-		// w.WriteHeader(http.StatusSeeOther)
+		w.Header().Set("Location", "/")
+		w.WriteHeader(http.StatusSeeOther)
 	}
 }
 
