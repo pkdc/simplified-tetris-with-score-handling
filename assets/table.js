@@ -30,9 +30,10 @@ class gameArea {
             console.log("wholeLine", wholeLine);
             if (wholeLine) {
                 score += 100;
-                line.forEach(el => el.remove());   
+                // line.forEach(el => el.remove());
             }
             // gameArea.addNewLine(); // not implemented yet
+            wholeLine = false;
         }
         return score;
     };
