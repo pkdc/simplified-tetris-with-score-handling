@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"html/template"
+	"io"
 	"io/fs"
 	"log"
 	"net/http"
@@ -12,6 +13,10 @@ import (
 )
 
 var id int
+
+// type GRecords struct {
+// 	GameRecords []GameRecord `json:"game_records"`
+// }
 
 type GameRecord struct {
 	Id         int    `json:"id"`
@@ -51,19 +56,18 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 			log.Fatal(err)
 		}
 
-		fmt.Printf("Id: %d\n", id)
+		// fmt.Printf("Id: %d\n", id)
 		pname := r.PostForm.Get("pname")
-		fmt.Printf("Name: %s\n", pname)
+		// fmt.Printf("Name: %s\n", pname)
 		score := r.PostForm.Get("score")
-		fmt.Printf("Score: %s\n", score)
+		// fmt.Printf("Score: %s\n", score)
 		time := r.PostForm.Get("time")
-		fmt.Printf("Time: %s\n", time)
+		// fmt.Printf("Time: %s\n", time)
 
-		// try to open
-		f, err := os.OpenFile("record.json", os.O_WRONLY|os.O_APPEND, 644)
+		// try to open to read
+		f, err := os.OpenFile("record.json", os.O_RDONLY, 0444)
 		// if file not exist
 		if errors.Is(err, fs.ErrNotExist) {
-
 			// first record
 			curRecord := GameRecord{
 				Id:         1,
@@ -75,6 +79,10 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 			var Records []GameRecord
 			Records = append(Records, curRecord)
 
+			for _, r := range Records {
+				fmt.Printf("first record: %v\n", r)
+			}
+
 			js, err := json.MarshalIndent(Records, "", "\t")
 			if err != nil {
 				log.Fatal(err)
@@ -84,19 +92,28 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				log.Fatal(err)
 			}
+			w.Header().Set("Location", "/")
+			w.WriteHeader(http.StatusSeeOther)
+			return
 		}
 		defer f.Close()
+
 		// if file exist
 		var Records []GameRecord
+		// var recordStr string
+
 		// get the records from record.json
+		byteRecord, _ := io.ReadAll(f)
+		json.Unmarshal(byteRecord, &Records)
+		for _, r := range Records {
+			fmt.Printf("prev records: %v\n", r)
+		}
 
-		// put each record into Records array
-
-		// get the length and find the last record's id
+		lastId := Records[len(Records)-1].Id
 
 		// id is the last id + 1
 		curRecord := GameRecord{
-			Id:         5,
+			Id:         lastId + 1,
 			PlayerName: pname,
 			GameScore:  score,
 			GameTime:   time,
@@ -104,12 +121,17 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 
 		Records = append(Records, curRecord)
 
+		fmt.Println("---------------------------------")
+		for _, r := range Records {
+			fmt.Printf("after records: %v\n", r)
+		}
+
 		js, err := json.MarshalIndent(Records, "", "\t")
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		f.Write(js)
+		err = os.WriteFile("record.json", js, 0644)
 		// f.Write([]byte('\n'))
 
 		w.Header().Set("Location", "/")
