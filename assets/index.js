@@ -5,7 +5,7 @@ import {score} from './scoreboard.js';
 import tetrisBlock from './tetris-block.js';
 import timer from './timer.js';
 
-const url = "http://localhost:8080"
+const recordUrl = "http://localhost:8080/record"
 let wait;
 let prevTime;
 let runID, waitID;
@@ -159,20 +159,28 @@ curBlocks = tetrisBlock.newBlocks(curBlocks, gameBoard);
     // wrapper.append(commingUp);
 
 // scoreboard
+const submitHandler = function(e) {
+    e.preventDefault();
+    console.log("subHan");
+
+    const data = new FormData(e.target);
+    const payload = Object.fromEntries(data.entries());
+    console.log("payload: ", payload);
+
+    fetch(recordUrl)
+}
+
 const enterNameDiv = document.createElement('div');
 enterNameDiv.classList.add("scoreboard");
 
 // form
-const method = "POST";
-const endpoint = "/record";
+// const method = "POST";
+// const endpoint = "/record";
 const recordForm = document.createElement('form');
 recordForm.classList.add("score-form");
-recordForm.setAttribute("action", endpoint);
-recordForm.setAttribute("method", method);
-recordForm.addEventListener("submit", (e) => {
-    console.log("prevented");
-    e.preventDefault();
-})
+// recordForm.setAttribute("action", endpoint);
+// recordForm.setAttribute("method", method);
+recordForm.addEventListener("submit", submitHandler);
 
 // gameover text
 const gameoverText = document.createElement('h1');
@@ -239,11 +247,6 @@ recordForm.append(gameoverText, enterNameLabelDiv, enterNameInputDiv, timeLabelD
 enterNameDiv.append(recordForm);
 body.append(enterNameDiv);
 
-const submitHandler = function(e) {
-    e.preventDefault();
-    console.log("subHan");
-}
-
 const enterPlayerName = function() {
     timeInput.setAttribute("value", `${timeDisplay.textContent}`);
     scoreInput.setAttribute("value", `${score}`);
@@ -251,9 +254,7 @@ const enterPlayerName = function() {
 }
 
 const showScoreBoard = function() {
-    console.log("scoreboard");
-    const request = fetch(url + endpoint);
-    console.log(request);
+    console.log("scoreboard shown");
 }
 
 // test
