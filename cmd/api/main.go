@@ -34,6 +34,16 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	err = tpl.ExecuteTemplate(w, "index.html", nil)
 }
 
+func getJsonData(file *os.File, jsonRecords *[]GameRecord) {
+
+	// get the records from record.json
+	byteRecord, _ := io.ReadAll(file)
+	json.Unmarshal(byteRecord, jsonRecords)
+	for _, r := range *jsonRecords {
+		fmt.Printf("prev records: %v\n", r)
+	}
+}
+
 func recordHandler(w http.ResponseWriter, r *http.Request) {
 	// fmt.Printf("-------method---------%s\n", r.Method)
 	if r.Method != http.MethodPost && r.Method != http.MethodGet {
@@ -42,12 +52,23 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 	// Get to get
 	if r.Method == http.MethodGet {
 		fmt.Printf("----record-GET-----\n")
-		// respond with json
-		// w.Header().Set("Content-Type", "application/json")
-		// w.WriteHeader(http.StatusOK)
-		// w.Write(js)
 
+		var Records []GameRecord
+		f, err := os.OpenFile("record.json", os.O_RDONLY, 0644)
+		if errors.Is(err, fs.ErrNotExist) {
+			http.Error(w, "Please play the game first", http.StatusBadRequest)
+		}
+		// get the records from record.json
+		getJsonData(f, &Records)
+
+		js, err := json.MarshalIndent(Records, "", "\t")
+
+		// respond with json
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write(js)
 	}
+
 	// Post to store
 	if r.Method == http.MethodPost {
 		fmt.Printf("----record-POST-----\n")
@@ -92,8 +113,9 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				log.Fatal(err)
 			}
-			w.Header().Set("Location", "/")
-			w.WriteHeader(http.StatusSeeOther)
+
+			// w.Header().Set("Location", "/")
+			// w.WriteHeader(http.StatusSeeOther)
 			return
 		}
 		defer f.Close()
@@ -103,11 +125,7 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 		// var recordStr string
 
 		// get the records from record.json
-		byteRecord, _ := io.ReadAll(f)
-		json.Unmarshal(byteRecord, &Records)
-		for _, r := range Records {
-			fmt.Printf("prev records: %v\n", r)
-		}
+		getJsonData(f, &Records)
 
 		lastId := Records[len(Records)-1].Id
 
@@ -134,8 +152,8 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 		err = os.WriteFile("record.json", js, 0644)
 		// f.Write([]byte('\n'))
 
-		w.Header().Set("Location", "/")
-		w.WriteHeader(http.StatusSeeOther)
+		// w.Header().Set("Location", "/")
+		// w.WriteHeader(http.StatusSeeOther)
 	}
 }
 

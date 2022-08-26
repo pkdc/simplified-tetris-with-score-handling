@@ -5,7 +5,7 @@ import {score} from './scoreboard.js';
 import tetrisBlock from './tetris-block.js';
 import timer from './timer.js';
 
-
+const url = "http://localhost:8080"
 let wait;
 let prevTime;
 let runID, waitID;
@@ -164,11 +164,15 @@ enterNameDiv.classList.add("scoreboard");
 
 // form
 const method = "POST";
-const url = "/record";
+const endpoint = "/record";
 const recordForm = document.createElement('form');
 recordForm.classList.add("score-form");
-recordForm.setAttribute("action", url);
+recordForm.setAttribute("action", endpoint);
 recordForm.setAttribute("method", method);
+recordForm.addEventListener("submit", (e) => {
+    console.log("prevented");
+    e.preventDefault();
+})
 
 // gameover text
 const gameoverText = document.createElement('h1');
@@ -235,11 +239,21 @@ recordForm.append(gameoverText, enterNameLabelDiv, enterNameInputDiv, timeLabelD
 enterNameDiv.append(recordForm);
 body.append(enterNameDiv);
 
+const submitHandler = function(e) {
+    e.preventDefault();
+    console.log("subHan");
+}
+
 const enterPlayerName = function() {
     timeInput.setAttribute("value", `${timeDisplay.textContent}`);
     scoreInput.setAttribute("value", `${score}`);
     enterNameDiv.classList.toggle("show");
-    
+}
+
+const showScoreBoard = function() {
+    console.log("scoreboard");
+    const request = fetch(url + endpoint);
+    console.log(request);
 }
 
 // test
@@ -249,6 +263,7 @@ document.addEventListener("keydown", (e) => {
         cancelAnimationFrame(runID);
         cancelAnimationFrame(waitID);
         enterPlayerName();
+        showScoreBoard();
     }
 })
 
