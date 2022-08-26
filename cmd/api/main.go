@@ -79,11 +79,11 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 
 		// fmt.Printf("Id: %d\n", id)
 		pname := r.PostForm.Get("pname")
-		// fmt.Printf("Name: %s\n", pname)
+		fmt.Printf("Name: %s\n", pname)
 		score := r.PostForm.Get("score")
-		// fmt.Printf("Score: %s\n", score)
+		fmt.Printf("Score: %s\n", score)
 		time := r.PostForm.Get("time")
-		// fmt.Printf("Time: %s\n", time)
+		fmt.Printf("Time: %s\n", time)
 
 		// try to open to read
 		f, err := os.OpenFile("record.json", os.O_RDONLY, 0444)
@@ -113,6 +113,18 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				log.Fatal(err)
 			}
+
+			f, err := os.OpenFile("record.json", os.O_RDONLY, 0444)
+			if errors.Is(err, fs.ErrNotExist) {
+				log.Fatal(err)
+			}
+			defer f.Close()
+
+			getJsonData(f, &Records)
+
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			w.Write(js)
 
 			// w.Header().Set("Location", "/")
 			// w.WriteHeader(http.StatusSeeOther)
@@ -151,6 +163,11 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 
 		err = os.WriteFile("record.json", js, 0644)
 		// f.Write([]byte('\n'))
+
+		// reply
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write(js)
 
 		// w.Header().Set("Location", "/")
 		// w.WriteHeader(http.StatusSeeOther)

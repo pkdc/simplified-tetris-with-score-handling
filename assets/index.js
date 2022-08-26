@@ -163,11 +163,21 @@ const submitHandler = function(e) {
     e.preventDefault();
     console.log("subHan");
 
-    const data = new FormData(e.target);
-    const payload = Object.fromEntries(data.entries());
+    const formFields = new FormData(e.target);
+    const payload = Object.fromEntries(formFields.entries());
     console.log("payload: ", payload);
 
-    fetch(recordUrl)
+    // console.log("pay Json", JSON.stringify(payload))
+    const reqOptions = {
+        method: "POST",
+        body: JSON.stringify(payload) // doesn't recognise body??
+    };
+    // console.log("req body", reqOptions.body)
+
+    fetch(recordUrl, reqOptions)
+    .then(req => req.json())
+    .then(data => console.log(data))
+
 }
 
 const enterNameDiv = document.createElement('div');
