@@ -1,20 +1,110 @@
 [
 	{
 		"id": 1,
-		"player_name": "",
-		"game_score": "",
-		"game_time": ""
+		"pname": "",
+		"score": "",
+		"time": ""
 	},
 	{
 		"id": 2,
-		"player_name": "",
-		"game_score": "",
-		"game_time": ""
+		"pname": "",
+		"score": "",
+		"time": ""
 	},
 	{
 		"id": 3,
-		"player_name": "",
-		"game_score": "",
-		"game_time": ""
+		"pname": "",
+		"score": "",
+		"time": ""
+	},
+	{
+		"id": 4,
+		"pname": "",
+		"score": "",
+		"time": ""
+	},
+	{
+		"id": 5,
+		"pname": "",
+		"score": "",
+		"time": ""
+	},
+	{
+		"id": 6,
+		"pname": "",
+		"score": "",
+		"time": ""
+	},
+	{
+		"id": 7,
+		"pname": "",
+		"score": "",
+		"time": ""
+	},
+	{
+		"id": 8,
+		"pname": "",
+		"score": "",
+		"time": ""
+	},
+	{
+		"id": 9,
+		"pname": "",
+		"score": "",
+		"time": ""
+	},
+	{
+		"id": 10,
+		"pname": "",
+		"score": "",
+		"time": ""
+	},
+	{
+		"id": 11,
+		"pname": "",
+		"score": "",
+		"time": ""
+	},
+	{
+		"id": 12,
+		"pname": "",
+		"score": "",
+		"time": ""
+	},
+	{
+		"id": 13,
+		"pname": "",
+		"score": "",
+		"time": ""
+	},
+	{
+		"id": 14,
+		"pname": "",
+		"score": "",
+		"time": ""
+	},
+	{
+		"id": 15,
+		"pname": "",
+		"score": "",
+		"time": ""
+	},
+	{
+		"id": 16,
+		"pname": " ",
+		"score": " ",
+		"time": " "
+	},
+	{
+		"id": 17,
+		"pname": "fg",
+		"score": "0",
+		"time": "00:00"
+	},
+	{
+		"id": 18,
+		"pname": "FirstGamer",
+		"score": "800",
+		"time": "00:30"
 	}
 ]

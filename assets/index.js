@@ -162,10 +162,12 @@ curBlocks = tetrisBlock.newBlocks(curBlocks, gameBoard);
 const submitHandler = function(e) {
     e.preventDefault();
     console.log("subHan");
+    // const rForm = document.querySelector(".score-form");
 
     const formFields = new FormData(e.target);
+    console.log("formFields: ", [...formFields]);
     const payload = Object.fromEntries(formFields.entries());
-    console.log("payload: ", payload);
+    // console.log("payload: ", payload);
 
     // console.log("pay Json", JSON.stringify(payload))
     const reqOptions = {
@@ -174,10 +176,10 @@ const submitHandler = function(e) {
     };
     // console.log("req body", reqOptions.body)
 
-    fetch(recordUrl, reqOptions)
+    // const testUrl = "http://httpbin.org/post";
+    fetch(recordUrl, reqOptions) 
     .then(req => req.json())
     .then(data => console.log(data))
-
 }
 
 const enterNameDiv = document.createElement('div');

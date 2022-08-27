@@ -20,9 +20,9 @@ var id int
 
 type GameRecord struct {
 	Id         int    `json:"id"`
-	PlayerName string `json:"player_name"`
-	GameScore  string `json:"game_score"`
-	GameTime   string `json:"game_time"`
+	PlayerName string `json:"pname"`
+	GameScore  string `json:"score"`
+	GameTime   string `json:"time"`
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
@@ -72,17 +72,26 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 	// Post to store
 	if r.Method == http.MethodPost {
 		fmt.Printf("----record-POST-----\n")
-		err := r.ParseForm()
-		if err != nil {
-			log.Fatal(err)
-		}
+		// err := r.ParseForm()
+		// if err != nil {
+		// 	log.Fatal(err)
+		// }
+		var recordPayload GameRecord
+
+		err := json.NewDecoder(r.Body).Decode(&recordPayload)
+
+		fmt.Println(recordPayload)
 
 		// fmt.Printf("Id: %d\n", id)
-		pname := r.PostForm.Get("pname")
+		pname := recordPayload.PlayerName
+		score := recordPayload.GameScore
+		time := recordPayload.GameTime
+
+		// pname := r.PostForm.Get("pname")
 		fmt.Printf("Name: %s\n", pname)
-		score := r.PostForm.Get("score")
+		// score := r.PostForm.Get("score")
 		fmt.Printf("Score: %s\n", score)
-		time := r.PostForm.Get("time")
+		// time := r.PostForm.Get("time")
 		fmt.Printf("Time: %s\n", time)
 
 		// try to open to read
