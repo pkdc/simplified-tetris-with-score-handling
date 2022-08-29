@@ -10,13 +10,19 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 )
-
-var id int
 
 // type GRecords struct {
 // 	GameRecords []GameRecord `json:"game_records"`
 // }
+
+type gameRecordPayload struct {
+	Id         string `json:"id"`
+	PlayerName string `json:"pname"`
+	GameScore  string `json:"score"`
+	GameTime   string `json:"time"`
+}
 
 type GameRecord struct {
 	Id         int    `json:"id"`
@@ -57,16 +63,20 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 		f, err := os.OpenFile("record.json", os.O_RDONLY, 0644)
 		if errors.Is(err, fs.ErrNotExist) {
 			http.Error(w, "Please play the game first", http.StatusBadRequest)
+		} else {
+			// get the records from record.json
+			getJsonData(f, &Records)
+
+			js, err := json.MarshalIndent(Records, "", "\t")
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			// respond with json
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			w.Write(js)
 		}
-		// get the records from record.json
-		getJsonData(f, &Records)
-
-		js, err := json.MarshalIndent(Records, "", "\t")
-
-		// respond with json
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		w.Write(js)
 	}
 
 	// Post to store
@@ -76,17 +86,23 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 		// if err != nil {
 		// 	log.Fatal(err)
 		// }
-		var recordPayload GameRecord
+		var payload gameRecordPayload
 
-		err := json.NewDecoder(r.Body).Decode(&recordPayload)
+		err := json.NewDecoder(r.Body).Decode(&payload)
 
-		fmt.Println(recordPayload)
+		fmt.Println(payload)
 
-		// fmt.Printf("Id: %d\n", id)
-		pname := recordPayload.PlayerName
-		score := recordPayload.GameScore
-		time := recordPayload.GameTime
+		idStr := payload.Id
+		pname := payload.PlayerName
+		score := payload.GameScore
+		time := payload.GameTime
 
+		id, err := strconv.Atoi(idStr)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		fmt.Printf("Id: %d\n", id)
 		// pname := r.PostForm.Get("pname")
 		fmt.Printf("Name: %s\n", pname)
 		// score := r.PostForm.Get("score")
@@ -94,17 +110,17 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 		// time := r.PostForm.Get("time")
 		fmt.Printf("Time: %s\n", time)
 
+		curRecord := GameRecord{
+			Id:         id,
+			PlayerName: pname,
+			GameScore:  score,
+			GameTime:   time,
+		}
+
 		// try to open to read
 		f, err := os.OpenFile("record.json", os.O_RDONLY, 0444)
 		// if file not exist
 		if errors.Is(err, fs.ErrNotExist) {
-			// first record
-			curRecord := GameRecord{
-				Id:         1,
-				PlayerName: pname,
-				GameScore:  score,
-				GameTime:   time,
-			}
 
 			var Records []GameRecord
 			Records = append(Records, curRecord)
@@ -147,16 +163,6 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 
 		// get the records from record.json
 		getJsonData(f, &Records)
-
-		lastId := Records[len(Records)-1].Id
-
-		// id is the last id + 1
-		curRecord := GameRecord{
-			Id:         lastId + 1,
-			PlayerName: pname,
-			GameScore:  score,
-			GameTime:   time,
-		}
 
 		Records = append(Records, curRecord)
 

@@ -159,6 +159,7 @@ curBlocks = tetrisBlock.newBlocks(curBlocks, gameBoard);
     // wrapper.append(commingUp);
 
 // scoreboard
+let gameId = 1;
 const submitHandler = function(e) {
     e.preventDefault();
     console.log("subHan");
@@ -174,7 +175,7 @@ const submitHandler = function(e) {
         method: "POST",
         body: JSON.stringify(payload) // doesn't recognise body??
     };
-    // console.log("req body", reqOptions.body)
+    console.log("req body", reqOptions.body)
 
     // const testUrl = "http://httpbin.org/post";
     fetch(recordUrl, reqOptions) 
@@ -197,6 +198,12 @@ recordForm.addEventListener("submit", submitHandler);
 // gameover text
 const gameoverText = document.createElement('h1');
 gameoverText.textContent = "GAME OVER";
+
+// id input
+const idInput = document.createElement('input');
+idInput.setAttribute("type", "text");
+idInput.setAttribute("name", "id");
+idInput.setAttribute("readonly", "readonly");
 
 // name label
 const enterNameLabelDiv = document.createElement('div');
@@ -255,13 +262,31 @@ recordSubmit.textContent = "Submit Name";
 recordSubmit.setAttribute("type", "submit");
 recordSubmitDiv.append(recordSubmit);
 
-recordForm.append(gameoverText, enterNameLabelDiv, enterNameInputDiv, timeLabelDiv, timeInputDiv, scoreLabelDiv, scoreInputDiv, recordSubmitDiv);
+recordForm.append(gameoverText, idInput, enterNameLabelDiv, enterNameInputDiv, timeLabelDiv, timeInputDiv, scoreLabelDiv, scoreInputDiv, recordSubmitDiv);
 enterNameDiv.append(recordForm);
 body.append(enterNameDiv);
+
+const setId = function() {
+    fetch(recordUrl)
+    .then(req => req.json())
+    .then(data => {
+        console.log("findId", data);
+        gameId = data[data.length-1].id + 1;
+        console.log("foundId",gameId);
+        console.log("foundId type",typeof(gameId));
+        idInput.setAttribute("value", gameId);
+    })
+    .catch(() => {
+        gameId = 1;
+        console.log("foundId",gameId);
+        idInput.setAttribute("value", gameId);
+    })
+}
 
 const enterPlayerName = function() {
     timeInput.setAttribute("value", `${timeDisplay.textContent}`);
     scoreInput.setAttribute("value", `${score}`);
+    setId();
     enterNameDiv.classList.toggle("show");
 }
 
