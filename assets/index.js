@@ -159,7 +159,34 @@ curBlocks = tetrisBlock.newBlocks(curBlocks, gameBoard);
     // wrapper.append(commingUp);
 
 // scoreboard
-let gameId = 1;
+const updateScoreBoard = function(data) {
+    console.log("Creating scoreBoard", data)
+    recordForm.textContent = "";
+
+    const scoreTableHeader = document.createElement("div");
+    scoreTableHeader.classList.add("score-table-header");
+    const header = ["Rank", "Name", "Score", "Time"];
+    for (let h = 0; h < 4; h++) {
+        const hCell = document.createElement("div");
+        hCell.textContent = header[h];
+        h === 3 ? hCell.classList.add("h-cell-last") : hCell.classList.add("h-cell")
+        scoreTableHeader.append(hCell);
+    }
+    const scoreTableRow = document.createElement("div");
+    scoreTableRow.classList.add("score-table-row");
+    recordForm.append(scoreTableHeader, scoreTableRow);
+}
+
+const showUpdatedScoreBoard = function() {
+    fetch(recordUrl)
+    .then(req => req.json())
+    .then(data => {
+        // console.log("league table", data)
+        updateScoreBoard(data);
+    })
+    console.log("scoreboard shown");
+}
+
 const submitHandler = function(e) {
     e.preventDefault();
     console.log("subHan");
@@ -181,10 +208,12 @@ const submitHandler = function(e) {
     fetch(recordUrl, reqOptions) 
     .then(req => req.json())
     .then(data => console.log(data))
+
+    showUpdatedScoreBoard();
 }
 
-const enterNameDiv = document.createElement('div');
-enterNameDiv.classList.add("scoreboard");
+const scoreBoardDiv = document.createElement('div');
+scoreBoardDiv.classList.add("scoreboard");
 
 // form
 // const method = "POST";
@@ -201,7 +230,7 @@ gameoverText.textContent = "GAME OVER";
 
 // id input
 const idInput = document.createElement('input');
-idInput.setAttribute("type", "text");
+idInput.setAttribute("type", "hidden");
 idInput.setAttribute("name", "id");
 idInput.setAttribute("readonly", "readonly");
 
@@ -263,20 +292,23 @@ recordSubmit.setAttribute("type", "submit");
 recordSubmitDiv.append(recordSubmit);
 
 recordForm.append(gameoverText, idInput, enterNameLabelDiv, enterNameInputDiv, timeLabelDiv, timeInputDiv, scoreLabelDiv, scoreInputDiv, recordSubmitDiv);
-enterNameDiv.append(recordForm);
-body.append(enterNameDiv);
+scoreBoardDiv.append(recordForm);
+body.append(scoreBoardDiv);
 
+let gameId;
 const setId = function() {
     fetch(recordUrl)
     .then(req => req.json())
     .then(data => {
-        console.log("findId", data);
+        console.log("all records", data);
         gameId = data[data.length-1].id + 1;
-        console.log("foundId",gameId);
-        console.log("foundId type",typeof(gameId));
+        console.log("cur id",gameId);
+        // console.log("cur id type",typeof(gameId));
         idInput.setAttribute("value", gameId);
     })
     .catch(() => {
+        // first record
+        console.log("caught");
         gameId = 1;
         console.log("foundId",gameId);
         idInput.setAttribute("value", gameId);
@@ -287,11 +319,7 @@ const enterPlayerName = function() {
     timeInput.setAttribute("value", `${timeDisplay.textContent}`);
     scoreInput.setAttribute("value", `${score}`);
     setId();
-    enterNameDiv.classList.toggle("show");
-}
-
-const showScoreBoard = function() {
-    console.log("scoreboard shown");
+    scoreBoardDiv.classList.toggle("show");
 }
 
 // test
@@ -301,7 +329,6 @@ document.addEventListener("keydown", (e) => {
         cancelAnimationFrame(runID);
         cancelAnimationFrame(waitID);
         enterPlayerName();
-        showScoreBoard();
     }
 })
 

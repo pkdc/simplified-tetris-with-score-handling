@@ -76,6 +76,27 @@ body {
     font-size: 2em;
 }
 
+.score-table-header,
+.score-table-row {
+    margin: 30px;
+    padding: 50px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    text-align: center;
+}
+
+.h-cell {
+    border-bottom: 5px dashed black;
+    border-right: 5px dashed black;
+}
+.h-cell-last {
+    border-bottom: 5px dashed black;
+}
+
+.r-cell {
+    border: 5px dashed black;
+}
+
 .show {
     opacity: 0.7;
 }

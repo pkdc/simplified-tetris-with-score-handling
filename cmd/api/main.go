@@ -151,8 +151,6 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusOK)
 			w.Write(js)
 
-			// w.Header().Set("Location", "/")
-			// w.WriteHeader(http.StatusSeeOther)
 			return
 		}
 		defer f.Close()
