@@ -20,7 +20,7 @@ const updateScoreBoard = function(cur, data) {
     recordForm.textContent = "";
     
     const endMsgDiv = document.createElement("div");
-    const endMsg = document.createElement("h3");
+    const endMsg = document.createElement("h2");
     endMsg.textContent = `Congratz ${cur.pname}`;
     endMsgDiv.append(endMsg);
 
@@ -36,6 +36,10 @@ const updateScoreBoard = function(cur, data) {
     }
     
     console.log("all data", data);
+
+    // sort by score
+    data.sort((a,b) => +a.score >= +b.score ? -1 : 1);
+
     const scoreTableRow = document.createElement("div");
     scoreTableRow.classList.add("score-table-row");
 

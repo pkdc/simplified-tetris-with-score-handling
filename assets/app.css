@@ -74,15 +74,19 @@ body {
     display: block;
     background: #72cc2e;
     font-size: 2em;
+    color: white;
 }
 
 .score-table-header,
 .score-table-row {
-    margin: 30px;
-    padding: 50px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     text-align: center;
+}
+
+.score-table-header {
+    font-size: 3rem;
+    font-weight: 700;
 }
 
 .h-cell {
@@ -97,7 +101,7 @@ body {
 .r-cell {
     border-right: 5px dashed white;
 }
-.r-cell:last-child {
+.r-cell:nth-of-type(4n) {
     border-right: 0px dashed white;
 }
 
