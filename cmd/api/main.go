@@ -45,9 +45,9 @@ func getJsonData(file *os.File, jsonRecords *[]GameRecord) {
 	// get the records from record.json
 	byteRecord, _ := io.ReadAll(file)
 	json.Unmarshal(byteRecord, jsonRecords)
-	for _, r := range *jsonRecords {
-		fmt.Printf("prev records: %v\n", r)
-	}
+	// for _, r := range *jsonRecords {
+	// 	fmt.Printf("prev records: %v\n", r)
+	// }
 }
 
 func recordHandler(w http.ResponseWriter, r *http.Request) {
@@ -164,10 +164,10 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 
 		Records = append(Records, curRecord)
 
-		fmt.Println("---------------------------------")
-		for _, r := range Records {
-			fmt.Printf("after records: %v\n", r)
-		}
+		// fmt.Println("---------------------------------")
+		// for _, r := range Records {
+		// 	fmt.Printf("after records: %v\n", r)
+		// }
 
 		js, err := json.MarshalIndent(Records, "", "\t")
 		if err != nil {
