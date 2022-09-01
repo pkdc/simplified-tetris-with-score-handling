@@ -1,6 +1,6 @@
 "use strict"
 
-const recordUrl = "http://localhost:8080/record"
+const recordUrl = "http://localhost:8080/record";
 
 export let score = 0;
 
@@ -20,10 +20,9 @@ const updateScoreBoard = function(cur, data) {
     recordForm.textContent = "";
     
     const endMsgDiv = document.createElement("div");
-    const endMsg = document.createElement("h2");
+    const endMsg = document.createElement("h3");
     endMsg.textContent = `Congratz ${cur.pname}`;
     endMsgDiv.append(endMsg);
-    
 
     const scoreTableHeader = document.createElement("div");
     scoreTableHeader.classList.add("score-table-header");
@@ -31,12 +30,44 @@ const updateScoreBoard = function(cur, data) {
     for (let h = 0; h < 4; h++) {
         const hCell = document.createElement("div");
         hCell.textContent = header[h];
-        h === 3 ? hCell.classList.add("h-cell-last") : hCell.classList.add("h-cell")
+        hCell.classList.add("h-cell");
+        // h === 3 ? hCell.classList.add("h-cell-last") : hCell.classList.add("h-cell")
         scoreTableHeader.append(hCell);
     }
+    
+    console.log("all data", data);
     const scoreTableRow = document.createElement("div");
     scoreTableRow.classList.add("score-table-row");
+
+    for (let r = 0; r < data.length; r++) {
+        const rankLeader = document.createElement("div");
+        rankLeader.classList.add("r-cell");
+        rankLeader.classList.add("rank-leader-board");
+        rankLeader.textContent = `${r+1}`;
+
+        const nameLeader = document.createElement("div");
+        nameLeader.classList.add("r-cell");
+        nameLeader.classList.add("name-leader-board");
+        nameLeader.textContent = `${data[r].pname}`;
+
+        const scoreLeader = document.createElement("div");
+        scoreLeader.classList.add("r-cell");
+        scoreLeader.classList.add("score-leader-board");
+        scoreLeader.textContent = `${data[r].score}`;
+
+        const timeLeader = document.createElement("div");
+        timeLeader.classList.add("r-cell");
+        timeLeader.classList.add("time-leader-board");
+        timeLeader.textContent = `${data[r].time}`;
+
+        scoreTableRow.append(rankLeader, nameLeader, scoreLeader, timeLeader);
+    }
+
+
+
+    
     recordForm.append(endMsgDiv, scoreTableHeader, scoreTableRow);
+
 }
 
 const showUpdatedScoreBoard = function(cur) {

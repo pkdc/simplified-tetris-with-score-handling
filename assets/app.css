@@ -86,15 +86,19 @@ body {
 }
 
 .h-cell {
-    border-bottom: 5px dashed black;
-    border-right: 5px dashed black;
+    border-bottom: 5px dashed white;
+    border-right: 5px dashed white;
 }
-.h-cell-last {
-    border-bottom: 5px dashed black;
+.h-cell:last-child {
+    border-bottom: 5px dashed white;
+    border-right: 0px dashed white;
 }
 
 .r-cell {
-    border: 5px dashed black;
+    border-right: 5px dashed white;
+}
+.r-cell:last-child {
+    border-right: 0px dashed white;
 }
 
 .show {
