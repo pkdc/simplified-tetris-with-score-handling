@@ -14,6 +14,33 @@ export const nextRound = function(gameBoard) {
     // round++;
 };
 
+const showPage = function(scoreTableRow, data, whichPage) {
+    for (let r = 5*whichPage; r < 5*(whichPage+1); r++) {
+        const rankLeader = document.createElement("div");
+        rankLeader.classList.add("r-cell");
+        rankLeader.classList.add("rank-leader-board");
+        rankLeader.textContent = `${r+1}`;
+
+        const nameLeader = document.createElement("div");
+        nameLeader.classList.add("r-cell");
+        nameLeader.classList.add("name-leader-board");
+        nameLeader.textContent = `${data[r].pname}`;
+
+        const scoreLeader = document.createElement("div");
+        scoreLeader.classList.add("r-cell");
+        scoreLeader.classList.add("score-leader-board");
+        scoreLeader.textContent = `${data[r].score}`;
+
+        const timeLeader = document.createElement("div");
+        timeLeader.classList.add("r-cell");
+        timeLeader.classList.add("time-leader-board");
+        timeLeader.textContent = `${data[r].time}`;
+
+        scoreTableRow.append(rankLeader, nameLeader, scoreLeader, timeLeader);
+    }
+    return scoreTableRow;
+};
+
 // scoreboard
 const updateScoreBoard = function(cur, data) {
     console.log("Creating scoreBoard", data)
@@ -40,38 +67,38 @@ const updateScoreBoard = function(cur, data) {
     // sort by score
     data.sort((a,b) => +a.score >= +b.score ? -1 : 1);
 
-    const scoreTableRow = document.createElement("div");
+    let scoreTableRow = document.createElement("div");
     scoreTableRow.classList.add("score-table-row");
 
-    for (let r = 0; r < data.length; r++) {
-        const rankLeader = document.createElement("div");
-        rankLeader.classList.add("r-cell");
-        rankLeader.classList.add("rank-leader-board");
-        rankLeader.textContent = `${r+1}`;
+    let whichPage = 0;
+    scoreTableRow = showPage(scoreTableRow, data, whichPage);
 
-        const nameLeader = document.createElement("div");
-        nameLeader.classList.add("r-cell");
-        nameLeader.classList.add("name-leader-board");
-        nameLeader.textContent = `${data[r].pname}`;
+    // page nav
+    const pageNavDiv = document.createElement("div");
+    pageNavDiv.classList.add("page-nav");
 
-        const scoreLeader = document.createElement("div");
-        scoreLeader.classList.add("r-cell");
-        scoreLeader.classList.add("score-leader-board");
-        scoreLeader.textContent = `${data[r].score}`;
-
-        const timeLeader = document.createElement("div");
-        timeLeader.classList.add("r-cell");
-        timeLeader.classList.add("time-leader-board");
-        timeLeader.textContent = `${data[r].time}`;
-
-        scoreTableRow.append(rankLeader, nameLeader, scoreLeader, timeLeader);
-    }
-
-
-
+    // check if first or last page
+    const pageNavPrev = document.createElement("div");
+    pageNavPrev.textContent = "<";
+    pageNavPrev.addEventListener("click", () => {
+        whichPage-=1;
+        scoreTableRow.textContent = "";
+        scoreTableRow = showPage(scoreTableRow, data, whichPage);
+    }); // unfinished
+    const pageNavCur = document.createElement("p");
+    pageNavCur.textContent = `${whichPage+1}/${Math.floor(data.length/5)}`;
+    const pageNavNext = document.createElement("div");
+    pageNavNext.addEventListener("click", () => {
+        whichPage+=1;
+        console.log("next", whichPage);
+        scoreTableRow.textContent = "";
+        console.log("next table", scoreTableRow);
+        scoreTableRow = showPage(scoreTableRow, data, whichPage);
+    });
+    pageNavNext.textContent = ">";
+    pageNavDiv.append(pageNavPrev, pageNavCur, pageNavNext);
     
-    recordForm.append(endMsgDiv, scoreTableHeader, scoreTableRow);
-
+    recordForm.append(endMsgDiv, scoreTableHeader, scoreTableRow, pageNavDiv);
 }
 
 const showUpdatedScoreBoard = function(cur) {

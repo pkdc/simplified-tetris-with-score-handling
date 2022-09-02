@@ -105,6 +105,11 @@ body {
     border-right: 0px dashed white;
 }
 
+.page-nav {
+    display: flex;
+    justify-content: space-evenly;
+}
+
 .show {
     opacity: 0.7;
 }
