@@ -14,109 +14,78 @@ export const nextRound = function(gameBoard) {
     // round++;
 };
 
-const updateNav = function(pageNavDiv, whichPage) {
+const showUnfilledPage = function(scoreTableRow, data, whichPage) {
+    console.log("last page: ", Math.ceil(data.length/5)-1);
+    let remainder = {};
 
+    for (let i = 1; i <= data.length%5; i++) {
+        console.log(`reverse ${5*whichPage+i} record : `, data[5*whichPage+i-1]);
+        console.log("current remaider", remainder);
+        const key = `${5*whichPage+i}`; // rank no need to -1
+        let obj = {};
+        obj[key] = data[5*whichPage+i-1]; // data array, need to -1
+        remainder = Object.assign(remainder, obj);
+    }
+    console.log("remaider", remainder);
+    for (const [key, remainRecord] of Object.entries(remainder)) {
+        const rankLeader = document.createElement("div");
+        rankLeader.classList.add("r-cell");
+        rankLeader.classList.add("rank-leader-board");
+        rankLeader.textContent = `${key}`;
+
+        const nameLeader = document.createElement("div");
+        nameLeader.classList.add("r-cell");
+        nameLeader.classList.add("name-leader-board");
+        nameLeader.textContent = `${remainRecord.pname}`;
+
+        const scoreLeader = document.createElement("div");
+        scoreLeader.classList.add("r-cell");
+        scoreLeader.classList.add("score-leader-board");
+        scoreLeader.textContent = `${remainRecord.score}`;
+
+        const timeLeader = document.createElement("div");
+        timeLeader.classList.add("r-cell");
+        timeLeader.classList.add("time-leader-board");
+        timeLeader.textContent = `${remainRecord.time}`;
+
+        scoreTableRow.append(rankLeader, nameLeader, scoreLeader, timeLeader);
+    }
+}
+
+const showFilledPage = function(scoreTableRow, data, whichPage) {
+    for (let r = 5*whichPage; r < 5*(whichPage+1); r++) {
+        const rankLeader = document.createElement("div");
+        rankLeader.classList.add("r-cell");
+        rankLeader.classList.add("rank-leader-board");
+        rankLeader.textContent = `${r+1}`;
+
+        const nameLeader = document.createElement("div");
+        nameLeader.classList.add("r-cell");
+        nameLeader.classList.add("name-leader-board");
+        nameLeader.textContent = `${data[r].pname}`;
+
+        const scoreLeader = document.createElement("div");
+        scoreLeader.classList.add("r-cell");
+        scoreLeader.classList.add("score-leader-board");
+        scoreLeader.textContent = `${data[r].score}`;
+
+        const timeLeader = document.createElement("div");
+        timeLeader.classList.add("r-cell");
+        timeLeader.classList.add("time-leader-board");
+        timeLeader.textContent = `${data[r].time}`;
+
+        scoreTableRow.append(rankLeader, nameLeader, scoreLeader, timeLeader);
+    }
 }
 
 const showRows = function(scoreTableRow, data, whichPage) {
-    // split data into group of 5
-    // const pageSizeRows = 5;
-    // const pageRows = [];
-    // for (i = 0; i < data.length; i+=pageSizeRows) {
-    //     const pageRows = data.slice(i,i+pageSizeRows);
-    // }
-    
-    // can't read the last 5 in the last page 
     if (data.length % 5 === 0) {
-        for (let r = 5*whichPage; r < 5*(whichPage+1); r++) {
-            const rankLeader = document.createElement("div");
-            rankLeader.classList.add("r-cell");
-            rankLeader.classList.add("rank-leader-board");
-            rankLeader.textContent = `${r+1}`;
-    
-            const nameLeader = document.createElement("div");
-            nameLeader.classList.add("r-cell");
-            nameLeader.classList.add("name-leader-board");
-            nameLeader.textContent = `${data[r].pname}`;
-    
-            const scoreLeader = document.createElement("div");
-            scoreLeader.classList.add("r-cell");
-            scoreLeader.classList.add("score-leader-board");
-            scoreLeader.textContent = `${data[r].score}`;
-    
-            const timeLeader = document.createElement("div");
-            timeLeader.classList.add("r-cell");
-            timeLeader.classList.add("time-leader-board");
-            timeLeader.textContent = `${data[r].time}`;
-    
-            scoreTableRow.append(rankLeader, nameLeader, scoreLeader, timeLeader);
-        }
+        showFilledPage(scoreTableRow, data, whichPage);
     } else {
         if (whichPage === Math.ceil(data.length/5)-1) { // last page that is not full
-            console.log("last page: ", Math.ceil(data.length/5)-1);
-            // turn it into an array
-            // const reminder = [];
-            let remainder = {};
-
-            // eg: from 16 to 19 if 3 pages
-            for (let i = 1; i <= data.length%5; i++) {
-                console.log(`reverse ${5*whichPage+i} record : `, data[5*whichPage+i-1]);
-                console.log("current remaider", remainder);
-                const key = `${5*whichPage+i}`; // rank no need -1
-                let obj = {};
-                obj[key] = data[5*whichPage+i-1]; // data array, need -1
-                remainder = Object.assign(remainder, obj);
-                
-            }
-            console.log("remaider", remainder);
-            for (const [key, remainRecord] of Object.entries(remainder)) {
-                const rankLeader = document.createElement("div");
-                rankLeader.classList.add("r-cell");
-                rankLeader.classList.add("rank-leader-board");
-                rankLeader.textContent = `${key}`;
-        
-                const nameLeader = document.createElement("div");
-                nameLeader.classList.add("r-cell");
-                nameLeader.classList.add("name-leader-board");
-                nameLeader.textContent = `${remainRecord.pname}`;
-        
-                const scoreLeader = document.createElement("div");
-                scoreLeader.classList.add("r-cell");
-                scoreLeader.classList.add("score-leader-board");
-                scoreLeader.textContent = `${remainRecord.score}`;
-        
-                const timeLeader = document.createElement("div");
-                timeLeader.classList.add("r-cell");
-                timeLeader.classList.add("time-leader-board");
-                timeLeader.textContent = `${remainRecord.time}`;
-        
-                scoreTableRow.append(rankLeader, nameLeader, scoreLeader, timeLeader);
-            }
+            showUnfilledPage(scoreTableRow, data, whichPage);
         } else {
-            for (let r = 5*whichPage; r < 5*(whichPage+1); r++) {
-            
-                const rankLeader = document.createElement("div");
-                rankLeader.classList.add("r-cell");
-                rankLeader.classList.add("rank-leader-board");
-                rankLeader.textContent = `${r+1}`;
-        
-                const nameLeader = document.createElement("div");
-                nameLeader.classList.add("r-cell");
-                nameLeader.classList.add("name-leader-board");
-                nameLeader.textContent = `${data[r].pname}`;
-        
-                const scoreLeader = document.createElement("div");
-                scoreLeader.classList.add("r-cell");
-                scoreLeader.classList.add("score-leader-board");
-                scoreLeader.textContent = `${data[r].score}`;
-        
-                const timeLeader = document.createElement("div");
-                timeLeader.classList.add("r-cell");
-                timeLeader.classList.add("time-leader-board");
-                timeLeader.textContent = `${data[r].time}`;
-        
-                scoreTableRow.append(rankLeader, nameLeader, scoreLeader, timeLeader);
-            }
+            showFilledPage(scoreTableRow, data, whichPage);
         }
     }
     return scoreTableRow;
@@ -217,7 +186,7 @@ const showUpdatedScoreBoard = function(cur) {
     fetch(recordUrl)
     .then(req => req.json())
     .then(data => {
-        // console.log("league table", data)
+        console.log("league table", data)
         updateScoreBoard(cur, data);
     })
     console.log("scoreboard shown");
