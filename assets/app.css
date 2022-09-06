@@ -107,9 +107,21 @@ body {
 
 .page-nav {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
+}
+.page-arrow {
+    font-weight: 700;
+    font-size: 3rem;
 }
 
 .show {
     opacity: 0.7;
+}
+
+/* .appear {
+    display: block;
+} */
+
+.disappear {
+    display: none;
 }

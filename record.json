@@ -1,307 +1,127 @@
 [
 	{
 		"id": 1,
-		"pname": "zero",
-		"score": "0",
-		"time": "00:00"
-	},
-	{
-		"id": 2,
-		"pname": "DC",
-		"score": "1800",
-		"time": "00:38"
-	},
-	{
-		"id": 2,
-		"pname": "ST",
-		"score": "1800",
-		"time": "00:38"
-	},
-	{
-		"id": 3,
 		"pname": "test0",
-		"score": "300",
-		"time": "00:12"
-	},
-	{
-		"id": 4,
-		"pname": "gamer",
 		"score": "100",
-		"time": "00:05"
-	},
-	{
-		"id": 5,
-		"pname": "dog",
-		"score": "200",
 		"time": "00:09"
 	},
 	{
-		"id": 6,
-		"pname": " 6bao",
-		"score": "100",
-		"time": "00:06"
-	},
-	{
-		"id": 7,
-		"pname": "6again",
-		"score": "100",
-		"time": "00:06"
-	},
-	{
-		"id": 8,
-		"pname": "too",
+		"id": 2,
+		"pname": "fat",
 		"score": "0",
-		"time": "00:02"
+		"time": "00:08"
 	},
 	{
-		"id": 9,
-		"pname": "Only",
-		"score": "0",
-		"time": "00:01"
-	},
-	{
-		"id": 10,
-		"pname": "free",
-		"score": "0",
-		"time": "00:03"
-	},
-	{
-		"id": 11,
-		"pname": "metoo",
-		"score": "0",
-		"time": "00:02"
-	},
-	{
-		"id": 12,
-		"pname": "zze",
-		"score": "0",
-		"time": "00:01"
-	},
-	{
-		"id": 13,
-		"pname": "nothing",
-		"score": "0",
-		"time": "00:00"
-	},
-	{
-		"id": 14,
-		"pname": "too",
-		"score": "0",
-		"time": "00:02"
-	},
-	{
-		"id": 15,
-		"pname": "ten",
-		"score": "100",
-		"time": "00:10"
-	},
-	{
-		"id": 16,
+		"id": 3,
 		"pname": "test1",
 		"score": "0",
-		"time": "00:01"
+		"time": "00:02"
 	},
 	{
-		"id": 17,
-		"pname": "test0",
-		"score": "0",
-		"time": "00:00"
-	},
-	{
-		"id": 18,
-		"pname": "abc",
-		"score": "0",
-		"time": "00:01"
-	},
-	{
-		"id": 19,
+		"id": 4,
 		"pname": "test2",
 		"score": "0",
 		"time": "00:01"
 	},
 	{
-		"id": 20,
-		"pname": "test3",
-		"score": "0",
-		"time": "00:01"
-	},
-	{
-		"id": 21,
-		"pname": "test4",
-		"score": "0",
-		"time": "00:01"
-	},
-	{
-		"id": 22,
+		"id": 5,
 		"pname": "test5",
 		"score": "0",
-		"time": "00:02"
+		"time": "00:03"
 	},
 	{
-		"id": 23,
-		"pname": "GO",
-		"score": "0",
-		"time": "00:09"
-	},
-	{
-		"id": 24,
-		"pname": "YO",
-		"score": "0",
-		"time": "00:01"
-	},
-	{
-		"id": 25,
-		"pname": "z",
-		"score": "0",
-		"time": "00:00"
-	},
-	{
-		"id": 26,
-		"pname": "ze",
-		"score": "0",
-		"time": "00:00"
-	},
-	{
-		"id": 27,
+		"id": 6,
 		"pname": "test6",
-		"score": "0",
-		"time": "00:01"
-	},
-	{
-		"id": 28,
-		"pname": "hey",
-		"score": "0",
+		"score": "100",
 		"time": "00:06"
 	},
 	{
-		"id": 29,
-		"pname": "ko",
-		"score": "0",
-		"time": "00:01"
+		"id": 7,
+		"pname": "test8",
+		"score": "2700",
+		"time": "00:32"
 	},
 	{
-		"id": 30,
-		"pname": "MH",
-		"score": "900",
-		"time": "00:20"
-	},
-	{
-		"id": 31,
-		"pname": "JY",
-		"score": "800",
-		"time": "00:25"
-	},
-	{
-		"id": 32,
-		"pname": "nav",
-		"score": "0",
-		"time": "00:01"
-	},
-	{
-		"id": 33,
-		"pname": "test0",
-		"score": "0",
-		"time": "00:01"
-	},
-	{
-		"id": 34,
-		"pname": "bad",
-		"score": "400",
-		"time": "00:13"
-	},
-	{
-		"id": 35,
-		"pname": "fda",
-		"score": "0",
-		"time": "00:01"
-	},
-	{
-		"id": 36,
-		"pname": "tes",
-		"score": "0",
-		"time": "00:01"
-	},
-	{
-		"id": 37,
-		"pname": "est",
-		"score": "0",
-		"time": "00:01"
-	},
-	{
-		"id": 38,
-		"pname": "fsdaf",
-		"score": "0",
-		"time": "00:08"
-	},
-	{
-		"id": 39,
-		"pname": "fds",
-		"score": "0",
-		"time": "00:01"
-	},
-	{
-		"id": 40,
-		"pname": "dsfa",
+		"id": 8,
+		"pname": "test9",
 		"score": "0",
 		"time": "00:02"
 	},
 	{
-		"id": 41,
-		"pname": "fdas",
+		"id": 9,
+		"pname": "tea",
+		"score": "0",
+		"time": "00:00"
+	},
+	{
+		"id": 10,
+		"pname": "testB",
+		"score": "900",
+		"time": "00:19"
+	},
+	{
+		"id": 11,
+		"pname": "textc",
+		"score": "600",
+		"time": "00:15"
+	},
+	{
+		"id": 12,
+		"pname": "testd",
+		"score": "200",
+		"time": "00:11"
+	},
+	{
+		"id": 13,
+		"pname": "teste",
 		"score": "0",
 		"time": "00:01"
 	},
 	{
-		"id": 42,
-		"pname": "dsaf",
+		"id": 14,
+		"pname": "testf",
+		"score": "200",
+		"time": "00:20"
+	},
+	{
+		"id": 15,
+		"pname": "test00",
+		"score": "0",
+		"time": "00:00"
+	},
+	{
+		"id": 16,
+		"pname": "testg",
 		"score": "0",
 		"time": "00:01"
 	},
 	{
-		"id": 43,
-		"pname": "twwer",
+		"id": 17,
+		"pname": "test17",
 		"score": "0",
 		"time": "00:01"
 	},
 	{
-		"id": 44,
-		"pname": "dasf",
+		"id": 18,
+		"pname": "testet",
 		"score": "0",
 		"time": "00:01"
 	},
 	{
-		"id": 45,
-		"pname": "rte",
+		"id": 19,
+		"pname": "test19",
 		"score": "0",
-		"time": "00:01"
+		"time": "00:02"
 	},
 	{
-		"id": 46,
-		"pname": "agd",
-		"score": "0",
-		"time": "00:01"
+		"id": 20,
+		"pname": "testABc",
+		"score": "200",
+		"time": "00:08"
 	},
 	{
-		"id": 47,
-		"pname": "adgdsf",
-		"score": "0",
-		"time": "00:01"
-	},
-	{
-		"id": 48,
-		"pname": "sdfa",
-		"score": "0",
-		"time": "00:01"
-	},
-	{
-		"id": 49,
-		"pname": "dfsa",
-		"score": "0",
-		"time": "00:01"
-	},
-	{
-		"id": 50,
-		"pname": "sdfa",
+		"id": 21,
+		"pname": "test21",
 		"score": "0",
 		"time": "00:01"
 	}

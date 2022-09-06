@@ -14,29 +14,110 @@ export const nextRound = function(gameBoard) {
     // round++;
 };
 
-const showPage = function(scoreTableRow, data, whichPage) {
-    for (let r = 5*whichPage; r < 5*(whichPage+1); r++) {
-        const rankLeader = document.createElement("div");
-        rankLeader.classList.add("r-cell");
-        rankLeader.classList.add("rank-leader-board");
-        rankLeader.textContent = `${r+1}`;
+const updateNav = function(pageNavDiv, whichPage) {
 
-        const nameLeader = document.createElement("div");
-        nameLeader.classList.add("r-cell");
-        nameLeader.classList.add("name-leader-board");
-        nameLeader.textContent = `${data[r].pname}`;
+}
 
-        const scoreLeader = document.createElement("div");
-        scoreLeader.classList.add("r-cell");
-        scoreLeader.classList.add("score-leader-board");
-        scoreLeader.textContent = `${data[r].score}`;
+const showRows = function(scoreTableRow, data, whichPage) {
+    // split data into group of 5
+    // const pageSizeRows = 5;
+    // const pageRows = [];
+    // for (i = 0; i < data.length; i+=pageSizeRows) {
+    //     const pageRows = data.slice(i,i+pageSizeRows);
+    // }
+    
+    // can't read the last 5 in the last page 
+    if (data.length % 5 === 0) {
+        for (let r = 5*whichPage; r < 5*(whichPage+1); r++) {
+            const rankLeader = document.createElement("div");
+            rankLeader.classList.add("r-cell");
+            rankLeader.classList.add("rank-leader-board");
+            rankLeader.textContent = `${r+1}`;
+    
+            const nameLeader = document.createElement("div");
+            nameLeader.classList.add("r-cell");
+            nameLeader.classList.add("name-leader-board");
+            nameLeader.textContent = `${data[r].pname}`;
+    
+            const scoreLeader = document.createElement("div");
+            scoreLeader.classList.add("r-cell");
+            scoreLeader.classList.add("score-leader-board");
+            scoreLeader.textContent = `${data[r].score}`;
+    
+            const timeLeader = document.createElement("div");
+            timeLeader.classList.add("r-cell");
+            timeLeader.classList.add("time-leader-board");
+            timeLeader.textContent = `${data[r].time}`;
+    
+            scoreTableRow.append(rankLeader, nameLeader, scoreLeader, timeLeader);
+        }
+    } else {
+        if (whichPage === Math.ceil(data.length/5)-1) { // last page that is not full
+            console.log("last page: ", Math.ceil(data.length/5)-1);
+            // turn it into an array
+            // const reminder = [];
+            let remainder = {};
 
-        const timeLeader = document.createElement("div");
-        timeLeader.classList.add("r-cell");
-        timeLeader.classList.add("time-leader-board");
-        timeLeader.textContent = `${data[r].time}`;
-
-        scoreTableRow.append(rankLeader, nameLeader, scoreLeader, timeLeader);
+            // eg: from 16 to 19 if 3 pages
+            for (let i = 1; i <= data.length%5; i++) {
+                console.log(`reverse ${5*whichPage+i} record : `, data[5*whichPage+i-1]);
+                console.log("current remaider", remainder);
+                const key = `${5*whichPage+i}`; // rank no need -1
+                let obj = {};
+                obj[key] = data[5*whichPage+i-1]; // data array, need -1
+                remainder = Object.assign(remainder, obj);
+                
+            }
+            console.log("remaider", remainder);
+            for (const [key, remainRecord] of Object.entries(remainder)) {
+                const rankLeader = document.createElement("div");
+                rankLeader.classList.add("r-cell");
+                rankLeader.classList.add("rank-leader-board");
+                rankLeader.textContent = `${key}`;
+        
+                const nameLeader = document.createElement("div");
+                nameLeader.classList.add("r-cell");
+                nameLeader.classList.add("name-leader-board");
+                nameLeader.textContent = `${remainRecord.pname}`;
+        
+                const scoreLeader = document.createElement("div");
+                scoreLeader.classList.add("r-cell");
+                scoreLeader.classList.add("score-leader-board");
+                scoreLeader.textContent = `${remainRecord.score}`;
+        
+                const timeLeader = document.createElement("div");
+                timeLeader.classList.add("r-cell");
+                timeLeader.classList.add("time-leader-board");
+                timeLeader.textContent = `${remainRecord.time}`;
+        
+                scoreTableRow.append(rankLeader, nameLeader, scoreLeader, timeLeader);
+            }
+        } else {
+            for (let r = 5*whichPage; r < 5*(whichPage+1); r++) {
+            
+                const rankLeader = document.createElement("div");
+                rankLeader.classList.add("r-cell");
+                rankLeader.classList.add("rank-leader-board");
+                rankLeader.textContent = `${r+1}`;
+        
+                const nameLeader = document.createElement("div");
+                nameLeader.classList.add("r-cell");
+                nameLeader.classList.add("name-leader-board");
+                nameLeader.textContent = `${data[r].pname}`;
+        
+                const scoreLeader = document.createElement("div");
+                scoreLeader.classList.add("r-cell");
+                scoreLeader.classList.add("score-leader-board");
+                scoreLeader.textContent = `${data[r].score}`;
+        
+                const timeLeader = document.createElement("div");
+                timeLeader.classList.add("r-cell");
+                timeLeader.classList.add("time-leader-board");
+                timeLeader.textContent = `${data[r].time}`;
+        
+                scoreTableRow.append(rankLeader, nameLeader, scoreLeader, timeLeader);
+            }
+        }
     }
     return scoreTableRow;
 };
@@ -70,34 +151,65 @@ const updateScoreBoard = function(cur, data) {
     let scoreTableRow = document.createElement("div");
     scoreTableRow.classList.add("score-table-row");
 
-    let whichPage = 0;
-    scoreTableRow = showPage(scoreTableRow, data, whichPage);
+    let whichPage = 0; // Note: when whichPage === 0, it displayed as page 1
+    scoreTableRow = showRows(scoreTableRow, data, whichPage);
+
 
     // page nav
     const pageNavDiv = document.createElement("div");
     pageNavDiv.classList.add("page-nav");
 
+    // pageNavDiv = updateNav(pageNavDiv, whichPage);
     // check if first or last page
+    // prev
     const pageNavPrev = document.createElement("div");
+    // if (whichPage === 0) {
+    //     pageNavPrev.classList.add("disappear");
+    // } else {
+    //     pageNavPrev.classList.remove("disappear")
+    // }
+    pageNavPrev.classList.add("page-arrow");
     pageNavPrev.textContent = "<";
     pageNavPrev.addEventListener("click", () => {
-        whichPage-=1;
+        if (whichPage >= 1) whichPage-=1;
+        pageNavCur.textContent = `${whichPage+1}/${Math.ceil(data.length/5)}`;
         scoreTableRow.textContent = "";
-        scoreTableRow = showPage(scoreTableRow, data, whichPage);
+        scoreTableRow = showRows(scoreTableRow, data, whichPage);
     }); // unfinished
+    
+    // cur
+    // if (pageNavCur !== null) pageNavCur.remove();
     const pageNavCur = document.createElement("p");
-    pageNavCur.textContent = `${whichPage+1}/${Math.floor(data.length/5)}`;
+    pageNavCur.textContent = `${whichPage+1}/${Math.ceil(data.length/5)}`;
+
+    // next
     const pageNavNext = document.createElement("div");
+    // if (whichPage === Math.floor(data.length/5)) {
+    //     pageNavNext.classList.add("disappear");
+    // } else {
+    //     pageNavNext.classList.remove("disappear");
+    // }
+    pageNavNext.classList.add("page-arrow");
+    pageNavNext.textContent = ">";
     pageNavNext.addEventListener("click", () => {
-        whichPage+=1;
+        if (whichPage < Math.ceil(data.length/5)-1) whichPage+=1;
+        pageNavCur.textContent = `${whichPage+1}/${Math.ceil(data.length/5)}`;
         console.log("next", whichPage);
         scoreTableRow.textContent = "";
         console.log("next table", scoreTableRow);
-        scoreTableRow = showPage(scoreTableRow, data, whichPage);
+        scoreTableRow = showRows(scoreTableRow, data, whichPage);
     });
-    pageNavNext.textContent = ">";
+
     pageNavDiv.append(pageNavPrev, pageNavCur, pageNavNext);
     
+    // if (whichPage !== 0 && whichPage !== Math.floor(data.length/5)) {
+    //     pageNavDiv.append(pageNavPrev, pageNavCur, pageNavNext);
+    // } else if (whichPage === 0){
+    //     pageNavDiv.append(pageNavCur, pageNavNext);
+    // } else if (whichPage === Math.floor(data.length/5)){
+    //     pageNavDiv.append(pageNavPrev, pageNavCur);
+    // }  
+
     recordForm.append(endMsgDiv, scoreTableHeader, scoreTableRow, pageNavDiv);
 }
 

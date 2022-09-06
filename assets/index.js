@@ -160,7 +160,7 @@ const enterPlayerName = function() {
     timeInput.setAttribute("value", `${timeDisplay.textContent}`);
     scoreInput.setAttribute("value", `${score}`);
     setId();
-    scoreBoardDiv.classList.toggle("show");
+    scoreBoardDiv.classList.add("show");
 }
 
 // test
