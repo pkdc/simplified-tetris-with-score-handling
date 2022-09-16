@@ -96,11 +96,6 @@ const updateScoreBoard = function(cur, data) {
     console.log("Creating scoreBoard", data)
     recordForm.textContent = "";
     
-    const endMsgDiv = document.createElement("div");
-    const endMsg = document.createElement("h2");
-    endMsg.textContent = `Congratz ${cur.pname}`;
-    endMsgDiv.append(endMsg);
-
     const scoreTableHeader = document.createElement("div");
     scoreTableHeader.classList.add("score-table-header");
     const header = ["Rank", "Name", "Score", "Time"];
@@ -116,6 +111,23 @@ const updateScoreBoard = function(cur, data) {
 
     // sort by score
     data.sort((a,b) => +a.score >= +b.score ? -1 : 1);
+
+    let rankedData = {};
+    for (const [rank, rec] of data.entries()) {
+        rankedData[rank] = rec;
+    }
+    console.log("rD: ", rankedData);
+
+    const endMsgDiv = document.createElement("div");
+    const endMsg = document.createElement("h2");
+    console.log("cur: ", cur);
+    const curRecord = data.filter((el) => el.id === +cur.id);
+    console.log("curRec: ", curRecord);
+    // const pos = 
+    // const percent = 
+
+    // endMsg.textContent = `Congratz ${cur.pname}you are in the top ${percent}`;
+    endMsgDiv.append(endMsg);
 
     let scoreTableRow = document.createElement("div");
     scoreTableRow.classList.add("score-table-row");
