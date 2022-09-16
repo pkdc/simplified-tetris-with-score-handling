@@ -12,7 +12,9 @@ score-handling:
 
 In addition, I was responsible to implement a RESTful API service with Go, the client can save the data (POST), and request it (GET). This service will store the information of each play (name, score, and time) in JSON format and return all the information when requested. 
 
+
 Controls:
+
 Press Spacebar to begin the game, the Tetris block will start falling
 
 Press ESC to end the game and display an input form, after submitting the form, a leaderboard will appear
