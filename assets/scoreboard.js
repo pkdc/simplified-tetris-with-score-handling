@@ -118,15 +118,20 @@ const updateScoreBoard = function(cur, data) {
     }
     console.log("rD: ", rankedData);
 
+    console.log("cur: ", cur);
+
+    // curRecord is a record that matches one of the value in rankedData
+    // const [curRecord] = data.filter((el) => el.id === +cur.id);
+    // console.log("curRec: ", curRecord);
+
+    const [curRecordRankMinusOne] = Object.keys(rankedData).filter((key) => rankedData[key].id === +cur.id);
+    console.log("curRecordRank: ", curRecordRankMinusOne);
+    const curRecordRank = +curRecordRankMinusOne + 1;
+    const percent = Math.round(curRecordRank*100/data.length);
+
     const endMsgDiv = document.createElement("div");
     const endMsg = document.createElement("h2");
-    console.log("cur: ", cur);
-    const curRecord = data.filter((el) => el.id === +cur.id);
-    console.log("curRec: ", curRecord);
-    // const pos = 
-    // const percent = 
-
-    // endMsg.textContent = `Congratz ${cur.pname}you are in the top ${percent}`;
+    endMsg.textContent = `Congratz ${cur.pname} you are in the top ${percent}%, on the ${curRecordRank} position.`;
     endMsgDiv.append(endMsg);
 
     let scoreTableRow = document.createElement("div");
