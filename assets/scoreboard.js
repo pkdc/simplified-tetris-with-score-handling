@@ -93,7 +93,7 @@ const showRows = function(scoreTableRow, data, whichPage) {
 
 // scoreboard
 const updateScoreBoard = function(cur, data) {
-    console.log("Creating scoreBoard", data)
+    // console.log("Creating scoreBoard", data)
     recordForm.textContent = "";
     
     const scoreTableHeader = document.createElement("div");
@@ -107,8 +107,6 @@ const updateScoreBoard = function(cur, data) {
         scoreTableHeader.append(hCell);
     }
     
-    console.log("all data", data);
-
     // sort by score
     data.sort((a,b) => +a.score >= +b.score ? -1 : 1);
 
@@ -118,11 +116,7 @@ const updateScoreBoard = function(cur, data) {
     }
     console.log("rD: ", rankedData);
 
-    console.log("cur: ", cur);
-
-    // curRecord is a record that matches one of the value in rankedData
     // const [curRecord] = data.filter((el) => el.id === +cur.id);
-    // console.log("curRec: ", curRecord);
 
     const [curRecordRankMinusOne] = Object.keys(rankedData).filter((key) => rankedData[key].id === +cur.id);
     console.log("curRecordRank: ", curRecordRankMinusOne);
@@ -199,15 +193,15 @@ const updateScoreBoard = function(cur, data) {
     recordForm.append(endMsgDiv, scoreTableHeader, scoreTableRow, pageNavDiv);
 }
 
-const showUpdatedScoreBoard = function(cur) {
-    fetch(recordUrl)
-    .then(req => req.json())
-    .then(data => {
-        console.log("league table", data)
-        updateScoreBoard(cur, data);
-    })
-    console.log("scoreboard shown");
-}
+// const showUpdatedScoreBoard = function(cur, data) {
+//     fetch(recordUrl)
+//     .then(req => req.json())
+//     .then(data => {
+//         console.log("league table", data)
+//         updateScoreBoard(cur, data);
+//     })
+//     console.log("scoreboard shown");
+// }
 
 const submitHandler = function(e) {
     e.preventDefault();
@@ -226,12 +220,14 @@ const submitHandler = function(e) {
     };
     console.log("req body", reqOptions.body)
 
+    // since the API will return the latest records
     // const testUrl = "http://httpbin.org/post";
     fetch(recordUrl, reqOptions) 
     .then(req => req.json())
-    .then(data => console.log(data))
-
-    showUpdatedScoreBoard(payload);
+    .then(data => {
+        console.log("returned data: ", data);
+        updateScoreBoard(payload, data);
+    })
 }
 
 const body = document.querySelector("body");
