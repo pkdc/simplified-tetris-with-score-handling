@@ -179,12 +179,15 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 			}
 
 			err = os.WriteFile("record.json", js, 0644)
+			if err != nil {
+				log.Fatal(err)
+			}
 			// f.Write([]byte('\n'))
 
-			// then send back the most updated records
-			w.Header().Set("Content-Type", "application/json")
-			w.WriteHeader(http.StatusOK)
-			w.Write(js)
+			// For testing: send back the most updated records
+			// w.Header().Set("Content-Type", "application/json")
+			// w.WriteHeader(http.StatusOK)
+			// w.Write(js)
 
 			// w.Header().Set("Location", "/")
 			// w.WriteHeader(http.StatusSeeOther)

@@ -193,15 +193,15 @@ const updateScoreBoard = function(cur, data) {
     recordForm.append(endMsgDiv, scoreTableHeader, scoreTableRow, pageNavDiv);
 }
 
-// const showUpdatedScoreBoard = function(cur, data) {
-//     fetch(recordUrl)
-//     .then(req => req.json())
-//     .then(data => {
-//         console.log("league table", data)
-//         updateScoreBoard(cur, data);
-//     })
-//     console.log("scoreboard shown");
-// }
+const showUpdatedScoreBoard = function(cur) {
+    fetch(recordUrl)
+    .then(req => req.json())
+    .then(data => {
+        console.log("league table", data)
+        updateScoreBoard(cur, data);
+    })
+    console.log("scoreboard shown");
+}
 
 const submitHandler = function(e) {
     e.preventDefault();
@@ -223,11 +223,13 @@ const submitHandler = function(e) {
     // since the API will return the latest records
     // const testUrl = "http://httpbin.org/post";
     fetch(recordUrl, reqOptions) 
-    .then(req => req.json())
-    .then(data => {
-        console.log("returned data: ", data);
-        updateScoreBoard(payload, data);
-    })
+    .then(() => showUpdatedScoreBoard(payload));
+    // .then(req => req.json())
+    // .then(data => {
+    //     console.log("returned data: ", data);
+    //     // updateScoreBoard(payload, data);
+    //     showUpdatedScoreBoard(payload);
+    // })
 }
 
 const body = document.querySelector("body");
