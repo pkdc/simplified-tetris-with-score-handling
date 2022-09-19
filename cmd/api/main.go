@@ -59,6 +59,7 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.URL.Path == "/record/" {
 		// Get to get
+		// not used
 		if r.Method == http.MethodGet {
 			fmt.Printf("----record-GET-----\n")
 
@@ -82,7 +83,7 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 
-		// Post to store
+		// Post to store, and then return
 		if r.Method == http.MethodPost {
 			fmt.Printf("----record-POST-----\n")
 			// err := r.ParseForm()
@@ -180,7 +181,7 @@ func recordHandler(w http.ResponseWriter, r *http.Request) {
 			err = os.WriteFile("record.json", js, 0644)
 			// f.Write([]byte('\n'))
 
-			// reply
+			// then send back the most updated records
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusOK)
 			w.Write(js)
