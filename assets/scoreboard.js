@@ -91,14 +91,14 @@ const showRows = function(scoreTableRow, data, whichPage) {
     return scoreTableRow;
 };
 
-const searchRecords = function(e) {
-    // console.log("search data: ", this);
-    const allRankedRecordsArr = Object.entries(this);
-    console.log("allRankedRecordsArr: ", allRankedRecordsArr);
+// const searchRecords = function(e) {
+//     // console.log("search data: ", this);
+//     const allRankedRecordsArr = Object.entries(this);
+//     console.log("allRankedRecordsArr: ", allRankedRecordsArr);
 
-    const foundRecords = allRankedRecordsArr.filter((rankRec) => rankRec[1].pname.toLowerCase().includes(e.target.value.toLowerCase()));
-    console.log("foundRecords: ", foundRecords);
-};
+//     const foundRecords = allRankedRecordsArr.filter((rankRec) => rankRec[1].pname.toLowerCase().includes(e.target.value.toLowerCase()));
+//     console.log("foundRecords: ", foundRecords);
+// };
 
 // scoreboard
 const updateScoreBoard = function(cur, data) {
@@ -155,15 +155,11 @@ const updateScoreBoard = function(cur, data) {
     endMsg.textContent = `Congratz ${cur.pname} you are in the top ${percent}%, on the ${curRecordRank} position.`;
     endMsgDiv.append(endMsg);
 
-    // searchInput.addEventListener("input", () => {
-    //     console.log(rankedData);
-    // });
-    searchInput.addEventListener("input", searchRecords.bind(rankedData));
+    let whichPage = 0; // Note: when whichPage === 0, it displayed as page 1
 
     let scoreTableRow = document.createElement("div");
     scoreTableRow.classList.add("score-table-row");
 
-    let whichPage = 0; // Note: when whichPage === 0, it displayed as page 1
     scoreTableRow = showRows(scoreTableRow, data, whichPage);
 
 
@@ -182,6 +178,7 @@ const updateScoreBoard = function(cur, data) {
     // }
     pageNavPrev.classList.add("page-arrow");
     pageNavPrev.textContent = "<";
+    // need to use callback instead of anon func
     pageNavPrev.addEventListener("click", () => {
         if (whichPage >= 1) whichPage-=1;
         pageNavCur.textContent = `${whichPage+1}/${Math.ceil(data.length/5)}`;
@@ -195,6 +192,7 @@ const updateScoreBoard = function(cur, data) {
     pageNavCur.textContent = `${whichPage+1}/${Math.ceil(data.length/5)}`;
 
     // next
+    // need to use callback instead of anon func
     const pageNavNext = document.createElement("div");
     // if (whichPage === Math.floor(data.length/5)) {
     //     pageNavNext.classList.add("disappear");
@@ -225,6 +223,23 @@ const updateScoreBoard = function(cur, data) {
 
     // putting all divs tgt
     recordForm.append(endMsgDiv, searchDiv, scoreTableHeader, scoreTableRow, pageNavDiv);
+
+    searchInput.addEventListener("input", (e) => {
+        // console.log(rankedData);
+        // const allRankedRecordsArr = Object.entries(this);
+        // console.log("allRankedRecordsArr: ", allRankedRecordsArr);
+
+        const foundRecords = data.filter((rec) => rec.pname.toLowerCase().includes(e.target.value.toLowerCase()));
+        console.log("foundRecords: ", foundRecords);
+        scoreTableRow.textContent = "";
+        if (foundRecords.length !== 0) {
+            whichPage = 0;
+            showRows(scoreTableRow, foundRecords, whichPage);
+            pageNavCur.textContent = `${whichPage+1}/${Math.ceil(foundRecords.length/5)}`;
+        }
+    
+    });
+    // searchInput.addEventListener("input", searchRecords.bind(rankedData));
 }
 
 // const showUpdatedScoreBoard = function(cur, data) {
