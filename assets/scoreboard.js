@@ -91,8 +91,13 @@ const showRows = function(scoreTableRow, data, whichPage) {
     return scoreTableRow;
 };
 
-const searchRecords = function() {
-    console.log("search data: ", this);
+const searchRecords = function(e) {
+    // console.log("search data: ", this);
+    const allRankedRecordsArr = Object.entries(this);
+    console.log("allRankedRecordsArr: ", allRankedRecordsArr);
+
+    const foundRecords = allRankedRecordsArr.filter((rankRec) => rankRec[1].pname.toLowerCase().includes(e.target.value.toLowerCase()));
+    console.log("foundRecords: ", foundRecords);
 };
 
 // scoreboard
