@@ -91,11 +91,33 @@ const showRows = function(scoreTableRow, data, whichPage) {
     return scoreTableRow;
 };
 
+const searchRecords = function() {
+    console.log("search data: ", this);
+};
+
 // scoreboard
 const updateScoreBoard = function(cur, data) {
     // console.log("Creating scoreBoard", data)
     recordForm.textContent = "";
     
+    const searchDiv = document.createElement("div");
+    searchDiv.classList.add("search");
+    const searchLabelDiv = document.createElement("div");
+    const searchLabel = document.createElement("label");
+    searchLabel.textContent = "Search records: ";
+    searchLabel.setAttribute("for", "search");
+    searchLabelDiv.append(searchLabel);
+    const searchInputDiv = document.createElement("div");
+    const searchInput = document.createElement("input");
+    searchInput.setAttribute("id", "search");
+    searchInput.setAttribute("type", "text");
+    searchInput.setAttribute("name", "search");
+    searchInput.setAttribute("placeholder", "Name");
+    searchInput.classList.add("search-input");
+    searchInputDiv.append(searchInput);
+    searchDiv.append(searchLabelDiv, searchInputDiv);
+
+
     const scoreTableHeader = document.createElement("div");
     scoreTableHeader.classList.add("score-table-header");
     const header = ["Rank", "Name", "Score", "Time"];
@@ -127,6 +149,11 @@ const updateScoreBoard = function(cur, data) {
     const endMsg = document.createElement("h2");
     endMsg.textContent = `Congratz ${cur.pname} you are in the top ${percent}%, on the ${curRecordRank} position.`;
     endMsgDiv.append(endMsg);
+
+    // searchInput.addEventListener("input", () => {
+    //     console.log(rankedData);
+    // });
+    searchInput.addEventListener("input", searchRecords.bind(rankedData));
 
     let scoreTableRow = document.createElement("div");
     scoreTableRow.classList.add("score-table-row");
@@ -182,6 +209,7 @@ const updateScoreBoard = function(cur, data) {
 
     pageNavDiv.append(pageNavPrev, pageNavCur, pageNavNext);
     
+
     // if (whichPage !== 0 && whichPage !== Math.floor(data.length/5)) {
     //     pageNavDiv.append(pageNavPrev, pageNavCur, pageNavNext);
     // } else if (whichPage === 0){
@@ -190,7 +218,8 @@ const updateScoreBoard = function(cur, data) {
     //     pageNavDiv.append(pageNavPrev, pageNavCur);
     // }  
 
-    recordForm.append(endMsgDiv, scoreTableHeader, scoreTableRow, pageNavDiv);
+    // putting all divs tgt
+    recordForm.append(endMsgDiv, searchDiv, scoreTableHeader, scoreTableRow, pageNavDiv);
 }
 
 // const showUpdatedScoreBoard = function(cur, data) {
@@ -280,8 +309,6 @@ const scoreInputDiv = document.createElement('div');
 export const scoreInput = document.createElement('input');
 scoreInput.setAttribute("type", "number");
 scoreInput.setAttribute("name", "score");
-// scoreInput.setAttribute("value", `${score}`);
-// scoreInput.setAttribute("value", `710`); //temp
 scoreInput.setAttribute("id", "score");
 scoreInput.setAttribute("readonly", "readonly");
 scoreInputDiv.append(scoreInput);
@@ -298,7 +325,6 @@ const timeInputDiv = document.createElement('div');
 export const timeInput = document.createElement('input');
 timeInput.setAttribute("type", "text");
 timeInput.setAttribute("name", "time");
-// timeInput.setAttribute("value", `03:16`); //temp
 timeInput.setAttribute("id", "time");
 timeInput.setAttribute("readonly", "readonly");
 timeInputDiv.append(timeInput);
