@@ -94,10 +94,6 @@ const showRows = function(scoreTableRow, data, whichPage) {
     return scoreTableRow;
 };
 
-const showNavBar = function() {
-
-}
-
 // const searchRecords = function(e) {
 //     // console.log("search data: ", this);
 //     const allRankedRecordsArr = Object.entries(this);
@@ -207,6 +203,8 @@ const updateScoreBoard = function(cur, data) {
     pageNavNext.textContent = ">";
 
     const nextPage = function() {
+        console.log("this: ", this);
+        console.log("next page limit:", Math.ceil(this.length/5)-1);
         if (whichPage < Math.ceil(this.length/5)-1) whichPage+=1; // rmb whichPage starts from 0
         pageNavCur.textContent = `${whichPage+1}/${Math.ceil(this.length/5)}`;
         scoreTableRow.textContent = "";
@@ -232,8 +230,10 @@ const updateScoreBoard = function(cur, data) {
         // console.log(rankedData);
         // const allRankedRecordsArr = Object.entries(this);
         // console.log("allRankedRecordsArr: ", allRankedRecordsArr);
-        pageNavPrev.removeEventListener("click", prevPage);
-        pageNavNext.removeEventListener("click", nextPage);
+
+        // cannot remove the EventListeners
+        pageNavPrev.removeEventListener("mouseover", prevPage);
+        pageNavNext.removeEventListener("mouseover", nextPage);
 
         const foundRecords = data.filter((rec) => rec.pname.toLowerCase().includes(e.target.value.toLowerCase()));
         console.log("foundRecords: ", foundRecords);
