@@ -243,23 +243,9 @@ const updateScoreBoard = function(cur, data) {
 
         if (foundRecords.length !== 0) {
             showRows(scoreTableRow, foundRecords, whichPage);
-            pageNavPrev.addEventListener("click", () => {
-                if (whichPage >= 1) whichPage-=1;
-                pageNavCur.textContent = `${whichPage+1}/${Math.ceil(foundRecords.length/5)}`;
-                scoreTableRow.textContent = "";
-                scoreTableRow = showRows(scoreTableRow, foundRecords, whichPage);
-            });
-            pageNavNext.addEventListener("click", () => {
-                if (whichPage <= Math.ceil(foundRecords.length/5)-1) whichPage+=1;
-                pageNavCur.textContent = `${whichPage+1}/${Math.ceil(foundRecords.length/5)}`;
-                scoreTableRow.textContent = "";
-                console.log("search next table", scoreTableRow);
-                console.log("search foundRecords: ", foundRecords);
-                console.log("search next page num: ", whichPage);
-                scoreTableRow = showRows(scoreTableRow, foundRecords, whichPage);
-            });
+            pageNavPrev.addEventListener("click", prevPage.bind(foundRecords));
+            pageNavNext.addEventListener("click", nextPage.bind(foundRecords));
         }
-    
     });
     // searchInput.addEventListener("input", searchRecords.bind(rankedData));
 }
