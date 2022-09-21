@@ -177,6 +177,7 @@ const updateScoreBoard = function(cur, data) {
     const pageNavPrev = document.createElement("div");
     pageNavPrev.classList.add("page-arrow");
     pageNavPrev.textContent = "<";
+    console.log("n pageNavPrev", pageNavPrev.onclick);
 
     const prevPage = function() {
         if (whichPage >= 1) whichPage-=1;
@@ -184,7 +185,7 @@ const updateScoreBoard = function(cur, data) {
         scoreTableRow.textContent = "";
         scoreTableRow = showRows(scoreTableRow, this, whichPage);
     };
-    pageNavPrev.addEventListener("click", prevPage.bind(data));
+    pageNavPrev.onclick = prevPage.bind(data);
     
     // cur
     // if (pageNavCur !== null) pageNavCur.remove();
@@ -194,13 +195,9 @@ const updateScoreBoard = function(cur, data) {
     // next
     // need to use callback instead of anon func
     const pageNavNext = document.createElement("div");
-    // if (whichPage === Math.floor(data.length/5)) {
-    //     pageNavNext.classList.add("disappear");
-    // } else {
-    //     pageNavNext.classList.remove("disappear");
-    // }
     pageNavNext.classList.add("page-arrow");
     pageNavNext.textContent = ">";
+    console.log("n pageNavNext",pageNavNext.onclick);
 
     const nextPage = function() {
         console.log("this: ", this);
@@ -210,11 +207,12 @@ const updateScoreBoard = function(cur, data) {
         scoreTableRow.textContent = "";
         scoreTableRow = showRows(scoreTableRow, this, whichPage);
     };
-    pageNavNext.addEventListener("click", nextPage.bind(data));
+    pageNavNext.onclick = nextPage.bind(data);
 
     pageNavDiv.append(pageNavPrev, pageNavCur, pageNavNext);
     
-
+    console.log("y pageNavNext",pageNavPrev.onclick);
+    console.log("y pageNavNext",pageNavNext.onclick);
     // if (whichPage !== 0 && whichPage !== Math.floor(data.length/5)) {
     //     pageNavDiv.append(pageNavPrev, pageNavCur, pageNavNext);
     // } else if (whichPage === 0){
@@ -227,13 +225,10 @@ const updateScoreBoard = function(cur, data) {
     recordForm.append(endMsgDiv, searchDiv, scoreTableHeader, scoreTableRow, pageNavDiv);
 
     searchInput.addEventListener("input", (e) => {
-        // console.log(rankedData);
-        // const allRankedRecordsArr = Object.entries(this);
-        // console.log("allRankedRecordsArr: ", allRankedRecordsArr);
-
-        // cannot remove the EventListeners
-        pageNavPrev.removeEventListener("mouseover", prevPage);
-        pageNavNext.removeEventListener("mouseover", nextPage);
+        pageNavPrev.onclick = null;
+        pageNavNext.onclick = null;
+        console.log("search pageNavPrev", pageNavPrev.onclick);
+        console.log("search pageNavNext",pageNavNext.onclick);
 
         const foundRecords = data.filter((rec) => rec.pname.toLowerCase().includes(e.target.value.toLowerCase()));
         console.log("foundRecords: ", foundRecords);
@@ -243,8 +238,9 @@ const updateScoreBoard = function(cur, data) {
 
         if (foundRecords.length !== 0) {
             showRows(scoreTableRow, foundRecords, whichPage);
-            pageNavPrev.addEventListener("click", prevPage.bind(foundRecords));
-            pageNavNext.addEventListener("click", nextPage.bind(foundRecords));
+            pageNavPrev.onclick = prevPage.bind(foundRecords);
+            pageNavNext.onclick =  nextPage.bind(foundRecords);
+            
         }
     });
     // searchInput.addEventListener("input", searchRecords.bind(rankedData));
