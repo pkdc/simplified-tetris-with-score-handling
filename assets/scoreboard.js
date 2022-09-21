@@ -107,7 +107,9 @@ const showRows = function(scoreTableRow, data, whichPage) {
 const updateScoreBoard = function(cur, data) {
     // console.log("Creating scoreBoard", data)
     recordForm.textContent = "";
-    
+    // remove submit handler
+    recordForm.removeEventListener("keydown", submitHandler);
+
     const searchDiv = document.createElement("div");
     searchDiv.classList.add("search");
     const searchLabelDiv = document.createElement("div");
@@ -186,7 +188,8 @@ const updateScoreBoard = function(cur, data) {
         scoreTableRow = showRows(scoreTableRow, this, whichPage);
     };
     pageNavPrev.onclick = prevPage.bind(data);
-    
+    // pageNavPrev.addEventListener("click", prevPage.bind(data));
+
     // cur
     // if (pageNavCur !== null) pageNavCur.remove();
     const pageNavCur = document.createElement("p");
@@ -208,23 +211,18 @@ const updateScoreBoard = function(cur, data) {
         scoreTableRow = showRows(scoreTableRow, this, whichPage);
     };
     pageNavNext.onclick = nextPage.bind(data);
+    // pageNavNext.addEventListener("click", nextPage.bind(data));
 
     pageNavDiv.append(pageNavPrev, pageNavCur, pageNavNext);
     
     console.log("y pageNavNext",pageNavPrev.onclick);
     console.log("y pageNavNext",pageNavNext.onclick);
-    // if (whichPage !== 0 && whichPage !== Math.floor(data.length/5)) {
-    //     pageNavDiv.append(pageNavPrev, pageNavCur, pageNavNext);
-    // } else if (whichPage === 0){
-    //     pageNavDiv.append(pageNavCur, pageNavNext);
-    // } else if (whichPage === Math.floor(data.length/5)){
-    //     pageNavDiv.append(pageNavPrev, pageNavCur);
-    // }  
 
     // putting all divs tgt
     recordForm.append(endMsgDiv, searchDiv, scoreTableHeader, scoreTableRow, pageNavDiv);
 
     searchInput.addEventListener("input", (e) => {
+        // pageNavNext.removeEventListener("click", nextPage);
         pageNavPrev.onclick = null;
         pageNavNext.onclick = null;
         console.log("search pageNavPrev", pageNavPrev.onclick);
@@ -236,13 +234,26 @@ const updateScoreBoard = function(cur, data) {
         whichPage = 0;
         pageNavCur.textContent = `${whichPage+1}/${Math.ceil(foundRecords.length/5)}`;
 
+        const noResultMsg = document.createElement("p");
+        noResultMsg.textContent = "No Record Is Found";
+        noResultMsg.classList.add("disappear");
+        recordForm.append(noResultMsg);
+
         if (foundRecords.length !== 0) {
+            scoreTableHeader.classList.remove("disappear");
+            pageNavDiv.classList.remove("disappear");
             showRows(scoreTableRow, foundRecords, whichPage);
+            // pageNavPrev.addEventListener(prevPage.bind(foundRecords));
+            // pageNavNext.addEventListener(nextPage.bind(foundRecords));
             pageNavPrev.onclick = prevPage.bind(foundRecords);
             pageNavNext.onclick =  nextPage.bind(foundRecords);
-            
+        } else {
+            scoreTableHeader.classList.add("disappear");
+            pageNavDiv.classList.add("disappear");
+            noResultMsg.classList.remove("disappear");
         }
     });
+
     // searchInput.addEventListener("input", searchRecords.bind(rankedData));
 }
 
