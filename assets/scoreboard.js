@@ -15,7 +15,7 @@ export const nextRound = function(gameBoard) {
 };
 
 const showUnfilledPage = function(scoreTableRow, data, whichPage) {
-    console.log("last page: ", Math.ceil(data.length/5)-1);
+    console.log("last unfilled page: ", Math.ceil(data.length/5)-1);
     let remainder = {};
 
     for (let i = 1; i <= data.length%5; i++) {
@@ -79,10 +79,13 @@ const showFilledPage = function(scoreTableRow, data, whichPage) {
 }
 
 const showRows = function(scoreTableRow, data, whichPage) {
+    console.log("data or foundRecord length:", data.length);
     if (data.length % 5 === 0) {
         showFilledPage(scoreTableRow, data, whichPage);
     } else {
-        if (whichPage === Math.ceil(data.length/5)-1) { // last page that is not full
+        console.log("whichPage filled or unfilled: ", whichPage);
+        console.log("Math.ceil(data.length/5)-1): ", Math.ceil(data.length/5)-1);
+        if (whichPage === Math.ceil(data.length/5)-1) { // last page that is not full // bug:sFilledPage when shld be UnfilledPage
             showUnfilledPage(scoreTableRow, data, whichPage);
         } else {
             showFilledPage(scoreTableRow, data, whichPage);
@@ -90,6 +93,10 @@ const showRows = function(scoreTableRow, data, whichPage) {
     }
     return scoreTableRow;
 };
+
+const showNavBar = function() {
+
+}
 
 // const searchRecords = function(e) {
 //     // console.log("search data: ", this);
@@ -164,6 +171,7 @@ const updateScoreBoard = function(cur, data) {
 
 
     // page nav
+
     const pageNavDiv = document.createElement("div");
     pageNavDiv.classList.add("page-nav");
 
@@ -171,20 +179,16 @@ const updateScoreBoard = function(cur, data) {
     // check if first or last page
     // prev
     const pageNavPrev = document.createElement("div");
-    // if (whichPage === 0) {
-    //     pageNavPrev.classList.add("disappear");
-    // } else {
-    //     pageNavPrev.classList.remove("disappear")
-    // }
     pageNavPrev.classList.add("page-arrow");
     pageNavPrev.textContent = "<";
-    // need to use callback instead of anon func
-    pageNavPrev.addEventListener("click", () => {
+
+    const prevPage = function() {
         if (whichPage >= 1) whichPage-=1;
-        pageNavCur.textContent = `${whichPage+1}/${Math.ceil(data.length/5)}`;
+        pageNavCur.textContent = `${whichPage+1}/${Math.ceil(this.length/5)}`;
         scoreTableRow.textContent = "";
-        scoreTableRow = showRows(scoreTableRow, data, whichPage);
-    }); // unfinished
+        scoreTableRow = showRows(scoreTableRow, this, whichPage);
+    };
+    pageNavPrev.addEventListener("click", prevPage.bind(data));
     
     // cur
     // if (pageNavCur !== null) pageNavCur.remove();
@@ -201,14 +205,14 @@ const updateScoreBoard = function(cur, data) {
     // }
     pageNavNext.classList.add("page-arrow");
     pageNavNext.textContent = ">";
-    pageNavNext.addEventListener("click", () => {
-        if (whichPage < Math.ceil(data.length/5)-1) whichPage+=1;
-        pageNavCur.textContent = `${whichPage+1}/${Math.ceil(data.length/5)}`;
-        console.log("next", whichPage);
+
+    const nextPage = function() {
+        if (whichPage < Math.ceil(this.length/5)-1) whichPage+=1; // rmb whichPage starts from 0
+        pageNavCur.textContent = `${whichPage+1}/${Math.ceil(this.length/5)}`;
         scoreTableRow.textContent = "";
-        console.log("next table", scoreTableRow);
-        scoreTableRow = showRows(scoreTableRow, data, whichPage);
-    });
+        scoreTableRow = showRows(scoreTableRow, this, whichPage);
+    };
+    pageNavNext.addEventListener("click", nextPage.bind(data));
 
     pageNavDiv.append(pageNavPrev, pageNavCur, pageNavNext);
     
@@ -228,14 +232,32 @@ const updateScoreBoard = function(cur, data) {
         // console.log(rankedData);
         // const allRankedRecordsArr = Object.entries(this);
         // console.log("allRankedRecordsArr: ", allRankedRecordsArr);
+        pageNavPrev.removeEventListener("click", prevPage);
+        pageNavNext.removeEventListener("click", nextPage);
 
         const foundRecords = data.filter((rec) => rec.pname.toLowerCase().includes(e.target.value.toLowerCase()));
         console.log("foundRecords: ", foundRecords);
         scoreTableRow.textContent = "";
+        whichPage = 0;
+        pageNavCur.textContent = `${whichPage+1}/${Math.ceil(foundRecords.length/5)}`;
+
         if (foundRecords.length !== 0) {
-            whichPage = 0;
             showRows(scoreTableRow, foundRecords, whichPage);
-            pageNavCur.textContent = `${whichPage+1}/${Math.ceil(foundRecords.length/5)}`;
+            pageNavPrev.addEventListener("click", () => {
+                if (whichPage >= 1) whichPage-=1;
+                pageNavCur.textContent = `${whichPage+1}/${Math.ceil(foundRecords.length/5)}`;
+                scoreTableRow.textContent = "";
+                scoreTableRow = showRows(scoreTableRow, foundRecords, whichPage);
+            });
+            pageNavNext.addEventListener("click", () => {
+                if (whichPage <= Math.ceil(foundRecords.length/5)-1) whichPage+=1;
+                pageNavCur.textContent = `${whichPage+1}/${Math.ceil(foundRecords.length/5)}`;
+                scoreTableRow.textContent = "";
+                console.log("search next table", scoreTableRow);
+                console.log("search foundRecords: ", foundRecords);
+                console.log("search next page num: ", whichPage);
+                scoreTableRow = showRows(scoreTableRow, foundRecords, whichPage);
+            });
         }
     
     });
