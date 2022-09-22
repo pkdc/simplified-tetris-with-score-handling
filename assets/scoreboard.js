@@ -14,6 +14,34 @@ export const nextRound = function(gameBoard) {
     // round++;
 };
 
+
+const submitHandler = function(e) {
+    e.preventDefault();
+    console.log("subHan");
+    // const rForm = document.querySelector(".score-form");
+
+    const formFields = new FormData(e.target);
+    console.log("formFields: ", [...formFields]);
+    const payload = Object.fromEntries(formFields.entries());
+    console.log("payload: ", payload);
+
+    // console.log("pay Json", JSON.stringify(payload))
+    const reqOptions = {
+        method: "POST",
+        body: JSON.stringify(payload) // doesn't recognise body??
+    };
+    console.log("req body", reqOptions.body)
+
+    // since the API will return the latest records
+    // const testUrl = "http://httpbin.org/post";
+    fetch(recordUrl, reqOptions) 
+    .then(req => req.json())
+    .then(data => {
+        console.log("returned data: ", data);
+        updateScoreBoard(payload, data);
+    })
+}
+
 const showUnfilledPage = function(scoreTableRow, data, whichPage) {
     console.log("last unfilled page: ", Math.ceil(data.length/5)-1);
     let remainder = {};
@@ -103,12 +131,17 @@ const showRows = function(scoreTableRow, data, whichPage) {
 //     console.log("foundRecords: ", foundRecords);
 // };
 
+const preventRefresh = function(e) {
+    e.preventDefault();
+};
+
 // scoreboard
 const updateScoreBoard = function(cur, data) {
     // console.log("Creating scoreBoard", data)
     recordForm.textContent = "";
     // remove submit handler
-    recordForm.removeEventListener("keydown", submitHandler);
+    recordForm.removeEventListener("submit", submitHandler);
+    recordForm.addEventListener("submit", preventRefresh);
 
     const searchDiv = document.createElement("div");
     searchDiv.classList.add("search");
@@ -218,10 +251,18 @@ const updateScoreBoard = function(cur, data) {
     console.log("y pageNavNext",pageNavPrev.onclick);
     console.log("y pageNavNext",pageNavNext.onclick);
 
+    const noResultMsg = document.createElement("p");
+    noResultMsg.textContent = "No Record Is Found";
+    noResultMsg.classList.add("no-result");
+    noResultMsg.classList.add("hide");
+
     // putting all divs tgt
-    recordForm.append(endMsgDiv, searchDiv, scoreTableHeader, scoreTableRow, pageNavDiv);
+    recordForm.append(endMsgDiv, searchDiv, scoreTableHeader, scoreTableRow, pageNavDiv, noResultMsg);
 
     searchInput.addEventListener("input", (e) => {
+        scoreTableHeader.style.willChange = "opacity";
+        pageNavDiv.style.willChange = "opacity";
+        noResultMsg.style.willChange = "opacity";
         // pageNavNext.removeEventListener("click", nextPage);
         pageNavPrev.onclick = null;
         pageNavNext.onclick = null;
@@ -234,24 +275,25 @@ const updateScoreBoard = function(cur, data) {
         whichPage = 0;
         pageNavCur.textContent = `${whichPage+1}/${Math.ceil(foundRecords.length/5)}`;
 
-        const noResultMsg = document.createElement("p");
-        noResultMsg.textContent = "No Record Is Found";
-        noResultMsg.classList.add("disappear");
         recordForm.append(noResultMsg);
 
         if (foundRecords.length !== 0) {
-            scoreTableHeader.classList.remove("disappear");
-            pageNavDiv.classList.remove("disappear");
+            scoreTableHeader.classList.remove("hide");
+            pageNavDiv.classList.remove("hide");
+            noResultMsg.classList.add("hide");
             showRows(scoreTableRow, foundRecords, whichPage);
             // pageNavPrev.addEventListener(prevPage.bind(foundRecords));
             // pageNavNext.addEventListener(nextPage.bind(foundRecords));
             pageNavPrev.onclick = prevPage.bind(foundRecords);
             pageNavNext.onclick =  nextPage.bind(foundRecords);
         } else {
-            scoreTableHeader.classList.add("disappear");
-            pageNavDiv.classList.add("disappear");
-            noResultMsg.classList.remove("disappear");
+            scoreTableHeader.classList.add("hide");
+            pageNavDiv.classList.add("hide");
+            noResultMsg.classList.remove("hide");
         }
+        scoreTableHeader.style.willChange = "auto";
+        pageNavDiv.style.willChange = "auto";
+        noResultMsg.style.willChange = "auto";
     });
 
     // searchInput.addEventListener("input", searchRecords.bind(rankedData));
@@ -266,33 +308,6 @@ const updateScoreBoard = function(cur, data) {
 //     })
 //     console.log("scoreboard shown");
 // }
-
-const submitHandler = function(e) {
-    e.preventDefault();
-    console.log("subHan");
-    // const rForm = document.querySelector(".score-form");
-
-    const formFields = new FormData(e.target);
-    console.log("formFields: ", [...formFields]);
-    const payload = Object.fromEntries(formFields.entries());
-    console.log("payload: ", payload);
-
-    // console.log("pay Json", JSON.stringify(payload))
-    const reqOptions = {
-        method: "POST",
-        body: JSON.stringify(payload) // doesn't recognise body??
-    };
-    console.log("req body", reqOptions.body)
-
-    // since the API will return the latest records
-    // const testUrl = "http://httpbin.org/post";
-    fetch(recordUrl, reqOptions) 
-    .then(req => req.json())
-    .then(data => {
-        console.log("returned data: ", data);
-        updateScoreBoard(payload, data);
-    })
-}
 
 const body = document.querySelector("body");
 export const scoreBoardDiv = document.createElement('div');
