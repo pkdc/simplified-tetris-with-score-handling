@@ -14,34 +14,6 @@ export const nextRound = function(gameBoard) {
     // round++;
 };
 
-
-const submitHandler = function(e) {
-    e.preventDefault();
-    console.log("subHan");
-    // const rForm = document.querySelector(".score-form");
-
-    const formFields = new FormData(e.target);
-    console.log("formFields: ", [...formFields]);
-    const payload = Object.fromEntries(formFields.entries());
-    console.log("payload: ", payload);
-
-    // console.log("pay Json", JSON.stringify(payload))
-    const reqOptions = {
-        method: "POST",
-        body: JSON.stringify(payload) // doesn't recognise body??
-    };
-    console.log("req body", reqOptions.body)
-
-    // since the API will return the latest records
-    // const testUrl = "http://httpbin.org/post";
-    fetch(recordUrl, reqOptions) 
-    .then(req => req.json())
-    .then(data => {
-        console.log("returned data: ", data);
-        updateScoreBoard(payload, data);
-    })
-}
-
 const showUnfilledPage = function(scoreTableRow, data, whichPage) {
     console.log("last unfilled page: ", Math.ceil(data.length/5)-1);
     let remainder = {};
@@ -301,15 +273,44 @@ const updateScoreBoard = function(cur, data) {
     // searchInput.addEventListener("input", searchRecords.bind(rankedData));
 }
 
-// const showUpdatedScoreBoard = function(cur, data) {
-//     fetch(recordUrl)
-//     .then(req => req.json())
-//     .then(data => {
-//         console.log("league table", data)
-//         updateScoreBoard(cur, data);
-//     })
-//     console.log("scoreboard shown");
-// }
+const showUpdatedScoreBoard = function(cur) {
+    fetch(recordUrl)
+    .then(req => req.json())
+    .then(data => {
+        console.log("league table", data)
+        updateScoreBoard(cur, data);
+    })
+    console.log("scoreboard shown");
+}
+
+const submitHandler = function(e) {
+    e.preventDefault();
+    console.log("subHan");
+    // const rForm = document.querySelector(".score-form");
+
+    const formFields = new FormData(e.target);
+    console.log("formFields: ", [...formFields]);
+    const payload = Object.fromEntries(formFields.entries());
+    console.log("payload: ", payload);
+
+    // console.log("pay Json", JSON.stringify(payload))
+    const reqOptions = {
+        method: "POST",
+        body: JSON.stringify(payload) // doesn't recognise body??
+    };
+    console.log("req body", reqOptions.body)
+
+    // since the API will return the latest records
+    // const testUrl = "http://httpbin.org/post";
+    fetch(recordUrl, reqOptions) 
+    .then(() => showUpdatedScoreBoard(payload));
+    // .then(req => req.json())
+    // .then(data => {
+    //     console.log("returned data: ", data);
+    //     // updateScoreBoard(payload, data);
+    //     showUpdatedScoreBoard(payload);
+    // })
+}
 
 const body = document.querySelector("body");
 export const scoreBoardDiv = document.createElement('div');
