@@ -80,9 +80,16 @@ body {
 .search {
     display: flex;
     justify-content: center;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
 }
-
+.search-label {
+    margin-right: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+.search-input {
+    font-size: 1.5rem;
+}
 .score-table-header,
 .score-table-row {
     display: grid;
@@ -114,10 +121,13 @@ body {
 .page-nav {
     display: flex;
     justify-content: center;
+    margin: 1rem;
 }
 .page-arrow {
+    margin: 0.5rem;
+    padding: 1.2rem;
     font-weight: 700;
-    font-size: 3rem;
+    font-size: 2.5rem;
 }
 
 .no-result {

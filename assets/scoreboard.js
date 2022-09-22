@@ -146,11 +146,13 @@ const updateScoreBoard = function(cur, data) {
     const searchDiv = document.createElement("div");
     searchDiv.classList.add("search");
     const searchLabelDiv = document.createElement("div");
+    searchLabelDiv.classList.add("search-label");
     const searchLabel = document.createElement("label");
     searchLabel.textContent = "Search records: ";
     searchLabel.setAttribute("for", "search");
     searchLabelDiv.append(searchLabel);
     const searchInputDiv = document.createElement("div");
+    searchInputDiv.classList.add("search-input");
     const searchInput = document.createElement("input");
     searchInput.setAttribute("id", "search");
     searchInput.setAttribute("type", "text");
