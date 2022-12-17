@@ -280,6 +280,7 @@ const showUpdatedScoreBoard = function(cur) {
         console.log("league table", data)
         updateScoreBoard(cur, data);
     })
+    .catch((err) => console.log(`Failed to get game record ${err}`));
     console.log("scoreboard shown");
 }
 
@@ -303,13 +304,14 @@ const submitHandler = function(e) {
     // since the API will return the latest records
     // const testUrl = "http://httpbin.org/post";
     fetch(recordUrl, reqOptions) 
-    .then(() => showUpdatedScoreBoard(payload));
+    .then(() => showUpdatedScoreBoard(payload))
     // .then(req => req.json())
     // .then(data => {
     //     console.log("returned data: ", data);
     //     // updateScoreBoard(payload, data);
     //     showUpdatedScoreBoard(payload);
     // })
+    .catch((err) => console.log(`Failed to submit record for storing ${err}`));
 }
 
 const body = document.querySelector("body");
