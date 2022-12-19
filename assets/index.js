@@ -129,6 +129,10 @@ const run = function() {
     console.log("in run");
     timeDisplay.textContent = `${gameTimer.time}`;
     scoreDisplay.textContent = `Score: ${score}`;
+    if (curBlocks.endGame) {
+        gameover();
+        return;
+    }
     waitID = requestAnimationFrame(checkWait);
 }
 
@@ -167,10 +171,13 @@ const enterPlayerName = function() {
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
         console.log("Esc");
-        cancelAnimationFrame(runID);
-        cancelAnimationFrame(waitID);
-        enterPlayerName();
+        gameover();
     }
 })
 
+const gameover = function() {
+    cancelAnimationFrame(runID);
+    cancelAnimationFrame(waitID);
+    enterPlayerName();
+}
 // temp game over

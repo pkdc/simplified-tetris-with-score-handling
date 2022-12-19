@@ -1,7 +1,7 @@
 "use strict";
 import {nextRound} from './scoreboard.js';
 class tetrisBlock {
-    constructor(x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape, locked) {
+    constructor(x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape, locked, end) {
         this.x1 = x1;
         this.y1 = y1;
         this.x2 = x2;
@@ -13,6 +13,7 @@ class tetrisBlock {
         this.blockColour = blockColour;
         this.shape = shape;
         this.locked = locked;
+        this.end = end;
         // this.canMove = canMove;
       }
 
@@ -41,6 +42,11 @@ class tetrisBlock {
       // set setCanMove(able) {
       //   this._canMove = able;
       // }
+
+      get endGame() {
+        // console.log("get end", this.end);
+        return this.end;
+      }
 
       // slowFall
       fall(curBlocks, gameBoard) {
@@ -83,7 +89,9 @@ class tetrisBlock {
 
         if (collide && (this.y1 <= 0 || this.y2 <= 0 || this.y3 <= 0 || this.y4 <= 0)) {
           // end the game
-          console.log("Game over");
+          this.end = true;
+          console.log("Game over", "end: ", this.end);
+          return;
         }
 
         // lock the blocks
@@ -218,11 +226,12 @@ class tetrisBlock {
       static generateTBlock(gameBoard) {
         nextRound(gameBoard);
         console.log("maxX", gameBoard.getMaxX);
-        let x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape, locked;
+        let x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape, locked, end;
         const rand = Math.floor(Math.random()*2);
         // const rand = 1;
         // const rand = 0;
         console.log(`generate new ${rand}`);
+        
         switch(rand) {
           case 0: // rectangle
             x1 = gameBoard.getMaxX/2 - 2;
@@ -236,6 +245,7 @@ class tetrisBlock {
             blockColour = "skyblue";
             shape = "rect";
             locked = false;
+        end = false;
             break;
           case 1: // sq
             x1 = gameBoard.getMaxX/2 - 1;
@@ -250,13 +260,14 @@ class tetrisBlock {
             blockColour = "yellow";
             shape = "sq";
             locked = false;
+        end = false;
             break;
         }
         console.log(x1, y1);
         console.log(x2, y2);
         console.log(x3, y3);
         console.log(x4, y4);
-        return [x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape, locked];
+        return [x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape, locked, end];
       }
 
       static newBlocks(curBlocks, gameBoard) {
