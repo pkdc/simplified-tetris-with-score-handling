@@ -81,6 +81,11 @@ class tetrisBlock {
         });
         console.log("collided", collide);
 
+        if (collide && (this.y1 <= 0 || this.y2 <= 0 || this.y3 <= 0 || this.y4 <= 0)) {
+          // end the game
+          console.log("Game over");
+        }
+
         // lock the blocks
         if (this.y1 >= gameBoard.getMaxY-1 || this.y2 >= gameBoard.getMaxY-1 || this.y3 >= gameBoard.getMaxY-1 || this.y4 >= gameBoard.getMaxY-1 || collide) {
           // console.log("can't move");
@@ -93,7 +98,8 @@ class tetrisBlock {
           const returnBlocks = tetrisBlock.newBlocks(curBlocks, gameBoard);
 
           return returnBlocks;
-        } 
+        }
+        
         
         // move the blocks down by 1
         this.y1 += 1;

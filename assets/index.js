@@ -127,7 +127,7 @@ const run = function() {
     wait = 1000;
     prevTime = null;
     console.log("in run");
-    timeDisplay.textContent = `${gameTimer.getTime()}`;
+    timeDisplay.textContent = `${gameTimer.time}`;
     scoreDisplay.textContent = `Score: ${score}`;
     waitID = requestAnimationFrame(checkWait);
 }
@@ -173,4 +173,4 @@ document.addEventListener("keydown", (e) => {
     }
 })
 
-// temp game over 
+// temp game over

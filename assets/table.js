@@ -23,11 +23,11 @@ class gameArea {
         for (let j = 0; j < this.maxY; j++) {
             const line = document.querySelectorAll(`.y-${j}`);
             let lineArr = [...line];
-            console.log(lineArr);
+            // console.log(lineArr);
             let wholeLine;
             // let wholeLine = true;
             wholeLine = lineArr.every((el) => el.classList.contains("occupied"));
-            console.log("wholeLine", wholeLine);
+            // console.log("wholeLine", wholeLine);
             if (wholeLine) {
                 score += 100;
                 // line.forEach(el => el.remove());

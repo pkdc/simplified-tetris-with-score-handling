@@ -19,7 +19,7 @@ class timer {
     //     this.checkPauseDur();
     //     return Math.floor((this.playTime/1000)%60).toString().padStart(2, "0");
     // }
-    getTime() {
+    get time() {
         // console.log("pause duration be4", this.pauseDur);
         // this.checkPauseDur();
         const totalPrevPauseDur = this._prevPauseDurs.reduce((prev, cur) => prev+cur, 0);
