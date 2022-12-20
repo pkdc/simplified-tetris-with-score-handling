@@ -129,6 +129,13 @@ const run = function() {
     console.log("in run");
     timeDisplay.textContent = `${gameTimer.time}`;
     scoreDisplay.textContent = `Score: ${score}`;
+    if (curBlocks.endGame) {
+        gameover();
+        return;
+    }
+    if (curBlocks.endSoon) {
+        scoreBoardDiv.style.willChange = "opacity";
+    }
     waitID = requestAnimationFrame(checkWait);
 }
 
@@ -161,16 +168,20 @@ const enterPlayerName = function() {
     scoreInput.setAttribute("value", `${score}`);
     setId();
     scoreBoardDiv.classList.add("show");
+    scoreBoardDiv.style.willChange = "auto";
 }
 
 // test
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
         console.log("Esc");
-        cancelAnimationFrame(runID);
-        cancelAnimationFrame(waitID);
-        enterPlayerName();
+        gameover();
     }
 })
 
+const gameover = function() {
+    cancelAnimationFrame(runID);
+    cancelAnimationFrame(waitID);
+    enterPlayerName();
+}
 // temp game over
