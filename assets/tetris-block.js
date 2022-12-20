@@ -48,6 +48,10 @@ class tetrisBlock {
         return this.end;
       }
 
+      get endSoon() {
+        return this.soon;
+      }
+
       // slowFall
       fall(curBlocks, gameBoard) {
         // console.log(this);
@@ -92,6 +96,11 @@ class tetrisBlock {
           this.end = true;
           console.log("Game over", "end: ", this.end);
           return;
+        }
+
+        if (collide && (this.y1 === 1 || this.y2 === 1 || this.y3 === 1 || this.y4 === 1)) {
+          this.soon = true;
+          console.log("ending soon", "soon: ", this.soon);
         }
 
         // lock the blocks
@@ -226,7 +235,10 @@ class tetrisBlock {
       static generateTBlock(gameBoard) {
         nextRound(gameBoard);
         console.log("maxX", gameBoard.getMaxX);
-        let x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape, locked, end;
+        let x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape;
+        let locked = false;
+        let end = false;
+        let soon = false;
         const rand = Math.floor(Math.random()*2);
         // const rand = 1;
         // const rand = 0;
@@ -244,8 +256,6 @@ class tetrisBlock {
             y4 = 0;
             blockColour = "skyblue";
             shape = "rect";
-            locked = false;
-        end = false;
             break;
           case 1: // sq
             x1 = gameBoard.getMaxX/2 - 1;
@@ -259,8 +269,6 @@ class tetrisBlock {
             y4 = 1;
             blockColour = "yellow";
             shape = "sq";
-            locked = false;
-        end = false;
             break;
         }
         console.log(x1, y1);

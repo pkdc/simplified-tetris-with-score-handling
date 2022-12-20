@@ -133,6 +133,9 @@ const run = function() {
         gameover();
         return;
     }
+    if (curBlocks.endSoon) {
+        scoreBoardDiv.style.willChange = "opacity";
+    }
     waitID = requestAnimationFrame(checkWait);
 }
 
