@@ -168,6 +168,7 @@ const enterPlayerName = function() {
     scoreInput.setAttribute("value", `${score}`);
     setId();
     scoreBoardDiv.classList.add("show");
+    scoreBoardDiv.style.willChange = "auto";
 }
 
 // test
