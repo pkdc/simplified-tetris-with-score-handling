@@ -1,15 +1,14 @@
 "use strict";
 import {nextRound} from './scoreboard.js';
+import Block from './block.js';
 class tetrisBlock {
     constructor(x1, y1, x2, y2, x3, y3, x4, y4, blockColour, shape, locked, end) {
-        this.x1 = x1;
-        this.y1 = y1;
-        this.x2 = x2;
-        this.y2 = y2;
-        this.x3 = x3;
-        this.y3 = y3;
-        this.x4 = x4;
-        this.y4 = y4;
+        this.blocks = [
+          new Block(x1, y1),
+          new Block(x2, y2),
+          new Block(x3, y3),
+          new Block(x4, y4),
+        ]
         this.blockColour = blockColour;
         this.shape = shape;
         this.locked = locked;
@@ -55,20 +54,29 @@ class tetrisBlock {
       // slowFall
       fall(curBlocks, gameBoard) {
         // console.log(this);
-        let block1 = document.querySelector(`.x-${this.x1}.y-${this.y1}`);
-        let block2 = document.querySelector(`.x-${this.x2}.y-${this.y2}`);
-        let block3 = document.querySelector(`.x-${this.x3}.y-${this.y3}`);
-        let block4 = document.querySelector(`.x-${this.x4}.y-${this.y4}`);
+        // let block1 = document.querySelector(`.x-${this.x1}.y-${this.y1}`);
+        // let block2 = document.querySelector(`.x-${this.x2}.y-${this.y2}`);
+        // let block3 = document.querySelector(`.x-${this.x3}.y-${this.y3}`);
+        // let block4 = document.querySelector(`.x-${this.x4}.y-${this.y4}`);
 
-        let blockArr = [block1, block2, block3, block4];
+        // let blockArr = [block1, block2, block3, block4];
 
-        let nextBlock1 = document.querySelector(`.x-${this.x1}.y-${this.y1+1}`);
-        let nextBlock2 = document.querySelector(`.x-${this.x2}.y-${this.y2+1}`);
-        let nextBlock3 = document.querySelector(`.x-${this.x3}.y-${this.y3+1}`);
-        let nextBlock4 = document.querySelector(`.x-${this.x4}.y-${this.y4+1}`);
-        let nextBlockArr = [nextBlock1,nextBlock2,nextBlock3,nextBlock4]
+        // let nextBlock1 = document.querySelector(`.x-${this.x1}.y-${this.y1+1}`);
+        // let nextBlock2 = document.querySelector(`.x-${this.x2}.y-${this.y2+1}`);
+        // let nextBlock3 = document.querySelector(`.x-${this.x3}.y-${this.y3+1}`);
+        // let nextBlock4 = document.querySelector(`.x-${this.x4}.y-${this.y4+1}`);
+        // let nextBlockArr = [nextBlock1,nextBlock2,nextBlock3,nextBlock4]
 
-        let collide = false;
+        this.blocks.forEach((block) => {
+          block.y += 1;
+        });
+
+        let collide = this.blocks.some((block) => {
+          let nextBlock = document.querySelector(`.x-${block.x}.y-${block.y+1}`);
+          return nextBlock && nextBlock.classList.contains("occupied");
+        });
+
+        // let collide = false;
 
         // if (blockArr.some(el => el.classList.contains("occupied"))) {
         //   blockArr.forEach(blk => blk.classList.add("occupied"));
@@ -76,7 +84,7 @@ class tetrisBlock {
         // }
         // console.log(blockArr.some((el) => el.classList.contains("occupied")))
         // collide = blockArr.some((el) => el.classList.contains("occupied"));
-        collide = nextBlockArr.some((el) => {
+        // collide = nextBlockArr.some((el) => {
         //   // const bStyles = window.getComputedStyle(el);
         //   // const bBGColour = bStyles.getPropertyValue("background-color");
         //   // console.log(bBGColour);
@@ -86,9 +94,9 @@ class tetrisBlock {
         //   // }
         //   // console.log("collided");
         //   // if (this.y1 !== 0 || this.y2 !== 0 || this.y3 !== 0 || this.y4 !== 0 || this.y1 !== 1 || this.y2 !== 1 || this.y3 !== 1 || this.y4 !== 1 ) {
-            return el.classList.contains("occupied");
-        //   // }
-        });
+        //     return el.classList.contains("occupied");
+        // //   // }
+        // });
         console.log("collided", collide);
 
         if (collide && (this.y1 <= 0 || this.y2 <= 0 || this.y3 <= 0 || this.y4 <= 0)) {
@@ -116,8 +124,8 @@ class tetrisBlock {
 
           return returnBlocks;
         }
-        
-        
+
+
         // move the blocks down by 1
         this.y1 += 1;
         this.y2 += 1;
@@ -148,7 +156,7 @@ class tetrisBlock {
         if (nextBlockArr.some((el) => el.classList.contains("occupied"))) {
           return;
         }
-        
+
         // move right
         console.log(this);
         this.x1 += 1;
@@ -243,7 +251,7 @@ class tetrisBlock {
         // const rand = 1;
         // const rand = 0;
         console.log(`generate new ${rand}`);
-        
+
         switch(rand) {
           case 0: // rectangle
             x1 = gameBoard.getMaxX/2 - 2;
@@ -296,7 +304,7 @@ export default tetrisBlock;
 // tetrisBlock.prototype.slowDrop = function() {
 
 // };
-// tetrisBlock.prototype.rotate 
+// tetrisBlock.prototype.rotate
 // tetrisBlock.prototype.moveRight
 // tetrisBlock.prototype.moveLeft
 // tetrisBlock.prototype.fastDrop
