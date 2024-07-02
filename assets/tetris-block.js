@@ -67,10 +67,6 @@ class tetrisBlock {
         // let nextBlock4 = document.querySelector(`.x-${this.x4}.y-${this.y4+1}`);
         // let nextBlockArr = [nextBlock1,nextBlock2,nextBlock3,nextBlock4]
 
-        this.blocks.forEach((block) => {
-          block.y += 1;
-        });
-
         let collide = this.blocks.some((block) => {
           let nextBlock = document.querySelector(`.x-${block.x}.y-${block.y+1}`);
           return nextBlock && nextBlock.classList.contains("occupied");
@@ -99,42 +95,43 @@ class tetrisBlock {
         // });
         console.log("collided", collide);
 
-        if (collide && (this.y1 <= 0 || this.y2 <= 0 || this.y3 <= 0 || this.y4 <= 0)) {
+        if (collide && this.blocks.some(block => block.y <= 0)) {
           // end the game
           this.end = true;
           console.log("Game over", "end: ", this.end);
           return;
         }
 
-        if (collide && (this.y1 === 1 || this.y2 === 1 || this.y3 === 1 || this.y4 === 1)) {
+        if (collide && this.blocks.some(block => block.y === 1)) {
           this.soon = true;
           console.log("ending soon", "soon: ", this.soon);
         }
 
-        // lock the blocks
-        if (this.y1 >= gameBoard.getMaxY-1 || this.y2 >= gameBoard.getMaxY-1 || this.y3 >= gameBoard.getMaxY-1 || this.y4 >= gameBoard.getMaxY-1 || collide) {
+        // lock the blocks if collided or reached the bottom
+        if (this.blocks.some(block => block.y >= gameBoard.getMaxY-1 || collide)) {
           // console.log("can't move");
           this.locked = true;
-          for (const el of blockArr) {
-            el.classList.add("occupied");
-            el.style.background = this.blockColour;
-          }
+
+          this.blocks.forEach((block) => {
+            let domBlock = document.querySelector(`.x-${block.x}.y-${block.y}`);
+            domBlock.classList.add("occupied");
+            domBlock.style.background = this.blockColour; // why?
+          });
+
           // console.log(this.locked);
           const returnBlocks = tetrisBlock.newBlocks(curBlocks, gameBoard);
 
           return returnBlocks;
         }
 
-
-        // move the blocks down by 1
-        this.y1 += 1;
-        this.y2 += 1;
-        this.y3 += 1;
-        this.y4 += 1;
-
         // remove the prev occupied class after moving out the pixel
-        blockArr.forEach(function(el) {
-          el.classList.remove("occupied");
+        // move the blocks down by 1
+        this.blocks.forEach((block) => {
+          let prevDomBlock = document.querySelector(`.x-${block.x}.y-${block.y}`);
+          if (prevDomBlock) {
+            prevDomBlock.classList.remove("occupied");
+          }
+          block.y += 1;
         });
 
         return;
@@ -142,32 +139,26 @@ class tetrisBlock {
 
       // check if there is a wall next to it
       mvRight(maxX) {
-        if (this.x1 === maxX-1 || this.x2 === maxX-1 || this.x3 === maxX-1 || this.x4 === maxX-1) {
+        if (this.blocks.some(block => block.x === maxX-1)) {
           return;
         }
 
         // check if there is another block
-        let nextBlock1 = document.querySelector(`.x-${this.x1+1}.y-${this.y1}`);
-        let nextBlock2 = document.querySelector(`.x-${this.x2+1}.y-${this.y2}`);
-        let nextBlock3 = document.querySelector(`.x-${this.x3+1}.y-${this.y3}`);
-        let nextBlock4 = document.querySelector(`.x-${this.x4+1}.y-${this.y4}`);
-        let nextBlockArr = [nextBlock1,nextBlock2,nextBlock3,nextBlock4]
+        let nextBlockArr = this.blocks.map(block => document.querySelector(`.x-${block.x+1}.y-${block.y}`));
 
         if (nextBlockArr.some((el) => el.classList.contains("occupied"))) {
           return;
         }
 
         // move right
-        console.log(this);
-        this.x1 += 1;
-        this.x2 += 1;
-        this.x3 += 1;
-        this.x4 += 1;
+        this.blocks.forEach(block => {
+          block.x += 1;
+        });
       }
 
       mvLeft() {
         // check if there is a wall next to it
-        if (this.x1 === 0 || this.x2 === 0 || this.x3 === 0 || this.x4 === 0) {
+        if (this.blocks.some(block => block.x === 0)) {
           return;
         }
 
@@ -183,10 +174,9 @@ class tetrisBlock {
         }
 
         // move left
-        this.x1 -= 1;
-        this.x2 -= 1;
-        this.x3 -= 1;
-        this.x4 -= 1;
+        this.blocks.forEach(block => {
+          block.x -= 1;
+        });
       }
 
       // rotate
