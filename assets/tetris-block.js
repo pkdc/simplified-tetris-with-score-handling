@@ -163,7 +163,7 @@ class tetrisBlock {
         }
 
         // check if there is another block
-        let nextBlockArr = this.blocks.map(block => document.querySelector('.x-${block.x-1}.y-${block.y}'))
+        let nextBlockArr = this.blocks.map(block => document.querySelector(`.x-${block.x-1}.y-${block.y}`))
         // let nextBlock1 = document.querySelector(`.x-${this.x1-1}.y-${this.y1}`);
         // let nextBlock2 = document.querySelector(`.x-${this.x2-1}.y-${this.y2}`);
         // let nextBlock3 = document.querySelector(`.x-${this.x3-1}.y-${this.y3}`);
@@ -196,6 +196,10 @@ class tetrisBlock {
       }
 
       erase() {
+        this.blocks.forEach((block => {
+          let domBlock = document.querySelector(`.x-${block.x}.y-${block.y}`)
+          domBlock.style.background = "var(--grey)";
+        }))
         // let block1 = document.querySelector(`.x-${this.x1}.y-${this.y1}`);
         // let block2 = document.querySelector(`.x-${this.x2}.y-${this.y2}`);
         // let block3 = document.querySelector(`.x-${this.x3}.y-${this.y3}`);
