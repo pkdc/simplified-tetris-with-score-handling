@@ -182,9 +182,7 @@ class tetrisBlock {
         let locked = false;
         let end = false;
         let soon = false;
-        const rand = Math.floor(Math.random()*2);
-        // const rand = 1;
-        // const rand = 0;
+        const rand = Math.floor(Math.random()*6);
         console.log(`generate new ${rand}`);
 
         switch(rand) {
@@ -207,11 +205,70 @@ class tetrisBlock {
             y2 = 0;
             x3 = gameBoard.getMaxX/2 - 1;
             y3 = 1;
-            x4 = gameBoard.getMaxX
-            /2;
+            x4 = gameBoard.getMaxX/2;
             y4 = 1;
             blockColour = "yellow";
             shape = "sq";
+            break;
+          case 2: // L
+            x1 = gameBoard.getMaxX/2 - 1;
+            y1 = 0;
+            x2 = gameBoard.getMaxX/2 - 1;
+            y2 = 1;
+            x3 = gameBoard.getMaxX/2 - 1;
+            y3 = 2;
+            x4 = gameBoard.getMaxX/2;
+            y4 = 2;
+            blockColour = "orange";
+            shape = "L";
+            break;
+          case 3: // T
+            x1 = gameBoard.getMaxX/2 - 1;
+            y1 = 0;
+            x2 = gameBoard.getMaxX/2;
+            y2 = 0;
+            x3 = gameBoard.getMaxX/2 + 1;
+            y3 = 0;
+            x4 = gameBoard.getMaxX/2;
+            y4 = 1;
+            blockColour = "purple";
+            shape = "T";
+            break;
+          case 4: // Z
+            x1 = gameBoard.getMaxX/2 - 1;
+            y1 = 0;
+            x2 = gameBoard.getMaxX/2;
+            y2 = 0;
+            x3 = gameBoard.getMaxX/2;
+            y3 = 1;
+            x4 = gameBoard.getMaxX/2 + 1;
+            y4 = 1;
+            blockColour = "red";
+            shape = "Z";
+            break;
+          case 5: // S
+            x1 = gameBoard.getMaxX/2 + 1;
+            y1 = 0;
+            x2 = gameBoard.getMaxX/2;
+            y2 = 0;
+            x3 = gameBoard.getMaxX/2;
+            y3 = 1;
+            x4 = gameBoard.getMaxX/2 - 1;
+            y4 = 1;
+            blockColour = "green";
+            shape = "S";
+            break;
+          case 6: // L-inverse
+            x1 = gameBoard.getMaxX/2 + 1;
+            y1 = 0;
+            x2 = gameBoard.getMaxX/2 + 1;
+            y2 = 1;
+            x3 = gameBoard.getMaxX/2 + 1;
+            y3 = 2;
+            x4 = gameBoard.getMaxX/2;
+            y4 = 2;
+            blockColour = "blue";
+            shape = "L-inverse";
             break;
         }
         console.log(x1, y1);
