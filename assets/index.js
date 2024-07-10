@@ -49,7 +49,7 @@ const slowDrop = function() {
         curBlocks = rBlocks;
     }
     curBlocks.colour();
-    // timeoutID = setTimeout(() => {    
+    // timeoutID = setTimeout(() => {
     //     globalID = requestAnimationFrame(slowDrop);
     // }, 500);
     return;
@@ -77,12 +77,15 @@ const moveLeft = function() {
     // blockGroup.style.right = `${mvLeft}px`;
 }
 
-// const rotateTBlock = function() {
-//     console.log(`rotate! ${curBlocks.shape}`);
-//     curBlocks.erase();
-//     curBlocks.rotate();
-//     curBlocks.colour();
-// }
+const rotateTBlock = function() {
+    console.log(`rotate! ${curBlocks.shape}`);
+    if (curBlocks.shape !== "sq") {
+        return;
+    }
+    curBlocks.erase();
+    curBlocks.rotate();
+    curBlocks.colour();
+}
 
 
 
@@ -99,10 +102,10 @@ document.addEventListener("keydown", (e) => {
         console.log("Left");
         moveLeft();
     }
-    // if (e.key === "ArrowUp") {
-    //     console.log("Up, rotate");
-    //     rotateTBlock();
-    // }
+    if (e.key === "ArrowUp") {
+        console.log("Up, rotate");
+        rotateTBlock();
+    }
 });
 
 const checkWait = function(timestamp) {

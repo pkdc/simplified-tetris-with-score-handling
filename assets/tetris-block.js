@@ -143,17 +143,9 @@ class tetrisBlock {
 
       // rotate
       rotate() {
-        // switch(this.shape) {
-        //   case "rect":
-        //     console.log(this.shape);
-        //     // just making it vertical...
-        //     this.x2 = this.x1;
-        //     this.x3 = this.x1;
-        //     this.x4 = this.x1
-        //     this.y2 = this.y1+1;
-        //     this.y3 = this.y1+2;
-        //     this.y4 = this.y1+3;
-        // }
+        if (this.shape === "rect") {
+
+        }
       }
 
       erase() {
