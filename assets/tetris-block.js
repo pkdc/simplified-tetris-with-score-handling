@@ -13,6 +13,7 @@ class tetrisBlock {
         this.shape = shape;
         this.locked = locked;
         this.end = end;
+        this.rotation = 0; // 0, 90, 180, 270 degrees
         // this.canMove = canMove;
       }
 
@@ -141,13 +142,6 @@ class tetrisBlock {
         });
       }
 
-      // rotate
-      rotate() {
-        if (this.shape === "rect") {
-
-        }
-      }
-
       erase() {
         this.blocks.forEach((block => {
           let domBlock = document.querySelector(`.x-${block.x}.y-${block.y}`)
@@ -155,15 +149,35 @@ class tetrisBlock {
         }))
       }
 
-      // colour
       colour() {
-        // if (!this.locked) {
-
-        // }
         this.blocks.forEach((block) => {
           let domBlock = document.querySelector(`.x-${block.x}.y-${block.y}`);
           domBlock.style.background = this.blockColour;
         });
+      }
+
+      rotate(gameBoard) {
+        // this.rotation = (this.rotation+90)%360;
+
+        let canRotate = true;
+
+        if (this.shape === "rect") {
+          // Determine New Positions for the Rectangle
+          let newPostions = [];
+          const centreX = Math.floor(this.blocks.reduce((sum, block) => sum + block.x, 0)/4); // AvgX
+          const centreY = Math.floor(this.blocks.reduce((sum, block) => sum + block.y, 0)/4); // AvgY
+
+          this.blocks.forEach(block => {
+            // rotate from horizontal to vertical
+            if (this.rotation === 0 || this.rotation === 180) {
+              newPostions.push({x: centreX, y: centreY - (block.x - centreX)});
+            } else { // rotate from vertical to horizontal
+              newPostions.push({x: centreX - (block.y - centreY), y: centreY});
+            }
+          })
+        }
+        this.erase();
+        this.colour();
       }
 
       // generate
