@@ -158,10 +158,11 @@ class tetrisBlock {
 
       rotate(gameBoard) {
         // this.rotation = (this.rotation+90)%360;
-
+        console.log("in rotate function");
         let canRotate = true;
 
         if (this.shape === "rect") {
+          console.log("try to rotate rect");
           // Determine New Positions for the Rectangle
           let newPostions = [];
           const centreX = Math.floor(this.blocks.reduce((sum, block) => sum + block.x, 0)/4); // AvgX
@@ -175,7 +176,30 @@ class tetrisBlock {
               newPostions.push({x: centreX - (block.y - centreY), y: centreY});
             }
           })
+
+          // check if the new positions have no collision and out of bounds
+          canRotate = newPostions.every(newPos => {
+            return (
+              newPos.x >= 0 &&
+              newPos.x <= gameBoard.getMaxX-1 &&
+              newPos.y >= 0 &&
+              newPos.y <= gameBoard.getMaxY-1 &&
+              !document.querySelector(`.x-${newPos.x}.y-${newPos.y}`).classList.contains("occupied")
+            );
+          });
+
+          // Apply the rotation
+          if (canRotate) {
+            this.blocks.forEach((block, i) => {
+              block.x = newPostions[i].x;
+              block.y = newPostions[i].y;
+            });
+            this.rotation = (this.rotation + 90) % 360;
+          }
         }
+
+
+
         this.erase();
         this.colour();
       }

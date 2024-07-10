@@ -79,11 +79,12 @@ const moveLeft = function() {
 
 const rotateTBlock = function() {
     console.log(`rotate! ${curBlocks.shape}`);
-    if (curBlocks.shape !== "sq") {
+    if (curBlocks.shape === "sq") {
         return;
     }
+    console.log("rotate non sq");
     curBlocks.erase();
-    curBlocks.rotate();
+    curBlocks.rotate(gameBoard);
     curBlocks.colour();
 }
 
