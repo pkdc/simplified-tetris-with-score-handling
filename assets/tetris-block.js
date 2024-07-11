@@ -13,6 +13,7 @@ class tetrisBlock {
         this.shape = shape;
         this.locked = locked;
         this.end = end;
+        this.rotation = 0; // 0, 90, 180, 270 degrees
         // this.canMove = canMove;
       }
 
@@ -141,21 +142,6 @@ class tetrisBlock {
         });
       }
 
-      // rotate
-      rotate() {
-        // switch(this.shape) {
-        //   case "rect":
-        //     console.log(this.shape);
-        //     // just making it vertical...
-        //     this.x2 = this.x1;
-        //     this.x3 = this.x1;
-        //     this.x4 = this.x1
-        //     this.y2 = this.y1+1;
-        //     this.y3 = this.y1+2;
-        //     this.y4 = this.y1+3;
-        // }
-      }
-
       erase() {
         this.blocks.forEach((block => {
           let domBlock = document.querySelector(`.x-${block.x}.y-${block.y}`)
@@ -163,15 +149,74 @@ class tetrisBlock {
         }))
       }
 
-      // colour
       colour() {
-        // if (!this.locked) {
-
-        // }
         this.blocks.forEach((block) => {
           let domBlock = document.querySelector(`.x-${block.x}.y-${block.y}`);
           domBlock.style.background = this.blockColour;
         });
+      }
+
+      rotate(gameBoard) {
+        // this.rotation = (this.rotation+90)%360;
+        console.log("in rotate function");
+        let canRotate = true;
+
+        // Determine New Positions for the Rectangle
+        let newPostions = [];
+
+        if (this.shape === "rect") {
+          console.log("try to rotate rect");
+          const centreX = Math.floor(this.blocks.reduce((sum, block) => sum + block.x, 0)/4); // AvgX
+          const centreY = Math.floor(this.blocks.reduce((sum, block) => sum + block.y, 0)/4); // AvgY
+
+          this.blocks.forEach(block => {
+            // rotate from horizontal to vertical
+            if (this.rotation === 0 || this.rotation === 180) {
+              newPostions.push({x: centreX, y: centreY - (block.x - centreX)});
+            } else { // rotate from vertical to horizontal
+              newPostions.push({x: centreX - (block.y - centreY), y: centreY});
+            }
+          });
+        } else {
+          console.log("try to rotate other shapes");
+          const pivotX = this.blocks[1].x;
+          const pivotY = this.blocks[1].y;
+
+          newPostions = this.blocks.map(block => {
+            // rotate 90 degrees clockwise
+            // const xOffset = block.x - pivotX;
+            // const yOffset = block.y - pivotY;
+
+            // from simultaneous equation
+            // xn = -yo + xp + yp
+            // yn = xo - xp + yp
+            return {x: -block.y + pivotX + pivotY, y: block.x - pivotX + pivotY};
+          });
+        }
+
+        // check if the new positions have no collision and out of bounds
+        canRotate = newPostions.every(newPos => {
+          return (
+            newPos.x >= 0 &&
+            newPos.x <= gameBoard.getMaxX-1 &&
+            newPos.y >= 0 &&
+            newPos.y <= gameBoard.getMaxY-1 &&
+            !document.querySelector(`.x-${newPos.x}.y-${newPos.y}`).classList.contains("occupied")
+          );
+        });
+
+        // Apply the rotation
+        if (canRotate) {
+          this.blocks.forEach((block, i) => {
+            block.x = newPostions[i].x;
+            block.y = newPostions[i].y;
+          });
+          this.rotation = (this.rotation + 90) % 360;
+        }
+
+
+        this.erase();
+        this.colour();
       }
 
       // generate
