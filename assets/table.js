@@ -18,24 +18,23 @@ class gameArea {
     set setMaxY(y) {
         this.maxY = y;
     }
-    
-    removeOneLine = function(score) {
-        for (let j = 0; j < this.maxY; j++) {
+
+    removeCompletedLines = function(score) {
+        let completedLines = 0;
+
+        for (let j = this.maxY-1; j <= 0; j--) {
             const line = document.querySelectorAll(`.y-${j}`);
-            let lineArr = [...line];
-            // console.log(lineArr);
-            let wholeLine;
-            // let wholeLine = true;
-            wholeLine = lineArr.every((el) => el.classList.contains("occupied"));
-            // console.log("wholeLine", wholeLine);
-            if (wholeLine) {
-                score += 100;
+            let domBlockArr = [...line];
+            let lineCompleted = true;
+            lineCompleted = domBlockArr.every((el) => el.classList.contains("occupied"));
+
+            if (lineCompleted) {
+                completedLines += 1;
                 // line.forEach(el => el.remove());
             }
             // gameArea.addNewLine(); // not implemented yet
-            wholeLine = false;
         }
-        return score;
+        // return score;
     };
 
     generateTable = function() {

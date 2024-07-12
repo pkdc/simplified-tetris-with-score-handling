@@ -6,10 +6,10 @@ export let score = 0;
 
 export const nextRound = function(gameBoard) {
     // if 4 lines, remove it, add score
-    
+
     // if a line, remove it, add score
     // console.log(gameBoard);
-    score = gameBoard.removeOneLine(score);
+    score = gameBoard.removeCompletedLines(score);
     // score += 4; // temp
     // round++;
 };
@@ -145,7 +145,7 @@ const updateScoreBoard = function(cur, data) {
         // h === 3 ? hCell.classList.add("h-cell-last") : hCell.classList.add("h-cell")
         scoreTableHeader.append(hCell);
     }
-    
+
     // sort by score
     data.sort((a,b) => +a.score >= +b.score ? -1 : 1);
 
@@ -221,7 +221,7 @@ const updateScoreBoard = function(cur, data) {
     // pageNavNext.addEventListener("click", nextPage.bind(data));
 
     pageNavDiv.append(pageNavPrev, pageNavCur, pageNavNext);
-    
+
     console.log("y pageNavNext",pageNavPrev.onclick);
     console.log("y pageNavNext",pageNavNext.onclick);
 
@@ -303,7 +303,7 @@ const submitHandler = function(e) {
 
     // since the API will return the latest records
     // const testUrl = "http://httpbin.org/post";
-    fetch(recordUrl, reqOptions) 
+    fetch(recordUrl, reqOptions)
     .then(() => showUpdatedScoreBoard(payload))
     // .then(req => req.json())
     // .then(data => {
