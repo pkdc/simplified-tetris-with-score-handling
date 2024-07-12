@@ -22,19 +22,25 @@ class gameArea {
     removeCompletedLines = function(score) {
         let completedLines = 0;
 
-        for (let j = this.maxY-1; j <= 0; j--) {
+        for (let j = this.maxY-1; j >= 0; j--) {
             const line = document.querySelectorAll(`.y-${j}`);
             let domBlockArr = [...line];
             let lineCompleted = true;
             lineCompleted = domBlockArr.every((el) => el.classList.contains("occupied"));
+            console.log("Line completed", lineCompleted);
 
             if (lineCompleted) {
                 completedLines += 1;
+                score += 100;
                 // line.forEach(el => el.remove());
             }
             // gameArea.addNewLine(); // not implemented yet
+            console.log("Completed lines: ", completedLines);
         }
-        // return score;
+        // temp
+        score += completedLines * 100;
+        console.log("score: ", score);
+        return score;
     };
 
     generateTable = function() {
