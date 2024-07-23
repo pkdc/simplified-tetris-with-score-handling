@@ -24,6 +24,7 @@ class gameArea {
 
         for (let j = this.maxY-1; j >= 0; j--) {
             const line = document.querySelectorAll(`.y-${j}`);
+
             let domBlockArr = [...line];
             let lineCompleted = true;
             lineCompleted = domBlockArr.every((el) => el.classList.contains("occupied"));
@@ -31,8 +32,30 @@ class gameArea {
 
             if (lineCompleted) {
                 completedLines += 1;
-                score += 100;
-                // line.forEach(el => el.remove());
+
+                // remove the line, node list also has forEach
+                line.forEach(el => el.remove());
+
+                // shifting the rows above the cleared line downward
+                for (let k = j-1; k >= 0; k--) {
+                    const lineAbove = document.querySelectorAll(`.y-${k}`);
+
+                    lineAbove.forEach(el => {
+                        //  Move the block down one row
+                        el.classList.remove(`y-${k}`);
+                        el.classList.add(`y-${k+1}`);
+
+                        // Handle the "occupied" class
+                        if (el.classList.contains("occupied")) {
+                            el.classList.remove("occupied");
+
+                            // if the block is not at the bottom of the game area
+                            if (k+1 < this.maxY) {
+                                el.classList.add("occupied");
+                            }
+                        }
+                    });
+                }
             }
             // gameArea.addNewLine(); // not implemented yet
             console.log("Completed lines: ", completedLines);
