@@ -56,6 +56,16 @@ class gameArea {
                         }
                     });
                 }
+
+                const gameTable = document.querySelector(".game-table");
+                // add a new line at the top
+                for (let i = this.maxX-1; i >= 0; i--) {
+                    const linePixel = document.createElement("div");
+                    linePixel.classList.add("table-pixel");
+                    linePixel.classList.add(`x-${i}`);
+                    linePixel.classList.add(`y-0`);
+                    gameTable.prepend(linePixel);
+                }
             }
             // gameArea.addNewLine(); // not implemented yet
             console.log("Completed lines: ", completedLines);
@@ -78,10 +88,6 @@ class gameArea {
                 tablePixel.classList.add("table-pixel");
                 tablePixel.classList.add(`x-${i}`);
                 tablePixel.classList.add(`y-${j}`);
-                // const pixelVal = document.createElement("input");
-                // pixelVal.value = 0; // 0 means free, 1 means occupied
-                // pixelVal.style.display = "none";
-                // tablePixel.append(pixelVal);
                 gameTable.append(tablePixel);
             }
         }
