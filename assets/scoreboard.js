@@ -9,7 +9,7 @@ export const nextRound = function(gameBoard) {
 
     // if a line, remove it, add score
     // console.log(gameBoard);
-    score = gameBoard.removeCompletedRows(score);
+    score = gameBoard.removeCompletedLines(score);
     // score += 4; // temp
     // round++;
 };
