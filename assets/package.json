@@ -18,13 +18,11 @@
   },
   "homepage": "https://github.com/pkdc/simplified-tetris-with-score-handling#readme",
   "devDependencies": {
-    "esm": "^3.2.25",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jsdom": "^24.1.1"
   },
   "jest": {
-    "transform": {},
     "testEnvironment": "jsdom",
     "testEnvironmentOptions": {
       "url": "http://localhost/"
