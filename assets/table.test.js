@@ -17,6 +17,9 @@ test('removes a completed row and shifts rows above down, and add score', () => 
     const gameBoard = new gameArea(10, 20);
     box2.append(gameBoard.generateTable());
 
+    // add a row of blocks to the game area
+    gameBoard.completeLines(1, 19)
+
     const score = 0;
     const newScore = gameBoard.removeCompletedLines(score);
 

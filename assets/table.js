@@ -19,6 +19,18 @@ class gameArea {
         this.maxY = y;
     }
 
+    completeLines = function(lines, startingLine) {
+        if (startingLine + lines > this.maxY) {
+            console.log("Invalid line number");
+            return false;
+        }
+
+        for (let j = startingLine; j < startingLine + lines; j++) {
+            const line = document.querySelectorAll(`.y-${j}`);
+            line.forEach(el => el.classList.add("occupied"));
+        }
+    };
+
     removeCompletedLines = function(score) {
         let completedLines = 0;
 
