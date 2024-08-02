@@ -31,9 +31,28 @@ class gameArea {
         }
     };
 
+    addNewLines = function(numLineToAdd) {
+        const gameTable = document.querySelector(".game-table");
+        let nextEmptyLine = 0;
+
+        while (numLineToAdd > 0) {
+            // add a new line at the top
+            for (let i = this.maxX-1; i >= 0; i--) {
+                const linePixel = document.createElement("div");
+                linePixel.classList.add("table-pixel");
+                linePixel.classList.add(`x-${i}`);
+                linePixel.classList.add(`y-${nextEmptyLine}`);
+                gameTable.prepend(linePixel);
+            }
+            nextEmptyLine += 1;
+            numLineToAdd -= 1;
+        }
+    }
+
     removeCompletedLines = function(score) {
         let completedLines = 0;
 
+        // checking from the bottom is important
         for (let j = this.maxY-1; j >= 0; j--) {
             const line = document.querySelectorAll(`.y-${j}`);
 
@@ -68,22 +87,27 @@ class gameArea {
                         }
                     });
                 }
-
-                const gameTable = document.querySelector(".game-table");
-                // add a new line at the top
-                for (let i = this.maxX-1; i >= 0; i--) {
-                    const linePixel = document.createElement("div");
-                    linePixel.classList.add("table-pixel");
-                    linePixel.classList.add(`x-${i}`);
-                    linePixel.classList.add(`y-0`);
-                    gameTable.prepend(linePixel);
-                }
             }
-            // gameArea.addNewLine(); // not implemented yet
-            // console.log("Completed lines: ", completedLines);
+
         }
-        // temp
-        score += completedLines * 100;
+
+        // add new lines to the top and update the score
+        if (completedLines === 1) {
+            this.addNewLines(1);
+            score += 100;
+        } else if (completedLines === 2) {
+            this.addNewLines(2);
+            score += 300;
+        } else if (completedLines === 3) {
+            this.addNewLines(3);
+            score += 700;
+        } else if (completedLines === 4) {
+            this.addNewLines(4);
+            score += 1500;
+        } else {
+            score += 0;
+        }
+
         // console.log("score: ", score);
         return score;
     };
