@@ -40,7 +40,7 @@ class gameArea {
             let domBlockArr = [...line];
             let lineCompleted = true;
             lineCompleted = domBlockArr.every((el) => el.classList.contains("occupied"));
-            console.log("Line completed", lineCompleted);
+            // console.log("Line completed", lineCompleted);
 
             if (lineCompleted) {
                 completedLines += 1;
@@ -80,11 +80,11 @@ class gameArea {
                 }
             }
             // gameArea.addNewLine(); // not implemented yet
-            console.log("Completed lines: ", completedLines);
+            // console.log("Completed lines: ", completedLines);
         }
         // temp
         score += completedLines * 100;
-        console.log("score: ", score);
+        // console.log("score: ", score);
         return score;
     };
 
