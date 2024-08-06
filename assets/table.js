@@ -54,11 +54,14 @@ class gameArea {
 
         // checking from the bottom is important
         for (let j = this.maxY-1; j >= 0; j--) {
+            console.log("Checking line: ", j);
             const line = document.querySelectorAll(`.y-${j}`);
 
             let domBlockArr = [...line];
             let lineCompleted = true;
-            lineCompleted = domBlockArr.every((el) => el.classList.contains("occupied"));
+            lineCompleted = domBlockArr.every((el) => {
+                return el.classList.contains("occupied") && !el.classList.contains("bottom-boundary");
+            });
             // console.log("Line completed", lineCompleted);
 
             if (lineCompleted) {
@@ -69,6 +72,7 @@ class gameArea {
 
                 // shifting the rows above the cleared line downward
                 for (let k = j-1; k >= 0; k--) {
+                    console.log("Shifting line: ", k);
                     const lineAbove = document.querySelectorAll(`.y-${k}`);
 
                     lineAbove.forEach(el => {
@@ -90,6 +94,8 @@ class gameArea {
             }
 
         }
+
+        console.log("completedLines: ", completedLines);
 
         // add new lines to the top and update the score
         if (completedLines === 1) {
@@ -127,12 +133,14 @@ class gameArea {
                 gameTable.append(tablePixel);
             }
         }
+        // bottom boundary rows
         for (let k = 0; k <this.maxX; k++) {
             const tablePixel = document.createElement("div");
                 tablePixel.classList.add("table-pixel");
                 tablePixel.classList.add(`x-${k}`);
                 tablePixel.classList.add(`y-20`);
                 tablePixel.classList.add("occupied");
+                tablePixel.classList.add("bottom-boundary");
                 gameTable.append(tablePixel);
         }
         return gameTable;
