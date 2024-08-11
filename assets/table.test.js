@@ -75,7 +75,7 @@ test('removes a completed row at the bottom and shifts rows above down, and add 
 //     expect(newScore).toBe(100);
 // });
 
-// test('removes 2 completed row and shifts rows above down, and add score', () => {
+// test('removes 2 consecutive completed row and shifts rows above down, and add score', () => {
 //     const box2 = document.createElement("div");
 //     root.append(box2);
 
@@ -91,7 +91,7 @@ test('removes a completed row at the bottom and shifts rows above down, and add 
 //     expect(newScore).toBe(300);
 // });
 
-// test('removes 3 completed row and shifts rows above down, and add score', () => {
+// test('removes 3 consecutive completed row and shifts rows above down, and add score', () => {
 //     const box2 = document.createElement("div");
 //     root.append(box2);
 
@@ -107,7 +107,7 @@ test('removes a completed row at the bottom and shifts rows above down, and add 
 //     expect(newScore).toBe(700);
 // });
 
-// test('removes 4 completed row and shifts rows above down, and add score', () => {
+// test('removes 4 consecutive completed row and shifts rows above down, and add score', () => {
 //     const box2 = document.createElement("div");
 //     root.append(box2);
 
@@ -121,4 +121,21 @@ test('removes a completed row at the bottom and shifts rows above down, and add 
 
 //     // 4 lines completed
 //     expect(newScore).toBe(1500);
+// });
+
+// test('removes 2 non-consecutive completed row and shifts rows above down, and add score', () => {
+//     const box2 = document.createElement("div");
+//     root.append(box2);
+
+//     const gameBoard = new gameArea(10, 20);
+//     box2.append(gameBoard.generateTable());
+
+//     gameBoard.completeLines(1, 19)
+//     gameBoard.completeLines(1, 17)
+
+//     const score = 0;
+//     const newScore = gameBoard.removeCompletedLines(score);
+
+//     // 2 lines completed
+//     expect(newScore).toBe(300);
 // });
