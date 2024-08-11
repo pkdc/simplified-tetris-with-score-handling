@@ -57,9 +57,12 @@ class gameArea {
             console.log("Checking line: ", j);
             // console.log("maxY-1", this.maxY-1);
             const line = document.querySelectorAll(`.y-${j}`);
+            if (line.length === 0) {
+                continue;
+            }
 
             let domBlockArr = [...line];
-            let lineCompleted = false;
+            let lineCompleted = true;
             lineCompleted = domBlockArr.every((el) => {
                 return el.classList.contains("occupied") && !el.classList.contains("bottom-boundary");
             });
