@@ -59,7 +59,7 @@ class gameArea {
             const line = document.querySelectorAll(`.y-${j}`);
 
             let domBlockArr = [...line];
-            let lineCompleted = true;
+            let lineCompleted = false;
             lineCompleted = domBlockArr.every((el) => {
                 return el.classList.contains("occupied") && !el.classList.contains("bottom-boundary");
             });
@@ -72,6 +72,7 @@ class gameArea {
                 // remove the line, node list also has forEach
                 line.forEach(el => el.remove());
 
+                console.log("completedLines after removing the comp row: ", completedLines);
                 // shifting the rows above the cleared line downward
                 for (let k = j-1; k >= 0; k--) {
                     console.log("Shifting line: ", k);
@@ -93,8 +94,9 @@ class gameArea {
                         }
                     });
                 }
+                console.log("completedLines after shifting the rows: ", completedLines);
             }
-
+            console.log("completedLines after the if (lineCompleted) block: ", completedLines);
         }
 
         console.log("completedLines after: ", completedLines);
