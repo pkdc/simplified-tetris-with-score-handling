@@ -54,7 +54,7 @@ class gameArea {
 
         // checking from the bottom is important
         for (let j = this.maxY-1; j >= 0; j--) {
-            console.log("Checking line: ", j);
+            // console.log("Checking line: ", j);
             // console.log("maxY-1", this.maxY-1);
             const line = document.querySelectorAll(`.y-${j}`);
             if (line.length === 0) {
@@ -67,9 +67,9 @@ class gameArea {
                 return el.classList.contains("occupied") && !el.classList.contains("bottom-boundary");
             });
             // console.log("Line completed", lineCompleted);
-            console.log("completedLines before entering: ", completedLines);
+            // console.log("completedLines before entering: ", completedLines);
             if (lineCompleted) {
-                console.log("completedLines before adding: ", completedLines);
+                // console.log("completedLines before adding: ", completedLines);
                 completedLines += 1;
 
                 // remove the line, node list also has forEach
