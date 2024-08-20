@@ -97,6 +97,7 @@ class gameArea {
                         }
                     });
                 }
+                j++; // recheck the same line
                 console.log("completedLines after shifting the rows: ", completedLines);
             }
             console.log("completedLines after the if (lineCompleted) block: ", completedLines);
