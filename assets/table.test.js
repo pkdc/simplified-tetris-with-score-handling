@@ -21,40 +21,78 @@ test('removes a completed row at the bottom and shifts rows above down, and add 
     gameBoard.completeLines(numLinesToComplete, 19)
 
     const completedLine = document.querySelectorAll('.y-19');
-    console.log("completedLine length: ", completedLine.length);
+    // console.log("completedLine length: ", completedLine.length);
     completedLine.forEach(el => {
         expect(el.classList.contains("occupied")).toBe(true);
     });
 
-    console.log("gameBoard before removal: ", box2.innerHTML);
+    // console.log("gameBoard before removal: ", box2.innerHTML);
 
     const score = 0;
     const newScore = gameBoard.removeCompletedLines(score);
 
-    console.log("gameBoard after removal: ", box2.innerHTML);
-
+    // console.log("gameBoard after removal: ", box2.innerHTML);
 
     // single line completed
     expect(newScore).toBe(100);
 });
 
-// test('removes a completed row at the top and shifts rows above down, and add score', () => {
-//     const box2 = document.createElement("div");
-//     root.append(box2);
+test('removes a completed row at the top and shifts rows above down, and add score', () => {
+    const box2 = document.createElement("div");
+    root.append(box2);
 
-//     const gameBoard = new gameArea(10, 20);
-//     box2.append(gameBoard.generateTable());
+    const gameBoard = new gameArea(10, 20);
+    box2.append(gameBoard.generateTable());
 
-//     const numLinesToComplete = 1;
-//     gameBoard.completeLines(numLinesToComplete, 0)
+    const numLinesToComplete = 1;
+    gameBoard.completeLines(numLinesToComplete, 0)
 
-//     const score = 0;
-//     const newScore = gameBoard.removeCompletedLines(score);
+    const completedLine = document.querySelectorAll('.y-0');
+    // console.log("completedLine length: ", completedLine.length);
+    completedLine.forEach(el => {
+        expect(el.classList.contains("occupied")).toBe(true);
+    });
 
-//     // single line completed
-//     expect(newScore).toBe(100);
-// });
+    // console.log("gameBoard before removal: ", box2.innerHTML);
 
+    const score = 0;
+    const newScore = gameBoard.removeCompletedLines(score);
+
+    // console.log("gameBoard after removal: ", box2.innerHTML);
+
+    // single line completed
+    expect(newScore).toBe(100);
+});
+
+test('removes a completed row at random and shifts rows above down, and add score', () => {
+    const box2 = document.createElement("div");
+    root.append(box2);
+
+    const gameBoard = new gameArea(10, 20);
+    box2.append(gameBoard.generateTable());
+
+    const numLinesToComplete = 1;
+    const maxStartingLine = gameBoard.getMaxY - numLinesToComplete;
+    const randomLineNum = Math.floor(Math.random() * (maxStartingLine + 1));
+    console.log("testing line ", randomLineNum);
+    gameBoard.completeLines(numLinesToComplete, randomLineNum)
+
+    const completedLine = document.querySelectorAll(`.y-${randomLineNum}`);
+    // console.log("completedLine length: ", completedLine.length);
+    completedLine.forEach(el => {
+        expect(el.classList.contains("occupied")).toBe(true);
+    });
+
+    // console.log("gameBoard before removal: ", box2.innerHTML);
+
+    const score = 0;
+    const newScore = gameBoard.removeCompletedLines(score);
+
+    // console.log("gameBoard after removal: ", box2.innerHTML);
+
+    // single line completed
+    expect(newScore).toBe(100);
+});
 // test('removes a completed row randomly and shifts rows above down, and add score', () => {
 //     const box2 = document.createElement("div");
 //     root.append(box2);
