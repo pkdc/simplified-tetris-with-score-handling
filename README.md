@@ -46,7 +46,12 @@ To run this project locally, follow these steps:
    Run the Game:
    ```
 
-Start a server by running: python3 -m http.server
+Start a server by running:
+
+```
+python3 -m http.server
+
+```
 
 Enter localhost:8000 in your web browser.
 
@@ -61,30 +66,48 @@ If you want to enable score saving and retrieval, ensure that the Go API service
 go run cmd/api/main.go
 ```
 
-API Endpoints
+## API Endpoints
+
 POST /scores: Submit a new score.
 Request Body:
 
+```
 {
 "pname": "Player1",
 "score": 1500,
 "time": "2024-08-24T12:00:00Z"
 }
+```
+
 GET /scores: Retrieve the current leaderboard.
-Testing
+
+## Testing
+
 This project follows Test-Driven Development (TDD) practices for the logic behind clearing completed rows. The tests are written using Jest.
 
 To run the tests:
 
 Install the necessary dependencies:
 
+```
 npm install
+```
+
 Run the tests:
+
+```
 npm test
-Future Enhancements
+```
+
+## Future Enhancements
+
 Some planned improvements include:
 
 Block Previews: Display the next block to be dropped.
 Sound Effects: Add sound effects for block placement and row clearing.
 Enhanced UI: Introduce animations and a more polished game interface.
 Additional Testing: Expand test coverage to include other game features.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
