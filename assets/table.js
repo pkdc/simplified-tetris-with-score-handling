@@ -18,23 +18,110 @@ class gameArea {
     set setMaxY(y) {
         this.maxY = y;
     }
-    
-    removeOneLine = function(score) {
-        for (let j = 0; j < this.maxY; j++) {
-            const line = document.querySelectorAll(`.y-${j}`);
-            let lineArr = [...line];
-            // console.log(lineArr);
-            let wholeLine;
-            // let wholeLine = true;
-            wholeLine = lineArr.every((el) => el.classList.contains("occupied"));
-            // console.log("wholeLine", wholeLine);
-            if (wholeLine) {
-                score += 100;
-                // line.forEach(el => el.remove());
-            }
-            // gameArea.addNewLine(); // not implemented yet
-            wholeLine = false;
+
+    completeLines = function(lines, startingLine) {
+        if (startingLine + lines > this.maxY) {
+            console.log("Invalid line number");
+            return false;
         }
+
+        for (let j = startingLine; j < startingLine + lines; j++) {
+            const line = document.querySelectorAll(`.y-${j}`);
+            line.forEach(el => el.classList.add("occupied"));
+        }
+    };
+
+    addNewLines = function(numLineToAdd) {
+        const gameTable = document.querySelector(".game-table");
+        // let nextEmptyLine = 0;
+
+        while (numLineToAdd > 0) {
+            // add a new line at the top
+            for (let i = this.maxX-1; i >= 0; i--) {
+                const linePixel = document.createElement("div");
+                linePixel.classList.add("table-pixel");
+                linePixel.classList.add(`x-${i}`);
+                linePixel.classList.add(`y-${numLineToAdd-1}`);
+                gameTable.prepend(linePixel);
+            }
+            numLineToAdd -= 1;
+        }
+    }
+
+    removeCompletedLines = function(score) {
+        let completedLines = 0;
+
+        // checking from the bottom is important
+        for (let j = this.maxY-1; j >= 0; j--) {
+            // console.log("Checking line: ", j);
+            // console.log("maxY-1", this.maxY-1);
+            const line = document.querySelectorAll(`.y-${j}`);
+            if (line.length === 0) {
+                continue;
+            }
+
+            let domBlockArr = [...line];
+            let lineCompleted = true;
+            lineCompleted = domBlockArr.every((el) => {
+                return el.classList.contains("occupied") && !el.classList.contains("bottom-boundary");
+            });
+            // console.log("Line completed", lineCompleted);
+            // console.log("completedLines before entering: ", completedLines);
+            if (lineCompleted) {
+                // console.log("completedLines before adding: ", completedLines);
+                completedLines += 1;
+
+                // remove the line, node list also has forEach
+                line.forEach(el => el.remove());
+
+                console.log("completedLines after removing the comp row: ", completedLines);
+                // shifting the rows above the cleared line downward
+                for (let k = j-1; k >= 0; k--) {
+                    console.log("Shifting line: ", k);
+                    const lineAbove = document.querySelectorAll(`.y-${k}`);
+
+                    lineAbove.forEach(el => {
+                        //  Move the block down one row
+                        el.classList.remove(`y-${k}`);
+                        el.classList.add(`y-${k+1}`);
+
+                        // Handle the "occupied" class
+                        if (el.classList.contains("occupied")) {
+                            el.classList.remove("occupied");
+
+                            // if the block is not at the bottom of the game area
+                            if (k+1 < this.maxY) {
+                                el.classList.add("occupied");
+                            }
+                        }
+                    });
+                }
+                j++; // recheck the same line
+                console.log("completedLines after shifting the rows: ", completedLines);
+            }
+            console.log("completedLines after the if (lineCompleted) block: ", completedLines);
+        }
+
+        console.log("completedLines after: ", completedLines);
+
+        // add new lines to the top and update the score
+        if (completedLines === 1) {
+            this.addNewLines(1);
+            score += 100;
+        } else if (completedLines === 2) {
+            this.addNewLines(2);
+            score += 300;
+        } else if (completedLines === 3) {
+            this.addNewLines(3);
+            score += 700;
+        } else if (completedLines === 4) {
+            this.addNewLines(4);
+            score += 1500;
+        } else {
+            score += 0;
+        }
+
+        // console.log("score: ", score);
         return score;
     };
 
@@ -50,19 +137,17 @@ class gameArea {
                 tablePixel.classList.add("table-pixel");
                 tablePixel.classList.add(`x-${i}`);
                 tablePixel.classList.add(`y-${j}`);
-                // const pixelVal = document.createElement("input");
-                // pixelVal.value = 0; // 0 means free, 1 means occupied
-                // pixelVal.style.display = "none";
-                // tablePixel.append(pixelVal);
                 gameTable.append(tablePixel);
             }
         }
+        // bottom boundary rows
         for (let k = 0; k <this.maxX; k++) {
             const tablePixel = document.createElement("div");
                 tablePixel.classList.add("table-pixel");
                 tablePixel.classList.add(`x-${k}`);
                 tablePixel.classList.add(`y-20`);
                 tablePixel.classList.add("occupied");
+                tablePixel.classList.add("bottom-boundary");
                 gameTable.append(tablePixel);
         }
         return gameTable;

@@ -157,8 +157,7 @@ class tetrisBlock {
       }
 
       rotate(gameBoard) {
-        // this.rotation = (this.rotation+90)%360;
-        console.log("in rotate function");
+        // console.log("in rotate function");
         let canRotate = true;
 
         // Determine New Positions for the Rectangle
@@ -213,7 +212,6 @@ class tetrisBlock {
           });
           this.rotation = (this.rotation + 90) % 360;
         }
-
 
         this.erase();
         this.colour();
