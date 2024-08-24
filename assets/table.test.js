@@ -113,7 +113,7 @@ test('removes 2 consecutive completed rows at the top and shifts rows above down
     const numLinesToComplete = 2;
     gameBoard.completeLines(numLinesToComplete, 18)
 
-        const completedLine1 = document.querySelectorAll('.y-18');
+    const completedLine1 = document.querySelectorAll('.y-18');
     // console.log("completedLine length: ", completedLine.length);
     completedLine1.forEach(el => {
         expect(el.classList.contains("occupied")).toBe(true);
@@ -227,7 +227,7 @@ test('removes 2 non-consecutive completed rows at the top and shifts rows above 
     gameBoard.completeLines(numLinesToCompleteConsec, rowNum1)
     gameBoard.completeLines(numLinesToCompleteConsec, rowNum2)
 
-        const completedLine1 = document.querySelectorAll(`.y-${rowNum1}`);
+    const completedLine1 = document.querySelectorAll(`.y-${rowNum1}`);
     // console.log("completedLine length: ", completedLine.length);
     completedLine1.forEach(el => {
         expect(el.classList.contains("occupied")).toBe(true);

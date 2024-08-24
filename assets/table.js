@@ -33,7 +33,7 @@ class gameArea {
 
     addNewLines = function(numLineToAdd) {
         const gameTable = document.querySelector(".game-table");
-        let nextEmptyLine = 0;
+        // let nextEmptyLine = 0;
 
         while (numLineToAdd > 0) {
             // add a new line at the top
@@ -41,10 +41,9 @@ class gameArea {
                 const linePixel = document.createElement("div");
                 linePixel.classList.add("table-pixel");
                 linePixel.classList.add(`x-${i}`);
-                linePixel.classList.add(`y-${nextEmptyLine}`);
+                linePixel.classList.add(`y-${numLineToAdd-1}`);
                 gameTable.prepend(linePixel);
             }
-            nextEmptyLine += 1;
             numLineToAdd -= 1;
         }
     }
