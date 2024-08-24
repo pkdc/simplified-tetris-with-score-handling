@@ -145,7 +145,7 @@ const run = function() {
 
 // press "Enter" to start game
 document.addEventListener("keydown", (e) => {
-    if (e.key === " ") {
+    if (e.key === "Enter") {
         // To prevent run being called multiple times
         if (!started) {
             started = true;
@@ -177,8 +177,8 @@ const enterPlayerName = function() {
 
 // test
 document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-        console.log("Esc");
+    if (e.key === "Backspace") {
+        console.log("Backspace");
         gameover();
     }
 })
