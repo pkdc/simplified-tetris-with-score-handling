@@ -70,7 +70,7 @@ To run this project locally, follow these steps:
 
 ## API Endpoints
 
-- **POST /scores**: Submit a new score.
+- **POST /record**: Submit a new score.
 
   Request Body:
 
@@ -82,7 +82,7 @@ To run this project locally, follow these steps:
   }
   ```
 
-- **GET /scores**: Retrieve the current leaderboard.
+- **GET /record**: Retrieve the current leaderboard.
 
 ## Testing
 
