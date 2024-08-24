@@ -40,46 +40,49 @@ This project is a simplified implementation of the classic Tetris game using Van
 To run this project locally, follow these steps:
 
 1. **Clone the repository**:
+
    ```
    git clone https://github.com/pkdc/simplified-tetris.git
    cd simplified-tetris
-   Run the Game:
    ```
 
-Start a server by running:
+2. **Run the Game**:
 
-```
-python3 -m http.server
+   Start a server by running:
 
-```
+   ```
+   python3 -m http.server
+   ```
 
-Enter localhost:8000 in your web browser.
+   Enter `localhost:8000` in your web browser.
 
-Click on assets/, it should open index.html automatically (if not open it manually)
+   Click on `assets/`, it should open `index.html` automatically (if not, open it manually).
 
-Start playing the game.
-API Setup (Optional):
+   Start playing the game.
 
-If you want to enable score saving and retrieval, ensure that the Go API service is running. Run:
+3. **API Setup (Optional)**:
 
-```
-go run cmd/api/main.go
-```
+   If you want to enable score saving and retrieval, ensure that the Go API service is running. Run:
+
+   ```
+   go run cmd/api/main.go
+   ```
 
 ## API Endpoints
 
-POST /scores: Submit a new score.
-Request Body:
+- **POST /scores**: Submit a new score.
 
-```
-{
-"pname": "Player1",
-"score": 1500,
-"time": "2024-08-24T12:00:00Z"
-}
-```
+  Request Body:
 
-GET /scores: Retrieve the current leaderboard.
+  ```json
+  {
+    "pname": "Player1",
+    "score": 1500,
+    "time": "2024-08-24T12:00:00Z"
+  }
+  ```
+
+- **GET /scores**: Retrieve the current leaderboard.
 
 ## Testing
 
@@ -87,27 +90,27 @@ This project follows Test-Driven Development (TDD) practices for the logic behin
 
 To run the tests:
 
-Install the necessary dependencies:
+1. Install the necessary dependencies:
 
-```
-npm install
-```
+   ```
+   npm install
+   ```
 
-Run the tests:
+2. Run the tests:
 
-```
-npm test
-```
+   ```
+   npm test
+   ```
 
 ## Future Enhancements
 
 Some planned improvements include:
 
-Block Previews: Display the next block to be dropped.
-Sound Effects: Add sound effects for block placement and row clearing.
-Enhanced UI: Introduce animations and a more polished game interface.
-Additional Testing: Expand test coverage to include other game features.
+- Block Previews: Display the next block to be dropped.
+- Sound Effects: Add sound effects for block placement and row clearing.
+- Enhanced UI: Introduce animations and a more polished game interface.
+- Additional Testing: Expand test coverage to include other game features.
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+This project is licensed under the MIT License. See the `LICENSE` file for details.
