@@ -172,7 +172,7 @@ test('removes 3 consecutive completed rows at the top and shifts rows above down
     expect(newScore).toBe(700);
 });
 
-test('removes 3 consecutive completed rows at the top and shifts rows above down, and add score', () => {
+test('removes 4 consecutive completed rows at the top and shifts rows above down, and add score', () => {
     const box2 = document.createElement("div");
     root.append(box2);
 
@@ -213,67 +213,38 @@ test('removes 3 consecutive completed rows at the top and shifts rows above down
     expect(newScore).toBe(1500);
 });
 
-// test('removes 2 consecutive completed row and shifts rows above down, and add score', () => {
-//     const box2 = document.createElement("div");
-//     root.append(box2);
+test('removes 2 non-consecutive completed rows at the top and shifts rows above down, and add score', () => {
+    const box2 = document.createElement("div");
+    root.append(box2);
 
-//     const gameBoard = new gameArea(10, 20);
-//     box2.append(gameBoard.generateTable());
+    const gameBoard = new gameArea(10, 20);
+    box2.append(gameBoard.generateTable());
 
-//     gameBoard.completeLines(2, 18)
+    // const numLinesToComplete = 2;
+    const numLinesToCompleteConsec = 1;
+    const rowNum1 = 16;
+    const rowNum2 = 18;
+    gameBoard.completeLines(numLinesToCompleteConsec, rowNum1)
+    gameBoard.completeLines(numLinesToCompleteConsec, rowNum2)
 
-//     const score = 0;
-//     const newScore = gameBoard.removeCompletedLines(score);
+        const completedLine1 = document.querySelectorAll(`.y-${rowNum1}`);
+    // console.log("completedLine length: ", completedLine.length);
+    completedLine1.forEach(el => {
+        expect(el.classList.contains("occupied")).toBe(true);
+    });
+    const completedLine2 = document.querySelectorAll(`.y-${rowNum2}`);
+    // console.log("completedLine length: ", completedLine.length);
+    completedLine2.forEach(el => {
+        expect(el.classList.contains("occupied")).toBe(true);
+    });
 
-//     // 2 lines completed
-//     expect(newScore).toBe(300);
-// });
+    // console.log("gameBoard before removal: ", box2.innerHTML);
 
-// test('removes 3 consecutive completed row and shifts rows above down, and add score', () => {
-//     const box2 = document.createElement("div");
-//     root.append(box2);
+    const score = 0;
+    const newScore = gameBoard.removeCompletedLines(score);
 
-//     const gameBoard = new gameArea(10, 20);
-//     box2.append(gameBoard.generateTable());
+    // console.log("gameBoard after removal: ", box2.innerHTML);
 
-//     gameBoard.completeLines(3, 17)
-
-//     const score = 0;
-//     const newScore = gameBoard.removeCompletedLines(score);
-
-//     // 3 lines completed
-//     expect(newScore).toBe(700);
-// });
-
-// test('removes 4 consecutive completed row and shifts rows above down, and add score', () => {
-//     const box2 = document.createElement("div");
-//     root.append(box2);
-
-//     const gameBoard = new gameArea(10, 20);
-//     box2.append(gameBoard.generateTable());
-
-//     gameBoard.completeLines(4, 16)
-
-//     const score = 0;
-//     const newScore = gameBoard.removeCompletedLines(score);
-
-//     // 4 lines completed
-//     expect(newScore).toBe(1500);
-// });
-
-// test('removes 2 non-consecutive completed row and shifts rows above down, and add score', () => {
-//     const box2 = document.createElement("div");
-//     root.append(box2);
-
-//     const gameBoard = new gameArea(10, 20);
-//     box2.append(gameBoard.generateTable());
-
-//     gameBoard.completeLines(1, 19)
-//     gameBoard.completeLines(1, 17)
-
-//     const score = 0;
-//     const newScore = gameBoard.removeCompletedLines(score);
-
-//     // 2 lines completed
-//     expect(newScore).toBe(300);
-// });
+    // single line completed
+    expect(newScore).toBe(300);
+});
